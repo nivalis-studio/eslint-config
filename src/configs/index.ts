@@ -1,0 +1,16 @@
+export {comments} from './comments';
+export {ignores} from './ignores';
+export {imports} from './imports';
+export {javascript} from './javascript';
+export {jsonc} from './jsonc';
+export {markdown} from './markdown';
+export {node} from './node';
+export {prettier} from './prettier';
+export {sortKeys} from './sort-keys';
+export {typescript, typescriptTypecheck} from './typescript';
+export {unicorn} from './unicorn';
+export {yml} from './yml';
+export {react} from './react';
+export {nextjs} from './nextjs';
+export {tailwindcss} from './tailwindcss';
+export {stylistic} from './stylistic';
