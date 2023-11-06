@@ -71,7 +71,7 @@
   "devDependencies": {
     "@nivalis/prettier-config": "^1.0.0",
     "@types/node": "^18.18.8",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "sucrase": "^3.34.0",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
