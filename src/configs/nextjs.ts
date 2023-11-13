@@ -34,6 +34,8 @@ export const nextjs: FlatESLintConfigItem[] = [
 			'@next/next/no-typos': ['warn'],
 			'@next/next/no-unwanted-polyfillio': ['warn'],
 			'jsx-a11y/anchor-is-valid': ['off'],
+			// This rule creates errors with webpack parsing on edge runtime
+			'unicorn/prefer-node-protocol': ['off'],
 		},
 		settings: {
 			next: {
