@@ -10,8 +10,6 @@
 npm i -D @nivalis/eslint-config
 ```
 
-## Setup
-
 ## Usage
 
 ```js
@@ -29,13 +27,13 @@ export default nivalis(
     /* your custom config */
   ],
   {
-    nextjs: true,  // default is true if nextjs is installed
-    prettier: true,  // default is true
-    react: true,  // default is true if react is installed
-    sortKeys: true,  // default is true
-    tailwindcss: true,  // default is true if tailwindcss is installed
-    typescript: true,  // default is true if typescript is installed
-    typescriptTypecheck: true  // default is true
+    nextjs: true,  // true if nextjs is installed
+    prettier: true,  // true
+    react: true,  // true if react is installed
+    sortKeys: true,  // true
+    tailwindcss: true,  // true if tailwindcss is installed
+    typescript: true,  // true if typescript is installed
+    typescriptTypecheck: true  // true
   },
 );
 ```
