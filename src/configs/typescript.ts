@@ -40,6 +40,16 @@ export const typescript: FlatESLintConfigItem[] = [
 			'no-use-before-define': 'off',
 			'no-useless-constructor': 'off',
 
+			'unused-imports/no-unused-vars': [
+				'off',
+				{
+					args: 'after-used',
+					argsIgnorePattern: '^_',
+					ignoreRestSiblings: true,
+					varsIgnorePattern: '^_',
+				},
+			],
+
 			...pluginTypeScript.configs['eslint-recommended'].overrides?.[0].rules,
 			...pluginTypeScript.configs.strict.rules,
 			'@typescript-eslint/adjacent-overload-signatures': ['error'],
