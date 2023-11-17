@@ -24,7 +24,28 @@ import {nivalis} from '@nivalis/eslint-config';
 
 export default nivalis(
   [
-    /* your custom config */
+    /* your custom configs */
+  ],
+  {
+    nextjs: true,  // true if nextjs is installed
+    prettier: true,  // true
+    react: true,  // true if react is installed
+    sortKeys: true,  // true
+    tailwindcss: true,  // true if tailwindcss is installed
+    typescript: true,  // true if typescript is installed
+    typescriptTypecheck: true  // true
+  },
+);
+```
+
+### CommonJS
+
+```js
+const {nivalis} = require('@nivalis/eslint-config');
+
+module.exports = nivalis(
+  [
+    /* your custom configs */
   ],
   {
     nextjs: true,  // true if nextjs is installed
