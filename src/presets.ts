@@ -20,30 +20,32 @@ import {
 import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
 import type {FlatESLintConfigItem} from 'eslint-define-config';
 
-export const basic = [
+export const basic = async () => [
 	...ignores,
-	...javascript,
-	...node,
-	...comments,
-	...imports,
-	...unicorn,
-	...markdown,
-	...yml,
-	...jsonc,
-	...stylistic,
+	...(await javascript()),
+	...(await node()),
+	...(await comments()),
+	...(await imports()),
+	...(await unicorn()),
+	...(await markdown()),
+	...(await yml()),
+	...(await jsonc()),
+	...(await stylistic()),
 ];
 
-export const all = [
-	...basic,
-	...(hasTypeScript ? [...typescript, ...typescriptTypecheck] : []),
-	...(hasReact ? react : []),
-	...(hasNextjs ? nextjs : []),
-	...(hasTailwindcss ? tailwindcss : []),
-	...sortKeys,
-	...prettier,
+export const all = async () => [
+	...(await basic()),
+	...(hasTypeScript
+		? [...(await typescript()), ...(await typescriptTypecheck())]
+		: []),
+	...(hasReact ? await react() : []),
+	...(hasNextjs ? await nextjs() : []),
+	...(hasTailwindcss ? await tailwindcss() : []),
+	...(await sortKeys()),
+	...(await prettier()),
 ];
 
-export const nivalis = (
+export const nivalis = async (
 	config: FlatESLintConfigItem | FlatESLintConfigItem[] = [],
 	{
 		prettier: enablePrettier = true,
@@ -62,37 +64,37 @@ export const nivalis = (
 		nextjs: boolean;
 		tailwindcss: boolean;
 	}> = {},
-): FlatESLintConfigItem[] => {
+): Promise<FlatESLintConfigItem[]> => {
 	const configs = [];
 
-	configs.push(...basic);
+	configs.push(...(await basic()));
 
 	if (enableTypescript) {
-		configs.push(...typescript);
+		configs.push(...(await typescript()));
 	}
 
 	if (enableTypescriptTypecheck) {
-		configs.push(...typescriptTypecheck);
+		configs.push(...(await typescriptTypecheck()));
 	}
 
 	if (enableReact) {
-		configs.push(...react);
+		configs.push(...(await react()));
 	}
 
 	if (enableNextjs) {
-		configs.push(...nextjs);
+		configs.push(...(await nextjs()));
 	}
 
 	if (enableTailwindcss) {
-		configs.push(...tailwindcss);
+		configs.push(...(await tailwindcss()));
 	}
 
 	if (enableSortKeys) {
-		configs.push(...sortKeys);
+		configs.push(...(await sortKeys()));
 	}
 
 	if (enablePrettier) {
-		configs.push(...prettier);
+		configs.push(...(await prettier()));
 	}
 
 	// User can optionally pass a flat config item to the first argument
