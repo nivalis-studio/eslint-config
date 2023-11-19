@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import {
 	comments,
 	ignores,
@@ -19,6 +20,7 @@ import {
 } from './configs';
 import {prettierStylistic} from './configs/stylistic';
 import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
+import {interopDefault} from './interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const basic = async () => [
@@ -50,6 +52,7 @@ export const all = async () => [
 export const nivalis = async (
 	config: FlatESLintConfig | FlatESLintConfig[] = [],
 	{
+		gitignore: enableGitignore = true,
 		prettier: enablePrettier = true,
 		sortKeys: enableSortKeys = true,
 		typescript: enableTypescript = hasTypeScript,
@@ -58,6 +61,7 @@ export const nivalis = async (
 		nextjs: enableNextjs = hasNextjs,
 		tailwindcss: enableTailwindcss = hasTailwindcss,
 	}: Partial<{
+		gitignore: boolean;
 		prettier: boolean;
 		sortKeys: boolean;
 		typescript: boolean;
@@ -67,7 +71,17 @@ export const nivalis = async (
 		tailwindcss: boolean;
 	}> = {},
 ): Promise<FlatESLintConfig[]> => {
-	const configs = [];
+	const configs: FlatESLintConfig[] = [];
+
+	if (enableGitignore && fs.existsSync('.gitignore')) {
+		configs.push(
+			(
+				interopDefault(
+					await import('eslint-config-flat-gitignore'),
+				) as () => FlatESLintConfig
+			)(),
+		);
+	}
 
 	configs.push(...(await basic()));
 
