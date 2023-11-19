@@ -1,8 +1,8 @@
 import {GLOB_MARKDOWN, GLOB_SRC, GLOB_VUE} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const markdown = async (): Promise<FlatESLintConfigItem[]> => {
+export const markdown = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginMarkdown = await import('eslint-plugin-markdown');
 	const pluginMarkdown = interopDefault(_pluginMarkdown);
 

@@ -1,7 +1,7 @@
 import {GLOB_GRAPHQL} from '../globs';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const graphql: FlatESLintConfigItem[] = [
+export const graphql: FlatESLintConfig[] = [
 	{
 		files: [GLOB_GRAPHQL],
 		plugins: {

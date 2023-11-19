@@ -1,8 +1,8 @@
 import {GLOB_YAML} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem, Rules} from 'eslint-define-config';
+import type {FlatESLintConfig, Rules} from 'eslint-define-config';
 
-export const yml = async (): Promise<FlatESLintConfigItem[]> => {
+export const yml = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginYml = await import('eslint-plugin-yml');
 	const _parserYml = await import('yaml-eslint-parser');
 

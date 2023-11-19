@@ -1,8 +1,8 @@
 import {GLOB_SRC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const node = async (): Promise<FlatESLintConfigItem[]> => {
+export const node = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginNode = await import('eslint-plugin-n');
 	const pluginNode = interopDefault(_pluginNode);
 
@@ -38,5 +38,5 @@ export const node = async (): Promise<FlatESLintConfigItem[]> => {
 				'n/process-exit-as-throw': ['error'],
 			},
 		},
-	] as FlatESLintConfigItem[];
+	] as FlatESLintConfig[];
 };

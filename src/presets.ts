@@ -18,7 +18,7 @@ import {
 	yml,
 } from './configs';
 import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const basic = async () => [
 	...ignores,
@@ -46,7 +46,7 @@ export const all = async () => [
 ];
 
 export const nivalis = async (
-	config: FlatESLintConfigItem | FlatESLintConfigItem[] = [],
+	config: FlatESLintConfig | FlatESLintConfig[] = [],
 	{
 		prettier: enablePrettier = true,
 		sortKeys: enableSortKeys = true,
@@ -64,7 +64,7 @@ export const nivalis = async (
 		nextjs: boolean;
 		tailwindcss: boolean;
 	}> = {},
-): Promise<FlatESLintConfigItem[]> => {
+): Promise<FlatESLintConfig[]> => {
 	const configs = [];
 
 	configs.push(...(await basic()));

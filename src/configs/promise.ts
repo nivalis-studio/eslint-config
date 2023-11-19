@@ -1,8 +1,8 @@
 import {GLOB_SRC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const promise = async (): Promise<FlatESLintConfigItem[]> => {
+export const promise = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginPromise = await import('eslint-plugin-promise');
 	const pluginPromise = interopDefault(_pluginPromise);
 

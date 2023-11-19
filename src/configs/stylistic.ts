@@ -2,9 +2,9 @@
 import {GLOB_REACT, GLOB_SRC, GLOB_TS, GLOB_TSX} from '../globs';
 import {interopDefault} from '../interop';
 import {paddingLines} from '../lib/padding-lines';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const stylistic = async (): Promise<FlatESLintConfigItem[]> => {
+export const stylistic = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginStylistic = await import('@stylistic/eslint-plugin');
 	const pluginStylistic = interopDefault(_pluginStylistic);
 

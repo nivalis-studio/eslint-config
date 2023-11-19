@@ -1,8 +1,8 @@
 import {GLOB_SRC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const nextjs = async (): Promise<FlatESLintConfigItem[]> => {
+export const nextjs = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginNextjs = await import('@next/eslint-plugin-next');
 	const pluginNextjs = interopDefault(_pluginNextjs);
 

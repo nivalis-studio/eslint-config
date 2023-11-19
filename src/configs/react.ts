@@ -3,9 +3,9 @@
 import globals from 'globals';
 import {GLOB_REACT} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const react = async (): Promise<FlatESLintConfigItem[]> => {
+export const react = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginA11y = await import('eslint-plugin-jsx-a11y');
 	const pluginA11y = interopDefault(_pluginA11y);
 

@@ -1,7 +1,7 @@
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const prettier = async (): Promise<FlatESLintConfigItem[]> => {
+export const prettier = async (): Promise<FlatESLintConfig[]> => {
 	const _configPrettier = await import('eslint-config-prettier');
 	const configPrettier = interopDefault(_configPrettier);
 

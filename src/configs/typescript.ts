@@ -3,10 +3,10 @@ import {cwd} from 'node:process';
 import {GLOB_TS, GLOB_TSX} from '../globs';
 import {paddingLines} from '../lib/padding-lines';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
 // eslint-disable-next-line max-lines-per-function
-export const typescript = async (): Promise<FlatESLintConfigItem[]> => {
+export const typescript = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginAntfu = await import('eslint-plugin-antfu');
 	const _pluginTypeScript = await import('@typescript-eslint/eslint-plugin');
 	const _parserTypeScript = await import('@typescript-eslint/parser');
@@ -370,9 +370,7 @@ export const typescript = async (): Promise<FlatESLintConfigItem[]> => {
 	];
 };
 
-export const typescriptTypecheck = async (): Promise<
-	FlatESLintConfigItem[]
-> => {
+export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginTypeScript = await import('@typescript-eslint/eslint-plugin');
 
 	const pluginTypeScript = interopDefault(_pluginTypeScript);

@@ -1,8 +1,8 @@
 import {GLOB_SRC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const sortKeys = async (): Promise<FlatESLintConfigItem[]> => {
+export const sortKeys = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginSortKeys = await import('eslint-plugin-sort-keys');
 	const pluginSortKeys = interopDefault(_pluginSortKeys);
 

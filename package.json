@@ -40,13 +40,13 @@
     "eslint": "^8.53.0"
   },
   "dependencies": {
-    "@next/eslint-plugin-next": "^14.0.2",
-    "@stylistic/eslint-plugin": "^1.1.0",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
+    "@next/eslint-plugin-next": "^14.0.3",
+    "@stylistic/eslint-plugin": "^1.4.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-define-config": "^1.24.1",
-    "eslint-plugin-antfu": "^1.0.2",
+    "eslint-define-config": "^2.0.0",
+    "eslint-plugin-antfu": "^1.0.9",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-i": "^2.29.0",
     "eslint-plugin-jsonc": "^2.10.0",
@@ -70,10 +70,10 @@
   },
   "devDependencies": {
     "@nivalis/prettier-config": "3.1.0",
-    "@types/node": "^18.18.9",
-    "eslint": "^8.53.0",
+    "@types/node": "^18.18.10",
+    "eslint": "^8.54.0",
     "sucrase": "^3.34.0",
-    "tsup": "^7.2.0",
+    "tsup": "^7.3.0",
     "typescript": "^5.2.2"
   },
   "engines": {

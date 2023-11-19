@@ -1,9 +1,9 @@
 /* eslint-disable max-lines-per-function */
 import {GLOB_JSON, GLOB_JSON5, GLOB_JSONC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem, Rules} from 'eslint-define-config';
+import type {FlatESLintConfig, Rules} from 'eslint-define-config';
 
-export const jsonc = async (): Promise<FlatESLintConfigItem[]> => {
+export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 	const _parserJsonc = await import('jsonc-eslint-parser');
 	const parserJsonc = interopDefault(_parserJsonc);
 

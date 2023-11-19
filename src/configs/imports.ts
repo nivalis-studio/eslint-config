@@ -8,9 +8,9 @@ import {
 	GLOB_TSX,
 } from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const imports = async (): Promise<FlatESLintConfigItem[]> => {
+export const imports = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginImport = await import('eslint-plugin-i');
 	const pluginImport = interopDefault(_pluginImport);
 

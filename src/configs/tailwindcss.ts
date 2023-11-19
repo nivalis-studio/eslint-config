@@ -1,8 +1,8 @@
 import {GLOB_HTML, GLOB_SRC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfigItem} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const tailwindcss = async (): Promise<FlatESLintConfigItem[]> => {
+export const tailwindcss = async (): Promise<FlatESLintConfig[]> => {
 	const _pluginTailwindcss = await import('eslint-plugin-tailwindcss');
 
 	const pluginTailwindcss = interopDefault(_pluginTailwindcss);
