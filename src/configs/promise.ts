@@ -3,17 +3,14 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const promise = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginPromise = await import('eslint-plugin-promise');
-	const pluginPromise = interopDefault(_pluginPromise);
+	const pluginPromise = interopDefault(await import('eslint-plugin-promise'));
 
 	return [
 		{
+			files: [GLOB_SRC],
 			plugins: {
 				promise: pluginPromise,
 			},
-		},
-		{
-			files: [GLOB_SRC],
 			rules: {
 				...pluginPromise.configs.recommended.rules,
 				'promise/always-return': ['error', {ignoreLastCallback: true}],

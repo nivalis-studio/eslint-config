@@ -3,18 +3,12 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const tailwindcss = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginTailwindcss = await import('eslint-plugin-tailwindcss');
-
-	const pluginTailwindcss = interopDefault(_pluginTailwindcss);
-
 	return [
 		{
-			plugins: {
-				tailwindcss: pluginTailwindcss,
-			},
-		},
-		{
 			files: [GLOB_SRC, GLOB_HTML],
+			plugins: {
+				tailwindcss: interopDefault(await import('eslint-plugin-tailwindcss')),
+			},
 			rules: {
 				'tailwindcss/classnames-order': ['warn'],
 				'tailwindcss/enforces-negative-arbitrary-values': ['warn'],

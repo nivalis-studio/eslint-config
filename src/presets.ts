@@ -17,16 +17,17 @@ import {
 	unicorn,
 	yml,
 } from './configs';
+import {prettierStylistic} from './configs/stylistic';
 import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const basic = async () => [
 	...ignores,
-	...(await javascript()),
-	...(await node()),
-	...(await comments()),
-	...(await imports()),
-	...(await unicorn()),
+	...javascript(),
+	...node(),
+	...comments(),
+	...imports(),
+	...unicorn(),
 	...(await markdown()),
 	...(await yml()),
 	...(await jsonc()),
@@ -43,6 +44,7 @@ export const all = async () => [
 	...(hasTailwindcss ? await tailwindcss() : []),
 	...(await sortKeys()),
 	...(await prettier()),
+	...prettierStylistic(),
 ];
 
 export const nivalis = async (
@@ -94,7 +96,7 @@ export const nivalis = async (
 	}
 
 	if (enablePrettier) {
-		configs.push(...(await prettier()));
+		configs.push(...(await prettier()), ...prettierStylistic());
 	}
 
 	// User can optionally pass a flat config item to the first argument

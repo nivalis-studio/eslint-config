@@ -3,17 +3,14 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const nextjs = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginNextjs = await import('@next/eslint-plugin-next');
-	const pluginNextjs = interopDefault(_pluginNextjs);
+	const pluginNextjs = interopDefault(await import('@next/eslint-plugin-next'));
 
 	return [
 		{
+			files: [GLOB_SRC],
 			plugins: {
 				'@next/next': pluginNextjs,
 			},
-		},
-		{
-			files: [GLOB_SRC],
 			rules: {
 				...pluginNextjs.configs.recommended.rules,
 				...pluginNextjs.configs['core-web-vitals'].rules,

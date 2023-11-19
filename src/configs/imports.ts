@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-restricted-syntax
+import * as pluginImport from 'eslint-plugin-i';
+import pluginAntfu from 'eslint-plugin-antfu';
 import {
 	GLOB_JS,
 	GLOB_JSX,
@@ -7,25 +10,16 @@ import {
 	GLOB_TS,
 	GLOB_TSX,
 } from '../globs';
-import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const imports = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginImport = await import('eslint-plugin-i');
-	const pluginImport = interopDefault(_pluginImport);
-
-	const _pluginAntfu = await import('eslint-plugin-antfu');
-	const pluginAntfu = interopDefault(_pluginAntfu);
-
+export const imports = (): FlatESLintConfig[] => {
 	return [
 		{
+			files: [GLOB_SRC],
 			plugins: {
 				antfu: pluginAntfu,
 				import: pluginImport,
 			},
-		},
-		{
-			files: [GLOB_SRC],
 			rules: {
 				'antfu/import-dedupe': 'error',
 				'antfu/no-import-node-modules-by-path': 'error',

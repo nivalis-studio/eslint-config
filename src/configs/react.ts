@@ -6,13 +6,14 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const react = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginA11y = await import('eslint-plugin-jsx-a11y');
+	const [_pluginA11y, _pluginReact, _pluginReactHooks] = await Promise.all([
+		import('eslint-plugin-jsx-a11y'),
+		import('eslint-plugin-react'),
+		import('eslint-plugin-react-hooks'),
+	]);
+
 	const pluginA11y = interopDefault(_pluginA11y);
-
-	const _pluginReact = await import('eslint-plugin-react');
 	const pluginReact = interopDefault(_pluginReact);
-
-	const _pluginReactHooks = await import('eslint-plugin-react-hooks');
 	const pluginReactHooks = interopDefault(_pluginReactHooks);
 
 	return [
@@ -459,6 +460,11 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 				'react/static-property-placement': ['error', 'property assignment'],
 				'react/style-prop-object': ['error', {allow: ['FormattedNumber']}],
 				'react/void-dom-elements-no-children': ['error'],
+			},
+			settings: {
+				react: {
+					version: 'detect',
+				},
 			},
 		},
 	];

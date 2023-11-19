@@ -7,21 +7,18 @@ import type {FlatESLintConfig} from 'eslint-define-config';
 
 // eslint-disable-next-line max-lines-per-function
 export const typescript = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginAntfu = await import('eslint-plugin-antfu');
-	const _pluginTypeScript = await import('@typescript-eslint/eslint-plugin');
-	const _parserTypeScript = await import('@typescript-eslint/parser');
+	const [_pluginAntfu, _pluginTypeScript, _parserTypeScript] =
+		await Promise.all([
+			import('eslint-plugin-antfu'),
+			import('@typescript-eslint/eslint-plugin'),
+			import('@typescript-eslint/parser'),
+		]);
 
 	const pluginAntfu = interopDefault(_pluginAntfu);
 	const pluginTypeScript = interopDefault(_pluginTypeScript);
 	const parserTypeScript = interopDefault(_parserTypeScript);
 
 	return [
-		{
-			plugins: {
-				'@typescript-eslint': pluginTypeScript,
-				'antfu': pluginAntfu,
-			},
-		},
 		{
 			files: [GLOB_TS, GLOB_TSX],
 			languageOptions: {
@@ -32,6 +29,10 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 					sourceType: 'module',
 					tsconfigRootDir: cwd(),
 				},
+			},
+			plugins: {
+				'@typescript-eslint': pluginTypeScript,
+				'antfu': pluginAntfu,
 			},
 			rules: {
 				'default-param-last': 'off',
@@ -371,13 +372,16 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 };
 
 export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginTypeScript = await import('@typescript-eslint/eslint-plugin');
-
-	const pluginTypeScript = interopDefault(_pluginTypeScript);
+	const pluginTypeScript = interopDefault(
+		await import('@typescript-eslint/eslint-plugin'),
+	);
 
 	return [
 		{
 			files: [GLOB_TS, GLOB_TSX],
+			plugins: {
+				'@typescript-eslint': pluginTypeScript,
+			},
 			rules: {
 				...pluginTypeScript.configs['strict-type-checked'].rules,
 				'@typescript-eslint/await-thenable': ['error'],

@@ -4,22 +4,22 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig, Rules} from 'eslint-define-config';
 
 export const jsonc = async (): Promise<FlatESLintConfig[]> => {
-	const _parserJsonc = await import('jsonc-eslint-parser');
-	const parserJsonc = interopDefault(_parserJsonc);
+	const [_parserJsonc, _pluginJsonc] = await Promise.all([
+		import('jsonc-eslint-parser'),
+		import('eslint-plugin-jsonc'),
+	]);
 
-	const _pluginJsonc = await import('eslint-plugin-jsonc');
+	const parserJsonc = interopDefault(_parserJsonc);
 	const pluginJsonc = interopDefault(_pluginJsonc);
 
 	return [
 		{
-			plugins: {
-				jsonc: pluginJsonc,
-			},
-		},
-		{
 			files: [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
 			languageOptions: {
 				parser: parserJsonc,
+			},
+			plugins: {
+				jsonc: pluginJsonc,
 			},
 
 			rules: {

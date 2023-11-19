@@ -1,20 +1,14 @@
+import pluginUnicorn from 'eslint-plugin-unicorn';
 import {GLOB_SRC} from '../globs';
-import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const unicorn = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginUnicorn = await import('eslint-plugin-unicorn');
-
-	const pluginUnicorn = interopDefault(_pluginUnicorn);
-
+export const unicorn = (): FlatESLintConfig[] => {
 	return [
 		{
+			files: [GLOB_SRC],
 			plugins: {
 				unicorn: pluginUnicorn,
 			},
-		},
-		{
-			files: [GLOB_SRC],
 			rules: {
 				'no-process-exit': 'off',
 				'unicorn/better-regex': 'error',

@@ -1,10 +1,10 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable max-lines */
 import globals from 'globals';
+import pluginUnusedImports from 'eslint-plugin-unused-imports';
 import {isInEditor} from '../env';
 import {paddingLines} from '../lib/padding-lines';
 import {GLOB_SRC} from '../globs';
-import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 const MAX_COMPLEXITY = 20;
@@ -16,16 +16,8 @@ const MAX_NESTED_CALLBACKS = 3;
 const MAX_PARAMS = 5;
 const MAX_STATEMENTS = 30;
 
-export const javascript = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginUnusedImports = await import('eslint-plugin-unused-imports');
-	const pluginUnusedImports = interopDefault(_pluginUnusedImports);
-
+export const javascript = (): FlatESLintConfig[] => {
 	return [
-		{
-			plugins: {
-				'unused-imports': pluginUnusedImports,
-			},
-		},
 		{
 			files: [GLOB_SRC],
 			languageOptions: {
@@ -45,6 +37,9 @@ export const javascript = async (): Promise<FlatESLintConfig[]> => {
 			},
 			linterOptions: {
 				reportUnusedDisableDirectives: true,
+			},
+			plugins: {
+				'unused-imports': pluginUnusedImports,
 			},
 			rules: {
 				'accessor-pairs': [

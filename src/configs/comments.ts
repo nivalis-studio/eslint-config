@@ -1,17 +1,12 @@
-import {interopDefault} from '../interop';
+import pluginComments from 'eslint-plugin-eslint-comments';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
-export const comments = async (): Promise<FlatESLintConfig[]> => {
-	const _pluginComments = await import('eslint-plugin-eslint-comments');
-	const pluginComments = interopDefault(_pluginComments);
-
+export const comments = (): FlatESLintConfig[] => {
 	return [
 		{
 			plugins: {
 				'eslint-comments': pluginComments,
 			},
-		},
-		{
 			rules: {
 				...pluginComments.configs.recommended.rules,
 				'eslint-comments/disable-enable-pair': [
