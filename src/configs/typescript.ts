@@ -7,14 +7,13 @@ import type {FlatESLintConfig} from 'eslint-define-config';
 
 // eslint-disable-next-line max-lines-per-function
 export const typescript = async (): Promise<FlatESLintConfig[]> => {
-	const [_pluginAntfu, _pluginTypeScript, _parserTypeScript] =
+	const [ _pluginTypeScript, _parserTypeScript] =
 		await Promise.all([
 			import('eslint-plugin-antfu'),
 			import('@typescript-eslint/eslint-plugin'),
 			import('@typescript-eslint/parser'),
 		]);
 
-	const pluginAntfu = interopDefault(_pluginAntfu);
 	const pluginTypeScript = interopDefault(_pluginTypeScript);
 	const parserTypeScript = interopDefault(_parserTypeScript);
 
@@ -32,7 +31,6 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 			},
 			plugins: {
 				'@typescript-eslint': pluginTypeScript,
-				'antfu': pluginAntfu,
 			},
 			rules: {
 				'default-param-last': 'off',
