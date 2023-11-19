@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import {
 	comments,
+	graphql,
 	ignores,
 	imports,
 	javascript,
@@ -19,7 +20,13 @@ import {
 	yml,
 } from './configs';
 import {prettierStylistic} from './configs/stylistic';
-import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
+import {
+	hasGraphql,
+	hasNextjs,
+	hasReact,
+	hasTailwindcss,
+	hasTypeScript,
+} from './env';
 import {interopDefault} from './interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
@@ -44,6 +51,7 @@ export const all = async () => [
 	...(hasReact ? await react() : []),
 	...(hasNextjs ? await nextjs() : []),
 	...(hasTailwindcss ? await tailwindcss() : []),
+	...(hasGraphql ? await graphql() : []),
 	...(await sortKeys()),
 	...(await prettier()),
 	...prettierStylistic(),
@@ -60,6 +68,7 @@ export const nivalis = async (
 		react: enableReact = hasReact,
 		nextjs: enableNextjs = hasNextjs,
 		tailwindcss: enableTailwindcss = hasTailwindcss,
+		graphql: enableGraphql = hasGraphql,
 	}: Partial<{
 		gitignore: boolean;
 		prettier: boolean;
@@ -69,6 +78,7 @@ export const nivalis = async (
 		react: boolean;
 		nextjs: boolean;
 		tailwindcss: boolean;
+		graphql: boolean;
 	}> = {},
 ): Promise<FlatESLintConfig[]> => {
 	const configs: FlatESLintConfig[] = [];
@@ -103,6 +113,10 @@ export const nivalis = async (
 
 	if (enableTailwindcss) {
 		configs.push(...(await tailwindcss()));
+	}
+
+	if (enableGraphql) {
+		configs.push(...(await graphql()));
 	}
 
 	if (enableSortKeys) {

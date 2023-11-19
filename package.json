@@ -1,6 +1,6 @@
 {
   "name": "@nivalis/eslint-config",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "packageManager": "bun@1.0.11",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "type": "module",
@@ -40,6 +40,7 @@
     "eslint": "^8.53.0"
   },
   "dependencies": {
+    "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@next/eslint-plugin-next": "^14.0.3",
     "@stylistic/eslint-plugin": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",

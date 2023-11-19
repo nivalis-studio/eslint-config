@@ -14,3 +14,4 @@ export {react} from './react';
 export {nextjs} from './nextjs';
 export {tailwindcss} from './tailwindcss';
 export {stylistic} from './stylistic';
+export {graphql} from './graphql';
