@@ -13,7 +13,23 @@ export const markdown = async (): Promise<FlatESLintConfig[]> => {
 		},
 		{
 			files: [GLOB_MARKDOWN],
+			languageOptions: {
+				parserOptions: {
+					ecmaFeatures: {
+						impliedStrict: true,
+					},
+				},
+			},
 			processor: 'markdown/markdown',
+			rules: {
+				'eol-last': 'off',
+				'no-undef': 'off',
+				'no-unused-expressions': 'off',
+				'no-unused-vars': 'off',
+				'padded-blocks': 'off',
+				'strict': 'off',
+				'unicode-bom': 'off',
+			},
 		},
 		{
 			files: [`${GLOB_MARKDOWN}/${GLOB_SRC}`, `${GLOB_MARKDOWN}/${GLOB_VUE}`],
@@ -25,8 +41,6 @@ export const markdown = async (): Promise<FlatESLintConfig[]> => {
 				},
 			},
 			rules: {
-				...pluginMarkdown.configs.recommended.overrides[1].rules,
-
 				'@typescript-eslint/await-thenable': 'off',
 				'@typescript-eslint/comma-dangle': 'off',
 				'@typescript-eslint/consistent-type-imports': 'off',
@@ -55,14 +69,17 @@ export const markdown = async (): Promise<FlatESLintConfig[]> => {
 
 				'antfu/no-cjs-exports': 'off',
 				'antfu/no-ts-export-equal': 'off',
+
+				'eol-last': 'off',
 				'no-alert': 'off',
 				'no-console': 'off',
 				'no-restricted-imports': 'off',
 				'no-undef': 'off',
 				'no-unused-expressions': 'off',
-
 				'no-unused-vars': 'off',
 				'node/prefer-global/process': 'off',
+				'padded-blocks': 'off',
+				'strict': 'off',
 				'unicode-bom': 'off',
 				'unused-imports/no-unused-imports': 'off',
 				'unused-imports/no-unused-vars': 'off',

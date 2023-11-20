@@ -20,15 +20,12 @@ import {
 	yml,
 } from './configs';
 import {prettierStylistic} from './configs/stylistic';
-import {
-	hasGraphql,
-	hasNextjs,
-	hasReact,
-	hasTailwindcss,
-	hasTypeScript,
-} from './env';
+import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
 import {interopDefault} from './interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
+
+// temporary
+const hasGraphql = false;
 
 export const basic = async () => [
 	...ignores,
@@ -40,7 +37,6 @@ export const basic = async () => [
 	...(await markdown()),
 	...(await yml()),
 	...(await jsonc()),
-	...(await stylistic()),
 ];
 
 export const all = async () => [
@@ -61,6 +57,7 @@ export const nivalis = async (
 	config: FlatESLintConfig | FlatESLintConfig[] = [],
 	{
 		gitignore: enableGitignore = true,
+		stylistic: enableStylistic = false,
 		prettier: enablePrettier = true,
 		sortKeys: enableSortKeys = true,
 		typescript: enableTypescript = hasTypeScript,
@@ -71,6 +68,7 @@ export const nivalis = async (
 		graphql: enableGraphql = hasGraphql,
 	}: Partial<{
 		gitignore: boolean;
+		stylistic: boolean;
 		prettier: boolean;
 		sortKeys: boolean;
 		typescript: boolean;
@@ -123,8 +121,16 @@ export const nivalis = async (
 		configs.push(...(await sortKeys()));
 	}
 
+	if (enableStylistic) {
+		configs.push(...(await stylistic()));
+	}
+
 	if (enablePrettier) {
-		configs.push(...(await prettier()), ...prettierStylistic());
+		configs.push(...(await prettier()));
+	}
+
+	if (enableStylistic && enablePrettier) {
+		configs.push(...prettierStylistic());
 	}
 
 	// User can optionally pass a flat config item to the first argument

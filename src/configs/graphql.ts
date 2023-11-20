@@ -1,8 +1,11 @@
 import {GLOB_GRAPHQL} from '../globs';
+import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const graphql = async (): Promise<FlatESLintConfig[]> => {
-	const pluginGraphql = await import('@graphql-eslint/eslint-plugin');
+	const pluginGraphql = interopDefault(
+		await import('@graphql-eslint/eslint-plugin'),
+	);
 
 	return [
 		{
@@ -11,7 +14,6 @@ export const graphql = async (): Promise<FlatESLintConfig[]> => {
 				parser: pluginGraphql,
 			},
 			plugins: {
-				// @ts-expect-error incorrect types
 				'@graphql-eslint': pluginGraphql,
 			},
 			rules: {
@@ -90,7 +92,6 @@ export const graphql = async (): Promise<FlatESLintConfig[]> => {
 				'@graphql-eslint/value-literals-of-correct-type': 'error',
 				'@graphql-eslint/variables-are-input-types': 'error',
 				'@graphql-eslint/variables-in-allowed-position': 'error',
-				'prettier/prettier': 'error',
 			},
 		},
 	];

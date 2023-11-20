@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import {GLOB_JSON, GLOB_JSON5, GLOB_JSONC} from '../globs';
 import {interopDefault} from '../interop';
-import type {FlatESLintConfig, Rules} from 'eslint-define-config';
+import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 	const [_parserJsonc, _pluginJsonc] = await Promise.all([
@@ -21,9 +21,7 @@ export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 			plugins: {
 				jsonc: pluginJsonc,
 			},
-
 			rules: {
-				...(pluginJsonc.configs['recommended-with-jsonc'].rules as Rules),
 				'jsonc/array-bracket-spacing': ['error', 'never'],
 				'jsonc/comma-dangle': ['error', 'never'],
 				'jsonc/comma-style': ['error', 'last'],

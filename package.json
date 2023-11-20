@@ -1,6 +1,6 @@
 {
   "name": "@nivalis/eslint-config",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "packageManager": "bun@1.0.11",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "type": "module",
@@ -48,7 +48,7 @@
     "eslint-config-flat-gitignore": "^0.1.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-define-config": "^2.0.0",
-    "eslint-plugin-antfu": "^1.0.9",
+    "eslint-plugin-antfu": "^1.0.10",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-i": "^2.29.0",
     "eslint-plugin-jsonc": "^2.10.0",
@@ -75,7 +75,7 @@
     "@types/node": "^18.18.10",
     "eslint": "^8.54.0",
     "sucrase": "^3.34.0",
-    "tsup": "^7.3.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.2.2"
   },
   "engines": {
