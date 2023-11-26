@@ -22,6 +22,12 @@ export const tailwindcss = async (): Promise<FlatESLintConfig[]> => {
 				tailwindcss: {
 					callees: ['cn', 'classnames', 'clsx'],
 					config: 'tailwind.config.ts',
+					/**
+					 * Performance issue with the plugin, somewhat mitigated setting cssFiles to an empty array.
+					 * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/276
+					 * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/174
+					 */
+					cssFiles: [],
 					removeDuplicates: true,
 				},
 			},
