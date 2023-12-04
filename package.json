@@ -46,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "eslint-config-flat-gitignore": "^0.1.1",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-define-config": "^2.0.0",
     "eslint-plugin-antfu": "^1.0.11",
     "eslint-plugin-eslint-comments": "^3.2.0",
