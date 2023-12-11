@@ -44,7 +44,7 @@
     "@next/eslint-plugin-next": "^14.0.3",
     "@stylistic/eslint-plugin": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
+    "@typescript-eslint/parser": "^6.13.2",
     "eslint-config-flat-gitignore": "^0.1.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-define-config": "^2.0.0",
