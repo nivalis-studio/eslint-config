@@ -65,6 +65,7 @@ export const imports = (): FlatESLintConfig[] => {
 					{
 						allow: [
 							'server-only',
+							'@total-typescript/ts-reset',
 							'**/register',
 							'**/register.*',
 							'**/register /**',
