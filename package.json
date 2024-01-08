@@ -1,7 +1,7 @@
 {
   "name": "@nivalis/eslint-config",
   "version": "1.8.1",
-  "packageManager": "bun@1.0.11",
+  "packageManager": "bun@1.0.21",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "type": "module",
   "keywords": [
@@ -42,9 +42,9 @@
   "dependencies": {
     "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@next/eslint-plugin-next": "^14.0.4",
-    "@stylistic/eslint-plugin": "^1.5.1",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@stylistic/eslint-plugin": "^1.5.3",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
     "eslint-config-flat-gitignore": "^0.1.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-define-config": "^2.1.0",
@@ -54,7 +54,7 @@
     "eslint-plugin-jsonc": "^2.11.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-markdown": "^3.0.1",
-    "eslint-plugin-n": "^16.6.0",
+    "eslint-plugin-n": "^16.6.1",
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "@nivalis/prettier-config": "3.1.1",
-    "@types/node": "^18.19.4",
+    "@types/node": "^20.10.7",
     "eslint": "^8.56.0",
     "sucrase": "^3.35.0",
     "tsup": "^8.0.1",
