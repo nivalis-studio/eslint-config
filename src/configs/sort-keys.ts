@@ -11,7 +11,7 @@ export const sortKeys = async (): Promise<FlatESLintConfig[]> => {
 			},
 			rules: {
 				'sort-keys': 'off', // disable default eslint sort-keys
-				'sort-keys/sort-keys-fix': 'off', // disabled but can be enabled if needed
+				'sort-keys/sort-keys-fix': 'warn',
 			},
 		},
 	];
