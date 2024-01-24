@@ -21,19 +21,45 @@ export {all as default} from '@nivalis/eslint-config';
 
 ```js
 import {nivalis} from '@nivalis/eslint-config';
+import anotherConfig from 'another-config';
+import anotherPlugin from 'another-plugin';
 
 export default nivalis(
   [
-    /* your custom configs */
+    /* ignore some files */
+    {
+      ignores: ['tsup.config.ts'],
+    },
+
+	/* disable some rules */
+    {
+      rules: {
+        'no-console': 'off',
+      },
+    },
+
+		/* add another config */
+    anotherConfig,
+
+		/* add another plugin */
+    {
+      plugins: [anotherPlugin],
+      rules: {
+        // custom rules...
+      },
+    }
   ],
   {
-    nextjs: true,  // true if nextjs is installed
-    prettier: true,  // true
+    gitignore: true,
+    graphql: false, // true if graphql is installed
+    nextjs: false,  // true if nextjs is installed
+    prettier: true,
     react: true,  // true if react is installed
-    sortKeys: true,  // true
+    sortKeys: false, // disabled by default
+    stylistic: false, // disabled by default
     tailwindcss: true,  // true if tailwindcss is installed
     typescript: true,  // true if typescript is installed
-    typescriptTypecheck: true  // true
+    typescriptTypecheck: true  // true if typescript is installed
   },
 );
 ```
@@ -48,13 +74,16 @@ module.exports = nivalis(
     /* your custom configs */
   ],
   {
-    nextjs: true,  // true if nextjs is installed
-    prettier: true,  // true
+    gitignore: true,
+    graphql: false, // true if graphql is installed
+    nextjs: false,  // true if nextjs is installed
+    prettier: true,
     react: true,  // true if react is installed
-    sortKeys: true,  // true
+    sortKeys: false, // disabled by default
+    stylistic: false, // disabled by default
     tailwindcss: true,  // true if tailwindcss is installed
     typescript: true,  // true if typescript is installed
-    typescriptTypecheck: true  // true
+    typescriptTypecheck: true  // true if typescript is installed
   },
 );
 ```
