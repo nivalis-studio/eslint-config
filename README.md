@@ -14,7 +14,9 @@ npm i -D @nivalis/eslint-config
 
 ```js
 // eslint.config.js
-export {all as default} from '@nivalis/eslint-config';
+import {nivalis} from '@nivalis/eslint-config';
+
+export default nivalis();
 ```
 
 ```jsonc
@@ -39,17 +41,17 @@ export default nivalis(
       ignores: ['tsup.config.ts'],
     },
 
-	  /* disable some rules */
+    /* disable some rules */
     {
       rules: {
         'no-console': 'off',
       },
     },
 
-		/* add another config */
+    /* add another config */
     anotherConfig,
 
-		/* add another plugin */
+    /* add another plugin */
     {
       plugins: [anotherPlugin],
       rules: {
