@@ -17,6 +17,14 @@ npm i -D @nivalis/eslint-config
 export {all as default} from '@nivalis/eslint-config';
 ```
 
+```jsonc
+// package.json
+{
+  // ...
+  "type": "module"
+}
+```
+
 ### Custom Config
 
 ```js
@@ -31,7 +39,7 @@ export default nivalis(
       ignores: ['tsup.config.ts'],
     },
 
-	/* disable some rules */
+	  /* disable some rules */
     {
       rules: {
         'no-console': 'off',
