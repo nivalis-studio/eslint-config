@@ -77,8 +77,10 @@ export default nivalis(
 ### CommonJS
 
 ```js
+// eslint-disable-next-line unicorn/prefer-module
 const {nivalis} = require('@nivalis/eslint-config');
 
+// eslint-disable-next-line unicorn/prefer-module
 module.exports = nivalis(
   [
     /* your custom configs */

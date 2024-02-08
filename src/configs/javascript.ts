@@ -2,7 +2,7 @@
 /* eslint-disable max-lines */
 import globals from 'globals';
 import pluginUnusedImports from 'eslint-plugin-unused-imports';
-import {isInEditor} from '../env';
+import {isInEditor} from '../environment';
 import {paddingLines} from '../lib/padding-lines';
 import {GLOB_SRC} from '../globs';
 import type {FlatESLintConfig} from 'eslint-define-config';

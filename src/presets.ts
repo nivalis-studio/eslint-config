@@ -20,7 +20,12 @@ import {
 	yml,
 } from './configs';
 import {prettierStylistic} from './configs/stylistic';
-import {hasNextjs, hasReact, hasTailwindcss, hasTypeScript} from './env';
+import {
+	hasNextjs,
+	hasReact,
+	hasTailwindcss,
+	hasTypeScript,
+} from './environment';
 import {interopDefault} from './interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
