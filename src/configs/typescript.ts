@@ -400,7 +400,8 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 					},
 				],
 				'@typescript-eslint/no-throw-literal': 'error',
-				'@typescript-eslint/no-unnecessary-condition': 'error',
+				// This rule is too strict, should be added per projet.
+				'@typescript-eslint/no-unnecessary-condition': 'off',
 				'@typescript-eslint/no-unnecessary-type-assertion': ['error'],
 				'@typescript-eslint/no-unsafe-argument': ['error'],
 				'@typescript-eslint/no-unsafe-assignment': ['warn'],
