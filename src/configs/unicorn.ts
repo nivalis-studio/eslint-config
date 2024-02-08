@@ -80,7 +80,7 @@ export const unicorn = (): FlatESLintConfig[] => {
 				'unicorn/prefer-dom-node-dataset': 'error',
 				'unicorn/prefer-dom-node-remove': 'error',
 				'unicorn/prefer-dom-node-text-content': 'error',
-				'unicorn/prefer-export-from': 'error',
+				'unicorn/prefer-export-from': [2, {ignoreUsedVariables: true}],
 				'unicorn/prefer-includes': 'error',
 				'unicorn/prefer-keyboard-event-key': 'error',
 				'unicorn/prefer-logical-operator-over-ternary': 'error',
