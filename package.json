@@ -1,6 +1,6 @@
 {
   "name": "@nivalis/eslint-config",
-  "version": "1.10.3",
+  "version": "1.11.0",
   "packageManager": "bun@1.0.21",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "type": "module",
