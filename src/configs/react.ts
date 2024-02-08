@@ -6,15 +6,18 @@ import {interopDefault} from '../interop';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
 export const react = async (): Promise<FlatESLintConfig[]> => {
-	const [_pluginA11y, _pluginReact, _pluginReactHooks] = await Promise.all([
-		import('eslint-plugin-jsx-a11y'),
-		import('eslint-plugin-react'),
-		import('eslint-plugin-react-hooks'),
-	]);
+	const [_pluginA11y, _pluginReact, _pluginReactHooks, _pluginReactRefresh] =
+		await Promise.all([
+			import('eslint-plugin-jsx-a11y'),
+			import('eslint-plugin-react'),
+			import('eslint-plugin-react-hooks'),
+			import('eslint-plugin-react-refresh'),
+		]);
 
 	const pluginA11y = interopDefault(_pluginA11y);
 	const pluginReact = interopDefault(_pluginReact);
 	const pluginReactHooks = interopDefault(_pluginReactHooks);
+	const pluginReactRefresh = interopDefault(_pluginReactRefresh);
 
 	return [
 		{
@@ -32,9 +35,8 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 					...globals.browser,
 				},
 				parserOptions: {
-					ecmaFeatures: {
-						jsx: true,
-					},
+					ecmaFeatures: {modules: true, jsx: true},
+					jsxPragma: null, // https://github.com/jsx-eslint/eslint-plugin-react/blob/8cf47a8ac2242ee00ea36eac4b6ae51956ba4411/index.js#L165-L179
 				},
 			},
 			rules: {
@@ -465,6 +467,35 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 				react: {
 					version: 'detect',
 				},
+			},
+		},
+		{
+			files: [GLOB_REACT],
+			plugins: {'react-refresh': pluginReactRefresh},
+			rules: {
+				'react-refresh/only-export-components': 'error',
+			},
+		},
+		// Specific overrides for storybook
+		{
+			files: ['**/*.stories.tsx'],
+			plugins: {'react-refresh': pluginReactRefresh},
+			rules: {
+				'react-refresh/only-export-components': 'off',
+			},
+		},
+		// Specific overrides for astro
+		{
+			files: ['**/*.astro'],
+			rules: {
+				'react/no-unknown-property': 0,
+				'react/jsx-filename-extension': [
+					2,
+					{
+						allow: 'always',
+						extensions: ['.jsx', '.tsx', '.mtsx', '.mjsx', '.astro'],
+					},
+				],
 			},
 		},
 	];

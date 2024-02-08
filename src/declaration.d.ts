@@ -14,3 +14,4 @@ declare module 'eslint-plugin-sort-keys';
 declare module 'eslint-plugin-tailwindcss';
 declare module 'eslint-plugin-unicorn';
 declare module 'eslint-plugin-unused-imports';
+declare module 'eslint-plugin-react-refresh';
