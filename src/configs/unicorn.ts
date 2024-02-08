@@ -11,7 +11,12 @@ export const unicorn = (): FlatESLintConfig[] => {
 			},
 			rules: {
 				'no-process-exit': 'off',
-				'unicorn/better-regex': 'error',
+				'unicorn/better-regex': [
+					'error',
+					{
+						sortCharacterClasses: false,
+					},
+				],
 				'unicorn/catch-error-name': 'error',
 				'unicorn/custom-error-definition': 'error',
 				'unicorn/error-message': 'error',
