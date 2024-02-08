@@ -389,6 +389,7 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 				],
 				'@typescript-eslint/no-for-in-array': 'error',
 				'@typescript-eslint/no-implied-eval': 'error',
+				'@typescript-eslint/promise-function-async': 'error',
 				'@typescript-eslint/no-misused-promises': [
 					'error',
 					{
