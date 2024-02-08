@@ -127,7 +127,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				curly: ['off', 'all'],
 				'default-case': ['error', {commentPattern: '(?:)'}],
 				'default-case-last': ['error'],
-				'default-param-last': ['off'],
+				'default-param-last': ['error'],
 				// deprecated -> moved to stylistic
 				'dot-location': ['off', 'property'],
 				'dot-notation': ['warn', {allowKeywords: true, allowPattern: ''}],
@@ -669,7 +669,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				'no-self-compare': ['off'],
 				'no-sequences': ['error', {allowInParentheses: false}],
 				'no-setter-return': ['error'],
-				'no-shadow': ['off'],
+				'no-shadow': ['warn'],
 				'no-shadow-restricted-names': ['error'],
 				'no-space-before-semi': ['off'],
 				'no-spaced-func': ['off'],
