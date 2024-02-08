@@ -663,7 +663,7 @@ export const javascript = (): FlatESLintConfig[] => {
 					},
 				],
 				'no-return-assign': ['error', 'always'],
-				'no-return-await': 'warn',
+				'no-return-await': 'off',
 				'no-script-url': ['error'],
 				'no-self-assign': ['error', {props: true}],
 				'no-self-compare': ['off'],
