@@ -15,7 +15,10 @@
   "bugs": {
     "url": "https://github.com/nivalis-studio/eslint-config/issues"
   },
-  "repository": "https://github.com/nivalis-studio/eslint-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivalis-studio/eslint-config.git"
+  },
   "files": [
     "dist"
   ],
