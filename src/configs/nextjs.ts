@@ -12,6 +12,8 @@ export const nextjs = async (): Promise<FlatESLintConfig[]> => {
 				'@next/next': pluginNextjs,
 			},
 			rules: {
+				...pluginNextjs.configs.recommended.rules,
+				...pluginNextjs.configs['core-web-vitals'].rules,
 				'@next/next/google-font-display': ['warn'],
 				'@next/next/google-font-preconnect': ['warn'],
 				'@next/next/inline-script-id': ['error'],
@@ -33,6 +35,7 @@ export const nextjs = async (): Promise<FlatESLintConfig[]> => {
 				'@next/next/no-title-in-document-head': ['warn'],
 				'@next/next/no-typos': ['warn'],
 				'@next/next/no-unwanted-polyfillio': ['warn'],
+
 				'jsx-a11y/anchor-is-valid': ['off'],
 				// This rule creates errors with webpack parsing on edge runtime
 				'unicorn/prefer-node-protocol': ['off'],
