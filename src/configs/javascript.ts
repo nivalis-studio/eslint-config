@@ -326,7 +326,10 @@ export const javascript = (): FlatESLintConfig[] => {
 					'off',
 					{allowParens: true, onlyOneSimpleParam: false},
 				],
-				'no-console': ['warn', {allow: ['warn', 'error', 'info']}],
+				'no-console': [
+					'warn',
+					{allow: ['warn', 'error', 'debug', 'info', 'table']},
+				],
 				'no-const-assign': ['error'],
 				'no-constant-condition': ['error', {checkLoops: false}],
 				'no-constructor-return': ['error'],
