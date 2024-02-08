@@ -58,6 +58,9 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 					},
 				],
 
+				...pluginTypeScript.configs['disable-type-checked'].overrides?.[0]
+					.rules,
+				...pluginTypeScript.configs.recommended.overrides?.[0].rules,
 				...pluginTypeScript.configs['eslint-recommended'].overrides?.[0].rules,
 				...pluginTypeScript.configs.strict.rules,
 				'@typescript-eslint/adjacent-overload-signatures': ['error'],
@@ -157,6 +160,7 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 						prefer: 'type-imports',
 					},
 				],
+				'@typescript-eslint/method-signature-style': ['error', 'property'],
 				'@typescript-eslint/default-param-last': ['error'],
 				'@typescript-eslint/explicit-function-return-type': ['off'],
 				'@typescript-eslint/explicit-member-accessibility': ['off'],
@@ -380,6 +384,7 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 			},
 			rules: {
 				...pluginTypeScript.configs['strict-type-checked'].rules,
+				...pluginTypeScript.configs['stylistic-type-checked'].rules,
 				'@typescript-eslint/await-thenable': ['error'],
 				'@typescript-eslint/dot-notation': ['error', {allowKeywords: true}],
 				'@typescript-eslint/no-explicit-any': 'off',
@@ -400,6 +405,11 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 					},
 				],
 				'@typescript-eslint/no-throw-literal': 'error',
+				'@typescript-eslint/consistent-type-exports': [
+					'error',
+					{fixMixedExportsWithInlineTypeSpecifier: true},
+				],
+				'@typescript-eslint/switch-exhaustiveness-check': 'error',
 				// This rule is too strict, should be added per projet.
 				'@typescript-eslint/no-unnecessary-condition': 'off',
 				'@typescript-eslint/no-unnecessary-type-assertion': ['error'],
