@@ -29,6 +29,12 @@ export const imports = (): FlatESLintConfig[] => {
 				'import/export': ['error'],
 				'import/first': 'error',
 				'import/named': ['error'],
+				'import/namespace': [
+					'error',
+					{
+						allowComputed: true,
+					},
+				],
 				'import/newline-after-import': [
 					'error',
 					{considerComments: true, count: 1},
