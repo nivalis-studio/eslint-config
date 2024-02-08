@@ -1,3 +1,3 @@
-export const interopDefault = (mod: any): any => {
-	return mod.default || mod;
+export const interopDefault = (module_: any): any => {
+	return module_.default || module_;
 };

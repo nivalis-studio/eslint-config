@@ -20,7 +20,7 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 		{
 			plugins: {
 				'jsx-a11y': pluginA11y,
-				'react': pluginReact,
+				react: pluginReact,
 				'react-hooks': pluginReactHooks,
 			},
 		},
@@ -45,11 +45,11 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 				'jsx-a11y/alt-text': [
 					'warn',
 					{
-						'area': [],
-						'elements': ['img', 'object', 'area', 'input[type="image"]'],
-						'img': [],
+						area: [],
+						elements: ['img', 'object', 'area', 'input[type="image"]'],
+						img: [],
 						'input[type="image"]': [],
-						'object': [],
+						object: [],
 					},
 				],
 				'jsx-a11y/anchor-has-content': ['warn', {components: []}],

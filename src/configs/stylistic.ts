@@ -11,7 +11,7 @@ export const stylistic = async (): Promise<FlatESLintConfig[]> => {
 				style: interopDefault(await import('@stylistic/eslint-plugin')),
 			},
 			rules: {
-				'curly': ['error', 'multi', 'consistent'],
+				curly: ['error', 'multi', 'consistent'],
 
 				'style/array-bracket-spacing': ['error', 'never'],
 				'style/arrow-parens': [

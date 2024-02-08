@@ -71,7 +71,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				// deprecated -> moved to stylistic
 				'brace-style': ['off', '1tbs', {allowSingleLine: true}],
 				'callback-return': ['error', ['callback']],
-				'camelcase': [
+				camelcase: [
 					'error',
 					{
 						ignoreDestructuring: false,
@@ -115,13 +115,13 @@ export const javascript = (): FlatESLintConfig[] => {
 				'comma-spacing': ['off', {after: true, before: false}],
 				// deprecated -> moved to stylistic
 				'comma-style': ['off', 'last'],
-				'complexity': ['error', MAX_COMPLEXITY],
+				complexity: ['error', MAX_COMPLEXITY],
 				// deprecated -> moved to stylistic
 				'computed-property-spacing': ['off', 'never'],
 				'consistent-return': ['off'],
 				'consistent-this': ['off', 'that'],
 				'constructor-super': ['error'],
-				'curly': ['off', 'all'],
+				curly: ['off', 'all'],
 				'default-case': ['error', {commentPattern: '(?:)'}],
 				'default-case-last': ['error'],
 				'default-param-last': ['off'],
@@ -130,7 +130,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				'dot-notation': ['warn', {allowKeywords: true, allowPattern: ''}],
 				// deprecated -> moved to stylistic
 				'eol-last': ['off', 'always'],
-				'eqeqeq': ['error', 'smart'],
+				eqeqeq: ['error', 'smart'],
 				'for-direction': ['error'],
 				// deprecated -> moved to stylistic
 				'func-call-spacing': ['off', 'never'],
@@ -171,7 +171,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				// deprecated -> moved to stylistic
 				'implicit-arrow-linebreak': ['off', 'beside'],
 				// deprecated -> moved to stylistic
-				'indent': [
+				indent: [
 					'off',
 					DEFAULT_IDENTATION,
 					{
@@ -789,8 +789,8 @@ export const javascript = (): FlatESLintConfig[] => {
 				// deprecated -> moved to stylistic
 				'quote-props': ['off', 'as-needed', {keywords: true}],
 				// deprecated -> moved to stylistic
-				'quotes': ['off', 'single', 'avoid-escape'],
-				'radix': ['error'],
+				quotes: ['off', 'single', 'avoid-escape'],
+				radix: ['error'],
 				'require-atomic-updates': ['error', {allowProperties: true}],
 				'require-await': ['error'],
 				'require-jsdoc': ['off'],
@@ -799,7 +799,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				// deprecated -> moved to stylistic
 				'rest-spread-spacing': ['off', 'never'],
 				// deprecated -> moved to stylistic
-				'semi': ['off', 'always'],
+				semi: ['off', 'always'],
 				// deprecated -> moved to stylistic
 				'semi-spacing': [
 					'off',
@@ -864,7 +864,7 @@ export const javascript = (): FlatESLintConfig[] => {
 						markers: ['='],
 					},
 				],
-				'strict': ['error', 'global'],
+				strict: ['error', 'global'],
 				// deprecated -> moved to stylistic
 				'switch-colon-spacing': [
 					'off',
@@ -908,7 +908,7 @@ export const javascript = (): FlatESLintConfig[] => {
 						before: false,
 					},
 				],
-				'yoda': [
+				yoda: [
 					'error',
 					'never',
 					{

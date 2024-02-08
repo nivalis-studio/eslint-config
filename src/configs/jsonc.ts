@@ -70,7 +70,7 @@ export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 				'jsonc/space-unary-ops': 'error',
 				'jsonc/valid-json-number': 'off',
 				'jsonc/vue-custom-block/no-parsing-error': 'error',
-				'strict': 'off',
+				strict: 'off',
 			},
 		},
 		{
