@@ -29,8 +29,9 @@ export const imports = (): FlatESLintConfig[] => {
 				'import/export': ['error'],
 				'import/first': 'error',
 				'import/named': ['error'],
+				// not supported with eslint flat config cf: https://github.com/import-js/eslint-plugin-import/pull/2829
 				'import/namespace': [
-					'error',
+					'off',
 					{
 						allowComputed: true,
 					},
