@@ -212,7 +212,10 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 				'react-hooks/rules-of-hooks': ['error'],
 				'react/boolean-prop-naming': [
 					'warn',
-					{rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+', validateNested: true},
+					{
+						rule: '^(is|has|are|can|should|did|will)[A-Z]([A-Za-z0-9])+',
+						validateNested: true,
+					},
 				],
 				'react/button-has-type': [
 					'error',
@@ -255,7 +258,10 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 				],
 				'react/jsx-curly-spacing': ['error', 'never'],
 				'react/jsx-equals-spacing': ['error', 'never'],
-				'react/jsx-filename-extension': ['warn', {extensions: ['.tsx']}],
+				'react/jsx-filename-extension': [
+					'warn',
+					{extensions: ['.jsx', '.tsx', '.mtsx', '.mjsx']},
+				],
 				'react/jsx-first-prop-new-line': ['off', 'multiline'],
 				'react/jsx-fragments': ['error', 'syntax'],
 				'react/jsx-handler-names': [

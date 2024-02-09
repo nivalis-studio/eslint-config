@@ -310,7 +310,15 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 				'@typescript-eslint/no-non-null-assertion': ['off'],
 				'@typescript-eslint/no-redeclare': ['error'],
 				'@typescript-eslint/no-require-imports': ['error'],
-				'@typescript-eslint/no-shadow': ['warn'],
+				'@typescript-eslint/no-shadow': [
+					'warn',
+					{
+						hoist: 'all',
+						allow: ['resolve', 'reject', 'done', 'next', 'err', 'error'],
+						ignoreTypeValueShadow: true,
+						ignoreFunctionTypeParameterNameValueShadow: true,
+					},
+				],
 				'@typescript-eslint/no-this-alias': [
 					'error',
 					{allowDestructuring: true},

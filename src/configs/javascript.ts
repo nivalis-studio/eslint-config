@@ -465,7 +465,17 @@ export const javascript = (): FlatESLintConfig[] => {
 				'no-param-reassign': [
 					'error',
 					{
-						ignorePropertyModificationsFor: [],
+						ignorePropertyModificationsFor: [
+							'accumulator',
+							'ctx',
+							'context',
+							'req',
+							'request',
+							'res',
+							'response',
+							'$scope',
+							'staticContext',
+						],
 						ignorePropertyModificationsForRegex: [],
 						props: true,
 					},
@@ -664,7 +674,14 @@ export const javascript = (): FlatESLintConfig[] => {
 				'no-self-compare': ['off'],
 				'no-sequences': ['error', {allowInParentheses: false}],
 				'no-setter-return': ['error'],
-				'no-shadow': ['warn'],
+				'no-shadow': [
+					'warn',
+					{
+						hoist: 'all',
+						builtinGlobals: true,
+						allow: ['resolve', 'reject', 'done', 'next', 'err', 'error'],
+					},
+				],
 				'no-shadow-restricted-names': ['error'],
 				'no-space-before-semi': ['off'],
 				'no-spaced-func': ['off'],

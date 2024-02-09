@@ -103,7 +103,10 @@ export const unicorn = (): FlatESLintConfig[] => {
 				'unicorn/prefer-string-slice': 'error',
 				'unicorn/prefer-string-starts-ends-with': 'error',
 				'unicorn/prefer-string-trim-start-end': 'error',
-				'unicorn/prefer-switch': 'error',
+				'unicorn/prefer-switch': [
+					'error',
+					{emptyDefaultCase: 'do-nothing-comment'},
+				],
 				'unicorn/prefer-ternary': ['error', 'only-single-line'],
 				'unicorn/prefer-top-level-await': 'error',
 				'unicorn/prefer-type-error': 'error',
@@ -114,7 +117,18 @@ export const unicorn = (): FlatESLintConfig[] => {
 						checkFilenames: false,
 						checkDefaultAndNamespaceImports: false,
 						checkShorthandImports: false,
+						checkShorthandProperties: true,
 						extendDefaultReplacements: true,
+						allowList: {
+							ctx: true,
+							args: true,
+							props: true,
+							Props: true,
+							params: true,
+							req: true,
+							res: true,
+							ref: true,
+						},
 						replacements: {
 							// https://thenextweb.com/dd/2020/07/13/linux-kernel-will-no-longer-use-terms-blacklist-and-slave/
 							whitelist: {

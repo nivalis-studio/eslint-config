@@ -2,15 +2,13 @@
 import {createRequire} from 'node:module';
 
 const require = createRequire(import.meta.url);
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 require('sucrase/register');
+
 /** @type {typeof import('./src/index.ts')} */
 const {nivalis} = require('./src/index.ts');
 
 export default nivalis([
-	{
-		ignores: ['tsup.config.ts'],
-	},
 	{
 		files: ['src/**/*.ts'],
 		rules: {
