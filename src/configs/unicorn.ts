@@ -109,7 +109,7 @@ export const unicorn = (): FlatESLintConfig[] => {
 				'unicorn/prefer-type-error': 'error',
 				// https://github.com/xojs/xo/blob/main/config/plugins.cjs#L38
 				'unicorn/prevent-abbreviations': [
-					'error',
+					'warn',
 					{
 						checkFilenames: false,
 						checkDefaultAndNamespaceImports: false,
@@ -198,6 +198,15 @@ export const unicorn = (): FlatESLintConfig[] => {
 							},
 							proc: {
 								process: true,
+							},
+							params: {
+								parameters: false,
+							},
+							props: {
+								properties: false,
+							},
+							ref: {
+								reference: false,
 							},
 							rand: {
 								random: true,
