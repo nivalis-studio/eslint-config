@@ -12,6 +12,7 @@ import {
 } from '../globs';
 import type {FlatESLintConfig} from 'eslint-define-config';
 
+// eslint-disable-next-line max-lines-per-function
 export const imports = (): FlatESLintConfig[] => {
 	return [
 		{
@@ -70,6 +71,41 @@ export const imports = (): FlatESLintConfig[] => {
 					'error',
 					{
 						includeTypes: true,
+						optionalDependencies: false,
+						peerDependencies: false,
+						bundledDependencies: false,
+						devDependencies: [
+							'**/test/**',
+							'**/tests/**',
+							'**/spec/**',
+							'**/__tests__/**',
+							'**/__mocks__/**',
+							'**/*.test.*',
+							'**/*.spec.*',
+							'**/*.e2e.*',
+							'**/*.e2e-spec.*',
+							'**/jest.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/jest.setup.{js,cjs,mjs,ts,cts,mts}',
+							'**/setupTests.{js,cjs,mjs,ts,cts,mts}',
+							'**/cypress.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/playwright.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/vue.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/next.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/nuxt.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/webpack.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/webpack.config.*.{js,cjs,mjs,ts,cts,mts}',
+							'**/rollup.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/rollup.config.*.{js,cjs,mjs,ts,cts,mts}',
+							'**/vite.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/vitest.config.{js,cjs,mjs,ts,cts,mts}',
+							'**/gulpfile.{js,cjs,mjs,ts,cts,mts}',
+							'**/gulpfile.*.{js,cjs,mjs,ts,cts,mts}',
+							'**/Gruntfile{,.js,.cjs,.mjs,.ts,.cts,.mts}',
+							'**/protractor.conf.{js,cjs,mjs,ts,cts,mts}',
+							'**/protractor.conf.*.{js,cjs,mjs,ts,cts,mts}',
+							'**/karma.conf.{js,cjs,mjs,ts,cts,mts}',
+							'**/.eslintrc.{js,cjs,mjs,ts,cts,mts}',
+						],
 					},
 				],
 				'import/no-import-module-exports': ['error', {exceptions: []}],
