@@ -18,6 +18,11 @@ export const prettier = async (): Promise<FlatESLintConfig[]> => {
 			rules: {
 				...configPrettier.rules,
 				...pluginPrettier.configs.recommended.rules,
+
+				'unicorn/number-literal-case': 'off',
+				'unicorn/no-nested-ternary': 'off',
+				'unicorn/empty-brace-spaces': 'off',
+
 				'prettier/prettier': 'warn',
 			},
 		},
