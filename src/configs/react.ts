@@ -324,10 +324,12 @@ export const react = async (): Promise<FlatESLintConfig[]> => {
 					{
 						callbacksLast: true,
 						locale: 'auto',
-						multiline: 'ignore',
+						multiline: 'last',
 						noSortAlphabetically: true,
+						ignoreCase: true,
 						reservedFirst: true,
 						shorthandFirst: true,
+						shorthandLast: false,
 					},
 				],
 				'react/jsx-space-before-closing': ['off', 'always'],

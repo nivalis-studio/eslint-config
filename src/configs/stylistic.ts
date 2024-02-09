@@ -22,8 +22,7 @@ export const stylistic = async (): Promise<FlatESLintConfig[]> => {
 				'style/arrow-spacing': ['error', {after: true, before: true}],
 				'style/block-spacing': ['error', 'never'],
 				'style/brace-style': ['error', '1tbs', {allowSingleLine: true}],
-				// handled by typescript-eslint
-				'style/comma-dangle': ['off', 'always-multiline'],
+				'style/comma-dangle': ['error', 'always-multiline'],
 				'style/comma-spacing': ['error', {after: true, before: false}],
 				'style/comma-style': ['error', 'last'],
 				'style/computed-property-spacing': [

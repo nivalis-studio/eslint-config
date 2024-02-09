@@ -181,9 +181,11 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 					{allowSingleLine: false},
 				],
 				'@typescript-eslint/class-literal-property-style': ['error', 'getters'],
-				'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
+
+				// handled by stylistic
+				'@typescript-eslint/comma-dangle': ['off', 'always-multiline'],
 				'@typescript-eslint/comma-spacing': [
-					'error',
+					'off',
 					{after: true, before: false},
 				],
 				'@typescript-eslint/consistent-generic-constructors': [
