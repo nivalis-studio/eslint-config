@@ -633,11 +633,6 @@ export const javascript = (): FlatESLintConfig[] => {
 							'Avoid the Reflect API. It is a very low-level feature that has only rare and specific use-cases if building complex and hacky libraries. There is no need to use this feature for any kind of normal development.',
 					},
 					{
-						selector: "BinaryExpression[operator='in']",
-						message:
-							"Avoid the 'in' operator. In real-world scenarios there is rarely a need for this operator. For most usecases, basic property access is all you need. For every other case, use the Object.hasOwn() or the Object.prototype.hasOwnProperty() method. In the really niche cases where you actually need to check for the existence of a property both in the object itself AND in it's prototype chain, feel free to disable this rule with the inline eslint-disable syntax.",
-					},
-					{
 						selector: "PropertyDefinition[accessibility='public']",
 						message: NO_ACCESS_MODIFIER,
 					},
