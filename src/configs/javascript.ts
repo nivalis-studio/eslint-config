@@ -130,7 +130,7 @@ export const javascript = (): FlatESLintConfig[] => {
 				'default-param-last': ['error'],
 				// deprecated -> moved to stylistic
 				'dot-location': ['off', 'property'],
-				'dot-notation': ['warn', {allowKeywords: true, allowPattern: ''}],
+				'dot-notation': ['error', {allowKeywords: true}],
 				// deprecated -> moved to stylistic
 				'eol-last': ['off', 'always'],
 				eqeqeq: ['error', 'smart'],
@@ -718,9 +718,10 @@ export const javascript = (): FlatESLintConfig[] => {
 				'no-unused-expressions': [
 					'error',
 					{
-						allowShortCircuit: true,
-						allowTaggedTemplates: true,
-						allowTernary: true,
+						allowShortCircuit: false,
+						allowTaggedTemplates: false,
+						allowTernary: false,
+						enforceForJSX: true,
 					},
 				],
 				'no-unused-labels': ['error'],
