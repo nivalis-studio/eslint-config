@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-import {cwd} from 'node:process';
 import {GLOB_TS, GLOB_TSX} from '../globs';
 import {paddingLines} from '../lib/padding-lines';
 import {interopDefault} from '../interop';
@@ -24,7 +23,7 @@ export const typescript = async (): Promise<FlatESLintConfig[]> => {
 					ecmaVersion: 'latest',
 					project: ['./**/tsconfig.json'],
 					sourceType: 'module',
-					tsconfigRootDir: cwd(),
+					tsconfigRootDir: process.cwd(),
 				},
 			},
 			plugins: {
@@ -418,6 +417,10 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 				'@typescript-eslint/no-unsafe-call': ['warn'],
 				'@typescript-eslint/no-unsafe-member-access': ['warn'],
 				'@typescript-eslint/no-unsafe-return': ['warn'],
+				'@typescript-eslint/prefer-nullish-coalescing': [
+					'error',
+					{ignorePrimitives: {string: true, number: true}},
+				],
 				'@typescript-eslint/require-await': ['error'],
 				'@typescript-eslint/restrict-plus-operands': ['error'],
 				'@typescript-eslint/restrict-template-expressions': [

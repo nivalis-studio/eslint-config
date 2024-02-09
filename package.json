@@ -22,23 +22,31 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
-    "require": "./dist/index.cjs",
-    "import": "./dist/index.js"
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "ts": "tsc --noEmit",
     "test": "exit 0",
-    "prepublishOnly": "bun run build"
+    "build": "unbuild",
+    "prepublishOnly": "unbuild"
   },
   "peerDependencies": {
     "eslint": "8.56.0"
@@ -80,11 +88,17 @@
     "@types/node": "20.11.16",
     "eslint": "8.56.0",
     "sucrase": "3.35.0",
-    "tsup": "8.0.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "unbuild": "^2.0.0"
   },
   "engines": {
     "node": ">=18"
+  },
+  "unbuild": {
+    "declaration": true,
+    "exports": "named",
+    "preserveModules": true,
+    "sourcemap": true
   },
   "prettier": "@nivalis/prettier-config"
 }
