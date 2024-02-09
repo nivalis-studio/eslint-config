@@ -432,7 +432,8 @@ export const typescriptTypecheck = async (): Promise<FlatESLintConfig[]> => {
 
 				'@typescript-eslint/prefer-optional-chain': ['error'],
 				'@typescript-eslint/no-redundant-type-constituents': ['error'],
-				'@typescript-eslint/strict-boolean-expressions': ['error'],
+				// This rule is too strict, should be added per projet.
+				'@typescript-eslint/strict-boolean-expressions': ['off'],
 				'@typescript-eslint/naming-convention': [
 					'warn',
 					{format: ['PascalCase', 'camelCase'], selector: 'function'},
