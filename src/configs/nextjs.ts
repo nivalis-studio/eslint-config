@@ -64,6 +64,7 @@ export const nextjs = async (): Promise<FlatESLintConfig[]> => {
 			],
 			rules: {
 				'import/no-default-export': 'off',
+				'react-refresh/only-export-components': 'off',
 			},
 		},
 	];
