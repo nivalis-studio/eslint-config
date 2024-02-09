@@ -12,7 +12,6 @@ export const promise = async (): Promise<FlatESLintConfig[]> => {
 				promise: pluginPromise,
 			},
 			rules: {
-				...pluginPromise.configs.recommended.rules,
 				'promise/always-return': ['error', {ignoreLastCallback: true}],
 				'promise/avoid-new': ['off'],
 				'promise/catch-or-return': ['error'],
