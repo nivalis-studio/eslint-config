@@ -16,6 +16,7 @@ export const javascript = (
 
 	return [
 		{
+			files: [GLOB_SRC],
 			languageOptions: {
 				ecmaVersion: 2022,
 				globals: {

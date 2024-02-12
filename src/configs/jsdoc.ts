@@ -1,4 +1,5 @@
 import { interopDefault } from '../utils';
+import { GLOB_SRC } from '../globs';
 import type { FlatConfigItem, OptionsStylistic } from '../types';
 
 export const jsdoc = async (options: OptionsStylistic = {}): Promise<FlatConfigItem[]> => {
@@ -8,6 +9,7 @@ export const jsdoc = async (options: OptionsStylistic = {}): Promise<FlatConfigI
 
 	return [
 		{
+			files: [GLOB_SRC],
 			name: 'nivalis:jsdoc',
 			plugins: {
 				jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),

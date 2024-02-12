@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { isPackageExists } from 'local-pkg';
 import { interopDefault } from '../utils';
-import { GLOB_JSX, GLOB_TSX } from '../globs';
+import { GLOB_REACT } from '../globs';
 import type {
 	FlatConfigItem,
 	OptionsFiles,
@@ -16,7 +16,7 @@ export const react = async (
 	options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {},
 ): Promise<FlatConfigItem[]> => {
 	const {
-		files = [GLOB_JSX, GLOB_TSX],
+		files = [GLOB_REACT],
 		overrides = {},
 		typescript = true,
 	} = options;

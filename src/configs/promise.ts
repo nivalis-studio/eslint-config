@@ -1,9 +1,11 @@
+import { GLOB_SRC } from '../globs';
 import { pluginPromise } from '../plugins';
 import type { FlatConfigItem } from '../types';
 
 export const promise = (): FlatConfigItem[] => {
 	return [
 		{
+			files: [GLOB_SRC],
 			name: 'nivalis:promise',
 			plugins: {
 				promise: pluginPromise,

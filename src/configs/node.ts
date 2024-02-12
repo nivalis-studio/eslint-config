@@ -1,9 +1,11 @@
+import { GLOB_SRC } from '../globs';
 import { pluginNode } from '../plugins';
 import type { FlatConfigItem } from '../types';
 
 export const node = (): FlatConfigItem[] => {
 	return [
 		{
+			files: [GLOB_SRC],
 			name: 'nivalis:node',
 			plugins: {
 				node: pluginNode,

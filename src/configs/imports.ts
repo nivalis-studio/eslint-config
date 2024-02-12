@@ -9,6 +9,7 @@ export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
 
 	return [
 		{
+			files: [GLOB_SRC],
 			name: 'nivalis:imports',
 			plugins: {
 				antfu: pluginAntfu,

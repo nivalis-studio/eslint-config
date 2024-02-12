@@ -1,3 +1,4 @@
+import { GLOB_SRC } from '../globs';
 import { pluginUnicorn } from '../plugins';
 import type { FlatConfigItem } from '../types';
 
@@ -5,9 +6,9 @@ import type { FlatConfigItem } from '../types';
 export const unicorn = async (): Promise<FlatConfigItem[]> => {
 	return [
 		{
+			files: [GLOB_SRC],
 			name: 'nivalis:unicorn',
 			plugins: {
-
 				unicorn: pluginUnicorn,
 			},
 			rules: {
