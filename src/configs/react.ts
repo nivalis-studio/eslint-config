@@ -177,13 +177,6 @@ export const react = async (
 				],
 				'react/jsx-no-undef': 'error',
 				'react/jsx-no-useless-fragment': 'error',
-				'react/jsx-pascal-case': [
-					'error',
-					{
-						allowAllCaps: true,
-						ignore: [],
-					},
-				],
 				'react/jsx-uses-react': 'error',
 				'react/jsx-uses-vars': 'error',
 				'react/no-access-state-in-setstate': 'error',

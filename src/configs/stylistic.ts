@@ -53,6 +53,13 @@ export const stylistic = async (
 				'antfu/top-level-function': 'off',
 
 				curly: ['error', 'multi-line', 'consistent'],
+				'style/jsx-pascal-case': [
+					'error',
+					{
+						allowAllCaps: true,
+						ignore: [],
+					},
+				],
 				'style/jsx-sort-props': [
 					'error',
 					{
