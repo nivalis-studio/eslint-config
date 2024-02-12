@@ -198,7 +198,6 @@ export const react = async (
 				'react/no-find-dom-node': 'error',
 				'react/no-invalid-html-attribute': 'error',
 				'react/no-is-mounted': 'error',
-				'react/no-multi-comp': 'error',
 				'react/no-namespace': 'error',
 				'react/no-object-type-as-default-prop': 'error',
 				'react/no-redundant-should-component-update': 'error',
