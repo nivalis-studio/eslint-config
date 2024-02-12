@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { isPackageExists } from 'local-pkg';
 import { interopDefault } from '../utils';
 import { GLOB_JSX, GLOB_TSX } from '../globs';
@@ -69,28 +70,236 @@ export const react = async (
 				],
 
 				// recommended rules react
-				'react/display-name': 'error',
-				'react/jsx-key': 'error',
+				'react/boolean-prop-naming': [
+					'warn',
+					{
+						rule: '^(is|has|are|can|should|did|will)[A-Z]([A-Za-z0-9])+',
+						validateNested: true,
+					},
+				],
+				'react/button-has-type': [
+					'error',
+					{
+						button: true,
+						reset: false,
+						submit: true,
+					},
+				],
+				'react/display-name': [
+					'error',
+					{
+						ignoreTranspilerName: false,
+					},
+				],
+				'react/function-component-definition': [
+					'error',
+					{
+						namedComponents: 'arrow-function',
+						unnamedComponents: 'arrow-function',
+					},
+				],
+				'react/hook-use-state': [
+					'error',
+				],
+				'react/iframe-missing-sandbox': [
+					'error',
+				],
+				'react/jsx-boolean-value': [
+					'error',
+					'never',
+				],
+				'react/jsx-filename-extension': [
+					'warn',
+					{
+						extensions: [
+							'.tsx',
+						],
+					},
+				],
+				'react/jsx-fragments': [
+					'error',
+					'syntax',
+				],
+				'react/jsx-handler-names': [
+					'error',
+					{
+						eventHandlerPrefix: 'handle',
+						eventHandlerPropPrefix: 'on',
+					},
+				],
+				'react/jsx-key': [
+					'error',
+					{
+						checkFragmentShorthand: true,
+						checkKeyMustBeforeSpread: true,
+						warnOnDuplicates: true,
+					},
+				],
+				'react/jsx-no-bind': [
+					'error',
+					{
+						allowArrowFunctions: true,
+						allowBind: false,
+						allowFunctions: false,
+						ignoreDOMComponents: false,
+						ignoreRefs: false,
+					},
+				],
 				'react/jsx-no-comment-textnodes': 'error',
-				'react/jsx-no-duplicate-props': 'error',
-				'react/jsx-no-target-blank': 'error',
+				'react/jsx-no-constructed-context-values': 'error',
+				'react/jsx-no-duplicate-props': [
+					'error',
+					{
+						ignoreCase: false,
+					},
+				],
+				'react/jsx-no-leaked-render': [
+					'error',
+				],
+				'react/jsx-no-script-url': [
+					'error',
+					[
+						{
+							name: 'Link',
+							props: [
+								'to',
+							],
+						},
+					],
+				],
+				'react/jsx-no-target-blank': [
+					'error',
+					{
+						forms: true,
+						links: true,
+						warnOnSpreadAttributes: true,
+					},
+				],
 				'react/jsx-no-undef': 'error',
+				'react/jsx-no-useless-fragment': 'error',
+				'react/jsx-pascal-case': [
+					'error',
+					{
+						allowAllCaps: true,
+						ignore: [],
+					},
+				],
 				'react/jsx-uses-react': 'error',
 				'react/jsx-uses-vars': 'error',
+				'react/no-access-state-in-setstate': 'error',
+				'react/no-array-index-key': 'error',
+				'react/no-arrow-function-lifecycle': 'error',
 				'react/no-children-prop': 'error',
+				'react/no-danger': 'error',
 				'react/no-danger-with-children': 'error',
 				'react/no-deprecated': 'error',
+				'react/no-did-update-set-state': 'error',
 				'react/no-direct-mutation-state': 'error',
 				'react/no-find-dom-node': 'error',
+				'react/no-invalid-html-attribute': 'error',
 				'react/no-is-mounted': 'error',
+				'react/no-multi-comp': 'error',
+				'react/no-namespace': 'error',
+				'react/no-object-type-as-default-prop': 'error',
+				'react/no-redundant-should-component-update': 'error',
 				'react/no-render-return-value': 'error',
-				'react/no-string-refs': 'error',
+				'react/no-string-refs': [
+					'error',
+					{
+						noTemplateLiterals: true,
+					},
+				],
+				'react/no-this-in-sfc': [
+					'error',
+				],
+				'react/no-typos': [
+					'error',
+				],
 				'react/no-unescaped-entities': 'error',
 				'react/no-unknown-property': 'error',
-				'react/no-unsafe': 'off',
-				'react/prop-types': 'error',
+				'react/no-unstable-nested-components': [
+					'error',
+				],
+				'react/no-unused-class-component-methods': [
+					'error',
+				],
+				'react/no-unused-prop-types': [
+					'error',
+					{
+						customValidators: [],
+						skipShapeProps: true,
+					},
+				],
+				'react/no-unused-state': [
+					'error',
+				],
+				'react/no-will-update-set-state': [
+					'error',
+				],
+				'react/prefer-es6-class': [
+					'error',
+					'always',
+				],
+				'react/prefer-exact-props': [
+					'error',
+				],
+				'react/prefer-read-only-props': [
+					'error',
+				],
+				'react/prefer-stateless-function': [
+					'error',
+					{
+						ignorePureComponents: true,
+					},
+				],
+				'react/prop-types': [
+					'error',
+					{
+						customValidators: [],
+						ignore: [],
+						skipUndeclared: false,
+					},
+				],
 				'react/react-in-jsx-scope': 'off',
 				'react/require-render-return': 'error',
+				'react/self-closing-comp': [
+					'error',
+					{
+						component: true,
+						html: true,
+					},
+				],
+				'react/sort-default-props': [
+					'error',
+				],
+				'react/state-in-constructor': [
+					'error',
+					'never',
+				],
+				'react/static-property-placement': [
+					'error',
+					'property assignment',
+				],
+				'react/style-prop-object': [
+					'error',
+					{
+						allow: [
+							'FormattedNumber',
+						],
+					},
+				],
+				'react/void-dom-elements-no-children': [
+					'error',
+				],
+
+				'style/jsx-curly-brace-presence': [
+					'error',
+					{
+						children: 'ignore',
+						propElementValues: 'always',
+						props: 'never',
+					},
+				],
 
 				...(typescript
 					? {
