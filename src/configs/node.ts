@@ -1,49 +1,33 @@
-import pluginNode from 'eslint-plugin-n';
-import {GLOB_SRC} from '../globs';
-import type {FlatESLintConfig} from 'eslint-define-config';
+import { pluginNode } from '../plugins';
+import type { FlatConfigItem } from '../types';
 
-export const node = (): FlatESLintConfig[] => {
+export const node = (): FlatConfigItem[] => {
 	return [
 		{
+			name: 'nivalis:node',
 			plugins: {
-				n: pluginNode,
+				node: pluginNode,
 			},
-		},
-		pluginNode.configs['flat/recommended'],
-		{
-			files: [GLOB_SRC],
 			rules: {
-				'n/file-extension-in-import': [
-					'error',
-					'always',
-					{
-						// TypeScript doesn't yet support using extensions and fails with error TS2691.
-						'.ts': 'never',
-						'.tsx': 'never',
-						'.mts': 'never',
-						'.cts': 'never',
-					},
-				],
-				'n/handle-callback-err': ['error', '^(err|error)$'],
-				'n/no-deprecated-api': ['error'],
-				'n/no-exports-assign': 'error',
-				'n/no-missing-import': ['off'],
-				'n/no-mixed-requires': ['error', {allowCall: true, grouping: true}],
-				'n/no-new-require': ['error'],
-				'n/no-path-concat': ['error'],
-				'n/no-process-exit': ['off'],
-				'n/no-unpublished-bin': ['error'],
-				'n/prefer-global/buffer': ['off'],
-				'n/prefer-global/console': ['error', 'always'],
-				'n/prefer-global/process': ['error', 'always'],
-				'n/prefer-global/text-decoder': ['error', 'always'],
-				'n/prefer-global/text-encoder': ['error', 'always'],
-				'n/prefer-global/url': ['error', 'always'],
-				'n/prefer-global/url-search-params': ['error', 'always'],
-				'n/prefer-promises/dns': ['error'],
-				'n/prefer-promises/fs': ['error'],
-				'n/process-exit-as-throw': ['error'],
+				'node/handle-callback-err': ['error', '^(err|error)$'],
+				'node/no-deprecated-api': 'error',
+				'node/no-exports-assign': 'error',
+				'node/no-mixed-requires': ['error', { allowCall: true, grouping: true }],
+				'node/no-new-require': 'error',
+				'node/no-path-concat': 'error',
+				'node/no-unsupported-features/es-builtins': 'error',
+				'node/no-unsupported-features/es-syntax': 'error',
+				'node/no-unsupported-features/node-builtins': 'error',
+				'node/prefer-global/console': ['error', 'always'],
+				'node/prefer-global/process': ['error', 'always'],
+				'node/prefer-global/text-decoder': ['error', 'always'],
+				'node/prefer-global/text-encoder': ['error', 'always'],
+				'node/prefer-global/url': ['error', 'always'],
+				'node/prefer-global/url-search-params': ['error', 'always'],
+				'node/prefer-promises/dns': ['error'],
+				'node/prefer-promises/fs': ['error'],
+				'node/process-exit-as-throw': ['error'],
 			},
 		},
-	] as FlatESLintConfig[];
+	];
 };

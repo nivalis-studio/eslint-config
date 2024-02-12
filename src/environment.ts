@@ -1,11 +1,9 @@
-/* eslint-disable no-process-env */
-import {isPackageExists} from 'local-pkg';
+import { isPackageExists } from 'local-pkg';
 
-export const isInEditor =
-	(Boolean(process.env.VSCODE_PID) || Boolean(process.env.JETBRAINS_IDE)) &&
-	!(process.env.CI ?? '');
-export const hasTypeScript = isPackageExists('typescript');
-export const hasReact = isPackageExists('react');
-export const hasNextjs = isPackageExists('next');
-export const hasTailwindcss = isPackageExists('tailwindcss');
-export const hasGraphql = isPackageExists('graphql');
+export const IN_IS_EDITOR
+ = !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM) && !process.env.CI);
+export const HAS_TYPESCRIPT = isPackageExists('typescript');
+export const HAS_REACT = isPackageExists('react');
+export const HAS_NEXTJS = isPackageExists('next');
+export const HAS_TAILWINDCSS = isPackageExists('tailwindcss');
+export const HAS_GRAPHQL = isPackageExists('graphql');

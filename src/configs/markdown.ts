@@ -1,18 +1,52 @@
-import {GLOB_MARKDOWN, GLOB_SRC, GLOB_VUE} from '../globs';
-import {interopDefault} from '../interop';
-import type {FlatESLintConfig} from 'eslint-define-config';
+/* eslint-disable ts/no-unsafe-member-access */
+/* eslint-disable ts/no-unsafe-argument */
+import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
+import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
+import { interopDefault, parserPlain } from '../utils';
+import type { FlatConfigItem, OptionsComponentExts, OptionsFiles, OptionsOverrides } from '../types';
 
-export const markdown = async (): Promise<FlatESLintConfig[]> => {
-	const pluginMarkdown = interopDefault(await import('eslint-plugin-markdown'));
+export const markdown = async (
+	options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {},
+): Promise<FlatConfigItem[]> => {
+	const {
+		componentExts = [],
+		files = [GLOB_MARKDOWN],
+		overrides = {},
+	} = options;
+
+	const markdownPlugin = await interopDefault(import('eslint-plugin-markdown'));
 
 	return [
 		{
+			name: 'nivalis:markdown:setup',
 			plugins: {
-				markdown: pluginMarkdown,
+				markdown: markdownPlugin,
 			},
 		},
 		{
-			files: [GLOB_MARKDOWN],
+			files,
+			ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
+			name: 'nivalis:markdown:processor',
+			/* `eslint-plugin-markdown` only creates virtual files for code blocks,
+         but not the markdown file itself. We use `eslint-merge-processors` to
+         add a pass-through processor for the markdown file itself. */
+			processor: mergeProcessors([
+				markdownPlugin.processors.markdown,
+				processorPassThrough,
+			]),
+		},
+		{
+			files,
+			languageOptions: {
+				parser: parserPlain,
+			},
+			name: 'nivalis:markdown:parser',
+		},
+		{
+			files: [
+				GLOB_MARKDOWN_CODE,
+				...componentExts.map(ext => `${GLOB_MARKDOWN}/**/*.${ext}`),
+			],
 			languageOptions: {
 				parserOptions: {
 					ecmaFeatures: {
@@ -20,69 +54,56 @@ export const markdown = async (): Promise<FlatESLintConfig[]> => {
 					},
 				},
 			},
-			processor: 'markdown/markdown',
+			name: 'nivalis:markdown:disables',
 			rules: {
-				'eol-last': 'off',
-				'no-undef': 'off',
-				'no-unused-expressions': 'off',
-				'no-unused-vars': 'off',
-				'padded-blocks': 'off',
-				strict: 'off',
-				'unicode-bom': 'off',
-			},
-		},
-		{
-			files: [`${GLOB_MARKDOWN}/${GLOB_SRC}`, `${GLOB_MARKDOWN}/${GLOB_VUE}`],
-			languageOptions: {
-				parserOptions: {
-					ecmaFeatures: {
-						impliedStrict: true,
-					},
-				},
-			},
-			rules: {
-				'@typescript-eslint/await-thenable': 'off',
-				'@typescript-eslint/comma-dangle': 'off',
-				'@typescript-eslint/consistent-type-imports': 'off',
-				'@typescript-eslint/dot-notation': 'off',
-				'@typescript-eslint/no-extraneous-class': 'off',
-				'@typescript-eslint/no-floating-promises': 'off',
-				'@typescript-eslint/no-for-in-array': 'off',
-				'@typescript-eslint/no-implied-eval': 'off',
-				'@typescript-eslint/no-misused-promises': 'off',
-				'@typescript-eslint/no-namespace': 'off',
-				'@typescript-eslint/no-redeclare': 'off',
-				'@typescript-eslint/no-require-imports': 'off',
-				'@typescript-eslint/no-throw-literal': 'off',
-				'@typescript-eslint/no-unnecessary-type-assertion': 'off',
-				'@typescript-eslint/no-unsafe-argument': 'off',
-				'@typescript-eslint/no-unsafe-assignment': 'off',
-				'@typescript-eslint/no-unsafe-call': 'off',
-				'@typescript-eslint/no-unsafe-member-access': 'off',
-				'@typescript-eslint/no-unsafe-return': 'off',
-				'@typescript-eslint/no-unused-vars': 'off',
-				'@typescript-eslint/no-use-before-define': 'off',
-				'@typescript-eslint/no-var-requires': 'off',
-				'@typescript-eslint/restrict-plus-operands': 'off',
-				'@typescript-eslint/restrict-template-expressions': 'off',
-				'@typescript-eslint/unbound-method': 'off',
+				'import/newline-after-import': 'off',
 
-				'antfu/no-cjs-exports': 'off',
-				'antfu/no-ts-export-equal': 'off',
-
-				'eol-last': 'off',
 				'no-alert': 'off',
 				'no-console': 'off',
-				'no-restricted-imports': 'off',
+				'no-labels': 'off',
+				'no-lone-blocks': 'off',
+				'no-restricted-syntax': 'off',
 				'no-undef': 'off',
 				'no-unused-expressions': 'off',
+				'no-unused-labels': 'off',
 				'no-unused-vars': 'off',
+
 				'node/prefer-global/process': 'off',
-				'padded-blocks': 'off',
-				strict: 'off',
+				'style/comma-dangle': 'off',
+
+				'style/eol-last': 'off',
+				'ts/await-thenable': 'off',
+				'ts/consistent-type-imports': 'off',
+				'ts/dot-notation': 'off',
+				'ts/no-floating-promises': 'off',
+				'ts/no-for-in-array': 'off',
+				'ts/no-implied-eval': 'off',
+				'ts/no-misused-promises': 'off',
+
+				'ts/no-namespace': 'off',
+				'ts/no-redeclare': 'off',
+				'ts/no-require-imports': 'off',
+
+				// Type aware rules
+
+				'ts/no-throw-literal': 'off',
+				'ts/no-unnecessary-type-assertion': 'off',
+				'ts/no-unsafe-argument': 'off',
+				'ts/no-unsafe-assignment': 'off',
+				'ts/no-unsafe-call': 'off',
+				'ts/no-unsafe-member-access': 'off',
+				'ts/no-unsafe-return': 'off',
+				'ts/no-unused-vars': 'off',
+				'ts/no-use-before-define': 'off',
+				'ts/no-var-requires': 'off',
+				'ts/restrict-plus-operands': 'off',
+				'ts/restrict-template-expressions': 'off',
+				'ts/unbound-method': 'off',
 				'unicode-bom': 'off',
 				'unused-imports/no-unused-imports': 'off',
 				'unused-imports/no-unused-vars': 'off',
+
+				...overrides,
 			},
 		},
 	];

@@ -1,4 +1,10 @@
-import {GLOB_EXCLUDE} from '../globs';
-import type {FlatESLintConfig} from 'eslint-define-config';
+import { GLOB_EXCLUDE } from '../globs';
+import type { FlatConfigItem } from '../types';
 
-export const ignores: FlatESLintConfig[] = [{ignores: GLOB_EXCLUDE}];
+export const ignores = (): FlatConfigItem[] => {
+	return [
+		{
+			ignores: GLOB_EXCLUDE,
+		},
+	];
+};

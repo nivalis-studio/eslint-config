@@ -1,3 +1,7 @@
-export * from './environment';
+export * from './configs';
+export * from './factory';
 export * from './globs';
-export * from './presets';
+export * from './types';
+export * from './utils';
+
+export { nivalis } from './factory';

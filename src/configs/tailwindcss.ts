@@ -1,26 +1,25 @@
-import {GLOB_HTML, GLOB_SRC} from '../globs';
-import {interopDefault} from '../interop';
-import type {FlatESLintConfig} from 'eslint-define-config';
+import { GLOB_HTML, GLOB_REACT } from '../globs';
+import { interopDefault } from '../utils';
+import type {
+	FlatConfigItem,
+	OptionsIsInEditor,
+	OptionsOverrides,
+} from '../types';
 
-export const tailwindcss = async (): Promise<FlatESLintConfig[]> => {
+export const tailwindcss = async (
+	options: OptionsIsInEditor & OptionsOverrides = {},
+): Promise<FlatConfigItem[]> => {
+	const { isInEditor = false, overrides = {} } = options;
+
 	return [
 		{
-			files: [GLOB_SRC, GLOB_HTML],
+			name: 'nivalis:tailwindcss',
 			plugins: {
-				tailwindcss: interopDefault(await import('eslint-plugin-tailwindcss')),
-			},
-			rules: {
-				'tailwindcss/classnames-order': ['warn'],
-				'tailwindcss/enforces-negative-arbitrary-values': ['warn'],
-				'tailwindcss/enforces-shorthand': ['warn'],
-				'tailwindcss/migration-from-tailwind-2': ['warn'],
-				'tailwindcss/no-arbitrary-value': ['off'],
-				'tailwindcss/no-contradicting-classname': ['error'],
-				'tailwindcss/no-custom-classname': ['warn'],
+				tailwindcss: await interopDefault(import('eslint-plugin-tailwindcss')),
 			},
 			settings: {
 				tailwindcss: {
-					callees: ['cn', 'classnames', 'clsx'],
+					callees: ['cn', 'classnames', 'clsx', 'cva'],
 					config: 'tailwind.config.ts',
 					/**
 					 * Performance issue with the plugin, somewhat mitigated setting cssFiles to an empty array.
@@ -33,10 +32,22 @@ export const tailwindcss = async (): Promise<FlatESLintConfig[]> => {
 			},
 		},
 		{
-			files: ['**/tailwind.config.?([cm])[jt]s'],
 			rules: {
-				'sort-keys': 'off',
-				'sort-keys/sort-keys-fix': 'off',
+				'tailwindcss/enforces-negative-arbitrary-values': ['warn'],
+				'tailwindcss/enforces-shorthand': ['warn'],
+				'tailwindcss/migration-from-tailwind-2': ['off'],
+				'tailwindcss/no-arbitrary-value': ['off'],
+				'tailwindcss/no-contradicting-classname': ['error'],
+				...overrides,
+			},
+
+		},
+		{
+			files: [GLOB_REACT, GLOB_HTML],
+			rules: {
+				'tailwindcss/classnames-order': isInEditor ? 'off' : 'warn',
+				'tailwindcss/no-custom-classname': ['warn'],
+				...overrides,
 			},
 		},
 	];

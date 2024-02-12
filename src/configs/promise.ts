@@ -1,30 +1,23 @@
-import {GLOB_SRC} from '../globs';
-import {interopDefault} from '../interop';
-import type {FlatESLintConfig} from 'eslint-define-config';
+import { pluginPromise } from '../plugins';
+import type { FlatConfigItem } from '../types';
 
-export const promise = async (): Promise<FlatESLintConfig[]> => {
-	const pluginPromise = interopDefault(await import('eslint-plugin-promise'));
-
+export const promise = (): FlatConfigItem[] => {
 	return [
 		{
-			files: [GLOB_SRC],
+			name: 'nivalis:promise',
 			plugins: {
 				promise: pluginPromise,
 			},
 			rules: {
-				'promise/always-return': ['error', {ignoreLastCallback: true}],
-				'promise/avoid-new': ['off'],
+				'promise/always-return': ['error', { ignoreLastCallback: true }],
 				'promise/catch-or-return': ['error'],
 				'promise/no-callback-in-promise': ['warn'],
-				'promise/no-native': ['off'],
 				'promise/no-nesting': ['warn'],
 				'promise/no-new-statics': ['error'],
 				'promise/no-promise-in-callback': ['warn'],
 				'promise/no-return-in-finally': ['warn'],
 				'promise/no-return-wrap': ['error'],
 				'promise/param-names': ['error'],
-				'promise/prefer-await-to-callbacks': ['off'],
-				'promise/prefer-await-to-then': ['off'],
 				'promise/valid-params': ['warn'],
 			},
 		},

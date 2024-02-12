@@ -1,43 +1,53 @@
-/* eslint-disable max-lines-per-function */
-import {GLOB_JSON, GLOB_JSON5, GLOB_JSONC} from '../globs';
-import {interopDefault} from '../interop';
-import type {FlatESLintConfig} from 'eslint-define-config';
+import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
+import { interopDefault } from '../utils';
+import { DEFAULT_INDENT } from '../constants';
+import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsStylistic } from '../types';
 
-export const jsonc = async (): Promise<FlatESLintConfig[]> => {
-	const [_parserJsonc, _pluginJsonc] = await Promise.all([
-		import('jsonc-eslint-parser'),
-		import('eslint-plugin-jsonc'),
-	]);
+export const jsonc = async (
+	options: OptionsFiles & OptionsStylistic & OptionsOverrides = {},
+): Promise<FlatConfigItem[]> => {
+	const {
+		files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
+		overrides = {},
+		stylistic = true,
+	} = options;
 
-	const parserJsonc = interopDefault(_parserJsonc);
-	const pluginJsonc = interopDefault(_pluginJsonc);
+	const {
+		indent = DEFAULT_INDENT,
+	} = typeof stylistic === 'boolean' ? {} : stylistic;
+
+	const [
+		pluginJsonc,
+		parserJsonc,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-jsonc')),
+		interopDefault(import('jsonc-eslint-parser')),
+	] as const);
 
 	return [
 		{
-			files: [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
+			name: 'nivalis:jsonc:setup',
+			plugins: {
+				jsonc: pluginJsonc as unknown,
+			},
+		},
+		{
+			files,
 			languageOptions: {
 				parser: parserJsonc,
 			},
-			plugins: {
-				jsonc: pluginJsonc,
-			},
+			name: 'nivalis:jsonc:rules',
 			rules: {
-				'jsonc/array-bracket-spacing': ['error', 'never'],
-				'jsonc/comma-dangle': ['error', 'never'],
-				'jsonc/comma-style': ['error', 'last'],
-				'jsonc/indent': ['error', 2],
-				'jsonc/key-spacing': ['error', {afterColon: true, beforeColon: false}],
 				'jsonc/no-bigint-literals': 'error',
 				'jsonc/no-binary-expression': 'error',
 				'jsonc/no-binary-numeric-literals': 'error',
-				'jsonc/no-comments': 'off',
 				'jsonc/no-dupe-keys': 'error',
 				'jsonc/no-escape-sequence-in-identifier': 'error',
 				'jsonc/no-floating-decimal': 'error',
 				'jsonc/no-hexadecimal-numeric-literals': 'error',
-				'jsonc/no-infinity': 'off',
+				'jsonc/no-infinity': 'error',
 				'jsonc/no-multi-str': 'error',
-				'jsonc/no-nan': 'off',
+				'jsonc/no-nan': 'error',
 				'jsonc/no-number-props': 'error',
 				'jsonc/no-numeric-separators': 'error',
 				'jsonc/no-octal': 'error',
@@ -51,26 +61,26 @@ export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 				'jsonc/no-undefined-value': 'error',
 				'jsonc/no-unicode-codepoint-escapes': 'error',
 				'jsonc/no-useless-escape': 'error',
-				'jsonc/object-curly-newline': [
-					'error',
-					{consistent: true, multiline: true},
-				],
-				'jsonc/object-curly-spacing': ['error', 'never'],
-				'jsonc/object-property-newline': [
-					'error',
-					{allowMultiplePropertiesPerLine: true},
-				],
-				'jsonc/quote-props': 'error',
-				'jsonc/quotes': 'error',
-				'jsonc/sort-keys': [
-					'error',
-					'asc',
-					{caseSensitive: false, natural: true},
-				],
 				'jsonc/space-unary-ops': 'error',
-				'jsonc/valid-json-number': 'off',
+				'jsonc/valid-json-number': 'error',
 				'jsonc/vue-custom-block/no-parsing-error': 'error',
-				strict: 'off',
+
+				...stylistic
+					? {
+							'jsonc/array-bracket-spacing': ['error', 'never'],
+							'jsonc/comma-dangle': ['error', 'never'],
+							'jsonc/comma-style': ['error', 'last'],
+							'jsonc/indent': ['error', indent],
+							'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
+							'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
+							'jsonc/object-curly-spacing': ['error', 'always'],
+							'jsonc/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
+							'jsonc/quote-props': 'error',
+							'jsonc/quotes': 'error',
+						}
+					: {},
+
+				...overrides,
 			},
 		},
 		{
@@ -85,204 +95,6 @@ export const jsonc = async (): Promise<FlatESLintConfig[]> => {
 			rules: {
 				'jsonc/no-infinity': 'error',
 				'jsonc/no-nan': 'error',
-			},
-		},
-		{
-			files: ['**/package.json'],
-			rules: {
-				'jsonc/sort-array-values': [
-					'error',
-					{
-						order: {type: 'asc'},
-						pathPattern: '^files$',
-					},
-				],
-				'jsonc/sort-keys': [
-					'error',
-					{
-						order: [
-							'name',
-							'version',
-							'private',
-							'packageManager',
-							'description',
-							'type',
-							'keywords',
-							'license',
-							'homepage',
-							'bugs',
-							'repository',
-							'author',
-							'contributors',
-							'funding',
-							'files',
-							'main',
-							'module',
-							'types',
-							'exports',
-							'typesVersions',
-							'sideEffects',
-							'unpkg',
-							'jsdelivr',
-							'browser',
-							'bin',
-							'man',
-							'directories',
-							'publishConfig',
-							'scripts',
-							'peerDependencies',
-							'peerDependenciesMeta',
-							'optionalDependencies',
-							'dependencies',
-							'devDependencies',
-							'engines',
-							'config',
-							'overrides',
-							'pnpm',
-							'husky',
-							'lint-staged',
-							'eslintConfig',
-							'prettier',
-						],
-						pathPattern: '^$',
-					},
-					{
-						order: {type: 'asc'},
-						pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies$',
-					},
-					{
-						order: ['types', 'require', 'import', 'default'],
-						pathPattern: '^exports.*$',
-					},
-					{
-						order: {type: 'asc'},
-						pathPattern: '^resolutions$',
-					},
-					{
-						order: {type: 'asc'},
-						pathPattern: '^pnpm.overrides$',
-					},
-				],
-			},
-		},
-		{
-			files: ['**/tsconfig.json', '**/tsconfig.*.json'],
-			rules: {
-				'jsonc/sort-keys': [
-					'error',
-					{
-						order: [
-							'extends',
-							'compilerOptions',
-							'references',
-							'files',
-							'include',
-							'exclude',
-						],
-						pathPattern: '^$',
-					},
-					{
-						order: [
-							/* Projects */
-							'incremental',
-							'composite',
-							'tsBuildInfoFile',
-							'disableSourceOfProjectReferenceRedirect',
-							'disableSolutionSearching',
-							'disableReferencedProjectLoad',
-							/* Language and Environment */
-							'target',
-							'jsx',
-							'jsxFactory',
-							'jsxFragmentFactory',
-							'jsxImportSource',
-							'lib',
-							'moduleDetection',
-							'noLib',
-							'reactNamespace',
-							'useDefineForClassFields',
-							'emitDecoratorMetadata',
-							'experimentalDecorators',
-							/* Modules */
-							'baseUrl',
-							'rootDir',
-							'rootDirs',
-							'customConditions',
-							'module',
-							'moduleResolution',
-							'moduleSuffixes',
-							'noResolve',
-							'paths',
-							'resolveJsonModule',
-							'resolvePackageJsonExports',
-							'resolvePackageJsonImports',
-							'typeRoots',
-							'types',
-							'allowArbitraryExtensions',
-							'allowImportingTsExtensions',
-							'allowUmdGlobalAccess',
-							/* JavaScript Support */
-							'allowJs',
-							'checkJs',
-							'maxNodeModuleJsDepth',
-							/* Type Checking */
-							'strict',
-							'strictBindCallApply',
-							'strictFunctionTypes',
-							'strictNullChecks',
-							'strictPropertyInitialization',
-							'allowUnreachableCode',
-							'allowUnusedLabels',
-							'alwaysStrict',
-							'exactOptionalPropertyTypes',
-							'noFallthroughCasesInSwitch',
-							'noImplicitAny',
-							'noImplicitOverride',
-							'noImplicitReturns',
-							'noImplicitThis',
-							'noPropertyAccessFromIndexSignature',
-							'noUncheckedIndexedAccess',
-							'noUnusedLocals',
-							'noUnusedParameters',
-							'useUnknownInCatchVariables',
-							/* Emit */
-							'declaration',
-							'declarationDir',
-							'declarationMap',
-							'downlevelIteration',
-							'emitBOM',
-							'emitDeclarationOnly',
-							'importHelpers',
-							'importsNotUsedAsValues',
-							'inlineSourceMap',
-							'inlineSources',
-							'mapRoot',
-							'newLine',
-							'noEmit',
-							'noEmitHelpers',
-							'noEmitOnError',
-							'outDir',
-							'outFile',
-							'preserveConstEnums',
-							'preserveValueImports',
-							'removeComments',
-							'sourceMap',
-							'sourceRoot',
-							'stripInternal',
-							/* Interop Constraints */
-							'allowSyntheticDefaultImports',
-							'esModuleInterop',
-							'forceConsistentCasingInFileNames',
-							'isolatedModules',
-							'preserveSymlinks',
-							'verbatimModuleSyntax',
-							/* Completeness */
-							'skipDefaultLibCheck',
-							'skipLibCheck',
-						],
-						pathPattern: '^compilerOptions$',
-					},
-				],
 			},
 		},
 	];

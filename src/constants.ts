@@ -1,3 +1,11 @@
+export const MAX_COMPLEXITY = 20;
+export const MAX_LINES = 500;
+export const MAX_LINES_PER_FUNCTION = 250;
+export const MAX_NESTED_CALLBACKS = 3;
+export const MAX_PARAMS = 5;
+export const MAX_STATEMENTS = 30;
+export const DEFAULT_INDENT = 2;
+
 type PaddingLineType = Array<{
 	blankLine: 'always' | 'any';
 	next:
@@ -30,7 +38,7 @@ type PaddingLineType = Array<{
 		| ['const', 'let', 'var'];
 }>;
 
-export const paddingLines: PaddingLineType = [
+export const PADDING_LINES: PaddingLineType = [
 	{
 		blankLine: 'always',
 		next: 'block-like',
@@ -121,4 +129,4 @@ export const paddingLines: PaddingLineType = [
 		next: 'while',
 		prev: '*',
 	},
-];
+] as const;
