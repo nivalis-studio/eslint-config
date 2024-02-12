@@ -54,6 +54,21 @@ export const stylistic = async (
 				'antfu/top-level-function': 'off',
 
 				curly: ['error', 'multi-line', 'consistent'],
+				'style/jsx-sort-props': [
+					'error',
+					{
+						callbacksLast: true,
+						ignoreCase: true,
+						locale: 'auto',
+						multiline: 'last',
+						noSortAlphabetically: true,
+						reservedFirst: true,
+						shorthandFirst: true,
+						shorthandLast: false,
+					},
+				],
+
+				'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
 				'style/padding-line-between-statements': ['error', ...PADDING_LINES],
 
 				...overrides,

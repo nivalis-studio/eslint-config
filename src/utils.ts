@@ -35,8 +35,9 @@ export const renameRules = (rules: { [key: string]: any }, from: string, to: str
 	return Object.fromEntries(
 		Object.entries(rules)
 			.map(([key, value]) => {
-				if (key.startsWith(from))
+				if (key.startsWith(from)) {
 					return [to + key.slice(from.length), value];
+				}
 
 				return [key, value];
 			}),
@@ -56,13 +57,15 @@ export const interopDefault = async <T>(mod: Awaitable<T>): Promise<T extends { 
 
 export const ensurePackages = (packages: string[]) => {
 	// eslint-disable-next-line no-process-env
-	if (process.env.CI || !process.stdout.isTTY)
+	if (process.env.CI || !process.stdout.isTTY) {
 		return;
+	}
 
 	const nonExistingPackages = packages.filter(i => !isPackageExists(i));
 
-	if (nonExistingPackages.length === 0)
+	if (nonExistingPackages.length === 0) {
 		return;
+	}
 
 	throw new Error(`This package(s) are required for this config: ${nonExistingPackages.join(', ')}. Please install them.`);
 };

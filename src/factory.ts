@@ -1,5 +1,4 @@
 /* eslint-disable ts/no-unsafe-return */
-
 import fs from 'node:fs';
 import {
 	comments,
@@ -88,16 +87,18 @@ export const nivalis = async (
 			? options.stylistic
 			: {};
 
-	if (stylisticOptions && !('jsx' in stylisticOptions))
+	if (stylisticOptions && !('jsx' in stylisticOptions)) {
 		stylisticOptions.jsx = options.jsx ?? true;
+	}
 
 	const configs: Array<Awaitable<FlatConfigItem[]>> = [];
 
 	if (enableGitignore) {
-		if (typeof enableGitignore !== 'boolean')
+		if (typeof enableGitignore !== 'boolean') {
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(mod => [mod(enableGitignore)]));
-		else if (fs.existsSync('.gitignore'))
+		} else if (fs.existsSync('.gitignore')) {
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(mod => [mod()]));
+		}
 	}
 
 	// Base configs
@@ -203,15 +204,17 @@ export const nivalis = async (
 	/* User can optionally pass a flat config item to the first argument
      We pick the known keys as ESLint would do schema validation */
 	const fusedConfig = flatConfigProps.reduce<FlatConfigItem>((acc, key) => {
-		if (key in options)
-		// eslint-disable-next-line no-param-reassign
+		if (key in options) {
+			// eslint-disable-next-line no-param-reassign
 			acc[key] = options[key] as any;
+		}
 
 		return acc;
 	}, {});
 
-	if (Object.keys(fusedConfig).length > 0)
+	if (Object.keys(fusedConfig).length > 0) {
 		configs.push([fusedConfig]);
+	}
 
 	const merged = combine(
 		...configs,

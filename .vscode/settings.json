@@ -6,6 +6,18 @@
 		"source.fixAll.eslint": "explicit",
 		"source.organizeImports": "never"
 	},
+	"eslint.rules.customizations": [
+		{ "rule": "style/*", "severity": "warn" },
+		{ "rule": "*-indent", "severity": "warn" },
+		{ "rule": "*-spacing", "severity": "warn" },
+		{ "rule": "*-spaces", "severity": "warn" },
+		{ "rule": "*-order", "severity": "warn" },
+		{ "rule": "*-dangle", "severity": "warn" },
+		{ "rule": "*-newline", "severity": "warn" },
+		{ "rule": "*quotes", "severity": "warn" },
+		{ "rule": "*semi", "severity": "warn" }
+	],
+
 	"eslint.validate": [
 		"javascript",
 		"javascriptreact",
