@@ -50,7 +50,6 @@ export const stylistic = async (
 				...config.rules,
 
 				'antfu/consistent-list-newline': 'error',
-				'antfu/if-newline': 'error',
 				'antfu/top-level-function': 'off',
 
 				curly: ['error', 'multi-line', 'consistent'],
