@@ -53,7 +53,7 @@ export const stylistic = async (
 				'antfu/if-newline': 'error',
 				'antfu/top-level-function': 'off',
 
-				curly: ['error', 'multi-or-nest', 'consistent'],
+				curly: ['error', 'multi-line', 'consistent'],
 				'style/padding-line-between-statements': ['error', ...PADDING_LINES],
 
 				...overrides,
