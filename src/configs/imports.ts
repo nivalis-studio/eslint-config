@@ -86,7 +86,7 @@ export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
         `**/*config*.${GLOB_SRC_EXT}`,
         `**/views/${GLOB_SRC}`,
         `**/pages/${GLOB_SRC}`,
-        `**/app/**/page.${GLOB_SRC_EXT}`,
+        `**/app/${GLOB_SRC}`,
         '**/{index,vite,esbuild,rollup,webpack,rspack}.ts',
         '**/*.d.ts',
         `${GLOB_MARKDOWN}/**`,
