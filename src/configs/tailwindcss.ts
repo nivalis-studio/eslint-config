@@ -32,20 +32,12 @@ export const tailwindcss = async (
 			},
 		},
 		{
-			rules: {
-				'tailwindcss/enforces-negative-arbitrary-values': ['warn'],
-				'tailwindcss/enforces-shorthand': ['warn'],
-				'tailwindcss/migration-from-tailwind-2': ['off'],
-				'tailwindcss/no-arbitrary-value': ['off'],
-				'tailwindcss/no-contradicting-classname': ['error'],
-				...overrides,
-			},
-
-		},
-		{
 			files: [GLOB_REACT, GLOB_HTML],
 			rules: {
 				'tailwindcss/classnames-order': isInEditor ? 'off' : 'warn',
+				'tailwindcss/enforces-negative-arbitrary-values': ['warn'],
+				'tailwindcss/enforces-shorthand': ['warn'],
+				'tailwindcss/no-contradicting-classname': ['error'],
 				'tailwindcss/no-custom-classname': ['warn'],
 				...overrides,
 			},

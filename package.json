@@ -40,7 +40,7 @@
 		"watch": "tsup --format esm,cjs --watch",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"prepack": "nr build",
+		"prepublishOnly": "nr build",
 		"release": "bumpp && pnpm publish",
 		"test": "exit 0",
 		"ts": "tsc --noEmit",
