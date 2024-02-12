@@ -1,4 +1,5 @@
 export { comments } from './comments';
+export { graphql } from './graphql';
 export { ignores } from './ignores';
 export { imports } from './imports';
 export { javascript } from './javascript';

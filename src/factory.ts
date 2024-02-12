@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import {
 	comments,
+	graphql,
 	ignores,
 	imports,
 	javascript,
@@ -75,6 +76,7 @@ export const nivalis = async (
 	const {
 		componentExts = [],
 		gitignore: enableGitignore = true,
+		graphQL: enableGraphQL = false,
 		isInEditor = IN_IS_EDITOR,
 		react: enableReact = HAS_REACT,
 		tailwindcss: enableTailwindCSS = HAS_TAILWINDCSS,
@@ -141,6 +143,12 @@ export const nivalis = async (
 		configs.push(test({
 			isInEditor,
 			overrides: getOverrides(options, 'test'),
+		}));
+	}
+
+	if (enableGraphQL) {
+		configs.push(graphql({
+			overrides: getOverrides(options, 'graphQL'),
 		}));
 	}
 

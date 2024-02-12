@@ -198,6 +198,16 @@ export interface OptionsConfig extends OptionsComponentExts {
 	gitignore?: boolean | FlatGitignoreOptions;
 
 	/**
+	 * Enable graphql.
+	 *
+	 * Requires installing:
+	 * - `@graphql-eslint/eslint-plugin`
+	 *
+	 * @default false
+	 */
+	graphQL?: OptionsOverrides;
+
+	/**
 	 * Core rules. Can't be disabled.
 	 */
 	javascript?: OptionsOverrides;
