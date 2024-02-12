@@ -342,7 +342,7 @@ export const typescript = async (
 					'warn',
 					{
 						allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
-						builtinGlobals: true,
+						builtinGlobals: false,
 						hoist: 'functions',
 						ignoreFunctionTypeParameterNameValueShadow: true,
 						ignoreTypeValueShadow: true,

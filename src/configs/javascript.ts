@@ -354,7 +354,7 @@ export const javascript = (
 					'warn',
 					{
 						allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
-						builtinGlobals: true,
+						builtinGlobals: false,
 						hoist: 'functions',
 					},
 				],
