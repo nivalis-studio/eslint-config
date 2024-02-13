@@ -22,8 +22,8 @@ export default nivalis();
 ```jsonc
 // package.json
 {
-	// ...
-	"type": "module"
+  // ...
+  "type": "module"
 }
 ```
 
@@ -35,42 +35,42 @@ import anotherConfig from 'another-config';
 import anotherPlugin from 'another-plugin';
 
 export default nivalis(
-	[
-		/* ignore some files */
-		{
-			ignores: ['tsup.config.ts'],
-		},
+  [
+    /* ignore some files */
+    {
+      ignores: ['tsup.config.ts'],
+    },
 
-		/* disable some rules */
-		{
-			rules: {
-				'no-console': 'off',
-			},
-		},
+    /* disable some rules */
+    {
+      rules: {
+        'no-console': 'off',
+      },
+    },
 
-		/* add another config */
-		anotherConfig,
+    /* add another config */
+    anotherConfig,
 
-		/* add another plugin */
-		{
-			plugins: [anotherPlugin],
-			rules: {
-				// custom rules...
-			},
-		}
-	],
-	{
-		gitignore: true,
-		graphql: false, // true if graphql is installed
-		nextjs: false, // true if nextjs is installed
-		prettier: true,
-		react: true, // true if react is installed
-		sortKeys: false, // disabled by default
-		stylistic: false, // disabled by default
-		tailwindcss: true, // true if tailwindcss is installed
-		typescript: true, // true if typescript is installed
-		typescriptTypecheck: true // true if typescript is installed
-	},
+    /* add another plugin */
+    {
+      plugins: [anotherPlugin],
+      rules: {
+        // custom rules...
+      },
+    },
+  ],
+  {
+    gitignore: true,
+    graphql: false, // true if graphql is installed
+    nextjs: false, // true if nextjs is installed
+    prettier: true,
+    react: true, // true if react is installed
+    sortKeys: false, // disabled by default
+    stylistic: false, // disabled by default
+    tailwindcss: true, // true if tailwindcss is installed
+    typescript: true, // true if typescript is installed
+    typescriptTypecheck: true, // true if typescript is installed
+  },
 );
 ```
 
@@ -78,6 +78,6 @@ export default nivalis(
 
 ```jsonc
 {
-	"eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true
 }
 ```

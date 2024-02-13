@@ -1,11 +1,9 @@
-import { pluginAntfu, pluginImport } from '../plugins';
-import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs';
-import type { FlatConfigItem, OptionsStylistic } from '../types';
+import {pluginAntfu, pluginImport} from '../plugins';
+import {GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT} from '../globs';
+import type {FlatConfigItem, OptionsStylistic} from '../types';
 
 export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
-	const {
-		stylistic = true,
-	} = options;
+	const {stylistic = true} = options;
 
 	return [
 		{
@@ -42,7 +40,7 @@ export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
 				'import/no-deprecated': 'off',
 				'import/no-duplicates': 'error',
 				'import/no-empty-named-blocks': 'error',
-				'import/no-import-module-exports': ['error', { exceptions: [] }],
+				'import/no-import-module-exports': ['error', {exceptions: []}],
 				'import/no-mutable-exports': 'error',
 				// Rules not supporting eslint flat config
 				'import/no-named-as-default': 'off',
@@ -51,27 +49,33 @@ export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
 				'import/no-named-default': 'error',
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
-				'import/order': ['error', {
-					groups: [
-						'builtin',
-						'external',
-						'internal',
-						'parent',
-						'sibling',
-						'index',
-						'object',
-						'type',
-					],
-					pathGroups: [{ group: 'internal', pattern: '{{@,~}/,#}**' }],
-					pathGroupsExcludedImportTypes: ['type'],
-					warnOnUnassignedImports: true,
-				}],
+				'import/order': [
+					'error',
+					{
+						groups: [
+							'builtin',
+							'external',
+							'internal',
+							'parent',
+							'sibling',
+							'index',
+							'object',
+							'type',
+						],
+						pathGroups: [{group: 'internal', pattern: '{{@,~}/,#}**'}],
+						pathGroupsExcludedImportTypes: ['type'],
+						warnOnUnassignedImports: true,
+					},
+				],
 
-				...stylistic
+				...(stylistic
 					? {
-							'import/newline-after-import': ['error', { considerComments: true, count: 1 }],
+							'import/newline-after-import': [
+								'error',
+								{considerComments: true, count: 1},
+							],
 						}
-					: {},
+					: {}),
 			},
 		},
 		{
@@ -84,13 +88,13 @@ export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
 		},
 		{
 			files: [
-        `**/*config*.${GLOB_SRC_EXT}`,
-        `**/views/${GLOB_SRC}`,
-        `**/pages/${GLOB_SRC}`,
-        `**/app/${GLOB_SRC}`,
-        '**/{index,vite,esbuild,rollup,webpack,rspack}.ts',
-        '**/*.d.ts',
-        `${GLOB_MARKDOWN}/**`,
+				`**/*config*.${GLOB_SRC_EXT}`,
+				`**/views/${GLOB_SRC}`,
+				`**/pages/${GLOB_SRC}`,
+				`**/app/${GLOB_SRC}`,
+				'**/{index,vite,esbuild,rollup,webpack,rspack}.ts',
+				'**/*.d.ts',
+				`${GLOB_MARKDOWN}/**`,
 			],
 			rules: {
 				'import/no-default-export': 'off',

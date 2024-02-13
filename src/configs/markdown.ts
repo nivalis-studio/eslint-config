@@ -1,18 +1,23 @@
 /* eslint-disable ts/no-unsafe-member-access */
 /* eslint-disable ts/no-unsafe-argument */
-import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
-import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
-import { interopDefault, parserPlain } from '../utils';
-import type { FlatConfigItem, OptionsComponentExts, OptionsFiles, OptionsOverrides } from '../types';
+import {mergeProcessors, processorPassThrough} from 'eslint-merge-processors';
+import {
+	GLOB_MARKDOWN,
+	GLOB_MARKDOWN_CODE,
+	GLOB_MARKDOWN_IN_MARKDOWN,
+} from '../globs';
+import {interopDefault, parserPlain} from '../utils';
+import type {
+	FlatConfigItem,
+	OptionsComponentExts,
+	OptionsFiles,
+	OptionsOverrides,
+} from '../types';
 
 export const markdown = async (
 	options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		componentExts = [],
-		files = [GLOB_MARKDOWN],
-		overrides = {},
-	} = options;
+	const {componentExts = [], files = [GLOB_MARKDOWN], overrides = {}} = options;
 
 	const markdownPlugin = await interopDefault(import('eslint-plugin-markdown'));
 

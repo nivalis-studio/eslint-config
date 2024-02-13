@@ -1,7 +1,7 @@
 /* eslint-disable ts/consistent-type-definitions */
-import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
-import type { ParserOptions } from '@typescript-eslint/parser';
-import type { Linter } from 'eslint';
+import type {FlatGitignoreOptions} from 'eslint-config-flat-gitignore';
+import type {ParserOptions} from '@typescript-eslint/parser';
+import type {Linter} from 'eslint';
 import type {
 	EslintCommentsRules,
 	EslintRules,
@@ -18,15 +18,18 @@ import type {
 	VitestRules,
 	YmlRules,
 } from '@antfu/eslint-define-config';
-import type { RuleOptions as JSDocRules } from '@eslint-types/jsdoc/types';
-import type { RuleOptions as TypeScriptRules } from '@eslint-types/typescript-eslint/types';
-import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
-import type { Rules as AntfuRules } from 'eslint-plugin-antfu';
-import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
-import type { VendoredPrettierOptions } from './vender/prettier-types';
+import type {RuleOptions as JSDocRules} from '@eslint-types/jsdoc/types';
+import type {RuleOptions as TypeScriptRules} from '@eslint-types/typescript-eslint/types';
+import type {RuleOptions as UnicornRules} from '@eslint-types/unicorn/types';
+import type {Rules as AntfuRules} from 'eslint-plugin-antfu';
+import type {
+	StylisticCustomizeOptions,
+	UnprefixedRuleOptions as StylisticRules,
+} from '@stylistic/eslint-plugin';
+import type {VendoredPrettierOptions} from './vender/prettier-types';
 
-export type WrapRuleConfig<T extends { [key: string]: any }> = {
-	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>
+export type WrapRuleConfig<T extends {[key: string]: any}> = {
+	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
 };
 
 export type Awaitable<T> = T | Promise<T>;
@@ -34,20 +37,19 @@ export type Awaitable<T> = T | Promise<T>;
 export type Rules = WrapRuleConfig<
 	MergeIntersection<
 		RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'> &
-		RenamePrefix<VitestRules, 'vitest/', 'test/'> &
-		RenamePrefix<YmlRules, 'yml/', 'yaml/'> &
-		RenamePrefix<NRules, 'n/', 'node/'> &
-		Prefix<StylisticRules, 'style/'> &
-		Prefix<AntfuRules, 'antfu/'> &
-		ReactHooksRules &
-		ReactRules &
-		JSDocRules &
-		ImportRules &
-		EslintRules &
-		JsoncRules &
-		UnicornRules &
-		EslintCommentsRules &
-		{ 'test/no-only-tests': RuleConfig<never[]> }
+			RenamePrefix<VitestRules, 'vitest/', 'test/'> &
+			RenamePrefix<YmlRules, 'yml/', 'yaml/'> &
+			RenamePrefix<NRules, 'n/', 'node/'> &
+			Prefix<StylisticRules, 'style/'> &
+			Prefix<AntfuRules, 'antfu/'> &
+			ReactHooksRules &
+			ReactRules &
+			JSDocRules &
+			ImportRules &
+			EslintRules &
+			JsoncRules &
+			UnicornRules &
+			EslintCommentsRules & {'test/no-only-tests': RuleConfig<never[]>}
 	>
 >;
 
@@ -64,7 +66,7 @@ export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules>, 'plugins'> & {
 	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
 	 */
 
-	plugins?: { [key: string]: any };
+	plugins?: {[key: string]: any};
 };
 
 export type UserConfigItem = FlatConfigItem | Linter.FlatConfig;
@@ -77,7 +79,7 @@ export interface OptionsFiles {
 }
 
 export type OptionsTypescript =
-	(OptionsTypeScriptWithTypes & OptionsOverrides)
+	| (OptionsTypeScriptWithTypes & OptionsOverrides)
 	| (OptionsTypeScriptParserOptions & OptionsOverrides);
 
 export interface OptionsFormatters {
@@ -163,7 +165,10 @@ export interface OptionsStylistic {
 	stylistic?: boolean | StylisticConfig;
 }
 
-export type StylisticConfig = Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'>;
+export type StylisticConfig = Pick<
+	StylisticCustomizeOptions,
+	'indent' | 'quotes' | 'jsx' | 'semi'
+>;
 
 export interface OptionsOverrides {
 	overrides?: FlatConfigItem['rules'];

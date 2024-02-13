@@ -1,22 +1,20 @@
-import { ensurePackages, interopDefault } from '../utils';
-import { GLOB_TESTS } from '../globs';
-import type { FlatConfigItem, OptionsFiles, OptionsIsInEditor, OptionsOverrides } from '../types';
+import {ensurePackages, interopDefault} from '../utils';
+import {GLOB_TESTS} from '../globs';
+import type {
+	FlatConfigItem,
+	OptionsFiles,
+	OptionsIsInEditor,
+	OptionsOverrides,
+} from '../types';
 
 export const test = async (
 	options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		files = GLOB_TESTS,
-		isInEditor = false,
-		overrides = {},
-	} = options;
+	const {files = GLOB_TESTS, isInEditor = false, overrides = {}} = options;
 
 	ensurePackages(['eslint-plugin-vitest', 'eslint-plugin-no-only-tests']);
 
-	const [
-		pluginVitest,
-		pluginNoOnlyTests,
-	] = await Promise.all([
+	const [pluginVitest, pluginNoOnlyTests] = await Promise.all([
 		interopDefault(import('eslint-plugin-vitest')),
 		interopDefault(import('eslint-plugin-no-only-tests')),
 	] as const);
@@ -42,7 +40,7 @@ export const test = async (
 			rules: {
 				'node/prefer-global/process': 'off',
 
-				'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
+				'test/consistent-test-it': ['error', {fn: 'it', withinDescribe: 'it'}],
 				'test/no-identical-title': 'error',
 				'test/no-import-node-test': 'error',
 				'test/no-only-tests': isInEditor ? 'off' : 'error',

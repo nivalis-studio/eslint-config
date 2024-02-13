@@ -1,5 +1,5 @@
-import { GLOB_HTML, GLOB_REACT } from '../globs';
-import { interopDefault } from '../utils';
+import {GLOB_HTML, GLOB_REACT} from '../globs';
+import {interopDefault} from '../utils';
 import type {
 	FlatConfigItem,
 	OptionsIsInEditor,
@@ -9,7 +9,7 @@ import type {
 export const tailwindcss = async (
 	options: OptionsIsInEditor & OptionsOverrides = {},
 ): Promise<FlatConfigItem[]> => {
-	const { isInEditor = false, overrides = {} } = options;
+	const {isInEditor = false, overrides = {}} = options;
 
 	return [
 		{

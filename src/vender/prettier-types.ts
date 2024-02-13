@@ -133,5 +133,5 @@ export type BuiltInParserName =
      https://github.com/microsoft/TypeScript/issues/29729#issuecomment-700527227 */
 export type LiteralUnion<T extends U, U = string> =
 	| T
-  // eslint-disable-next-line ts/no-redundant-type-constituents
-	| (Pick<U, never> & { _?: never | undefined });
+	// eslint-disable-next-line ts/no-redundant-type-constituents
+	| (Pick<U, never> & {_?: never | undefined});

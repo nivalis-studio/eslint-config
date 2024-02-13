@@ -1,17 +1,25 @@
-import { GLOB_CSS, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs';
-import { ensurePackages, interopDefault, parserPlain } from '../utils';
-import { DEFAULT_INDENT } from '../constants';
-import { StylisticConfigDefaults } from './stylistic';
-import type { VendoredPrettierOptions } from '../vender/prettier-types';
-import type { FlatConfigItem, OptionsFormatters, StylisticConfig } from '../types';
+import {
+	GLOB_CSS,
+	GLOB_LESS,
+	GLOB_MARKDOWN,
+	GLOB_POSTCSS,
+	GLOB_SCSS,
+} from '../globs';
+import {ensurePackages, interopDefault, parserPlain} from '../utils';
+import {DEFAULT_INDENT} from '../constants';
+import {StylisticConfigDefaults} from './stylistic';
+import type {VendoredPrettierOptions} from '../vender/prettier-types';
+import type {
+	FlatConfigItem,
+	OptionsFormatters,
+	StylisticConfig,
+} from '../types';
 
 export const formatters = async (
 	options: OptionsFormatters | true = {},
 	stylistic: StylisticConfig = {},
 ): Promise<FlatConfigItem[]> => {
-	ensurePackages([
-		'eslint-plugin-format',
-	]);
+	ensurePackages(['eslint-plugin-format']);
 
 	if (options === true) {
 		// eslint-disable-next-line no-param-reassign
@@ -23,23 +31,22 @@ export const formatters = async (
 		};
 	}
 
-	const {
-		indent,
-		quotes,
-		semi,
-	} = {
+	const {indent, quotes, semi} = {
 		...StylisticConfigDefaults,
 		...stylistic,
 	};
 
-	const prettierOptions: VendoredPrettierOptions = Object.assign({
-		endOfLine: 'auto',
-		semi,
-		singleQuote: quotes === 'single',
-		tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
-		trailingComma: 'all',
-		useTabs: indent === 'tab',
-	} satisfies VendoredPrettierOptions,	options.prettierOptions ?? {});
+	const prettierOptions: VendoredPrettierOptions = Object.assign(
+		{
+			endOfLine: 'auto',
+			semi,
+			singleQuote: quotes === 'single',
+			tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
+			trailingComma: 'all',
+			useTabs: indent === 'tab',
+		} satisfies VendoredPrettierOptions,
+		options.prettierOptions ?? {},
+	);
 
 	const dprintOptions = Object.assign(
 		{
@@ -134,9 +141,7 @@ export const formatters = async (
 	}
 
 	if (options.markdown) {
-		const formater = options.markdown === true
-			? 'prettier'
-			: options.markdown;
+		const formater = options.markdown === true ? 'prettier' : options.markdown;
 
 		configs.push({
 			files: [GLOB_MARKDOWN],

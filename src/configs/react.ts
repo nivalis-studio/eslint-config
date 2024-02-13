@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import { isPackageExists } from 'local-pkg';
-import { interopDefault } from '../utils';
-import { GLOB_REACT } from '../globs';
+import {isPackageExists} from 'local-pkg';
+import {interopDefault} from '../utils';
+import {GLOB_REACT} from '../globs';
 import type {
 	FlatConfigItem,
 	OptionsFiles,
@@ -15,19 +15,15 @@ const ReactRefreshAllowPackages = ['vite'];
 export const react = async (
 	options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		files = [GLOB_REACT],
-		overrides = {},
-		typescript = true,
-	} = options;
+	const {files = [GLOB_REACT], overrides = {}, typescript = true} = options;
 
-	const [pluginA11y, pluginReact, pluginReactHooks, pluginReactRefresh]
-	= await Promise.all([
-		interopDefault(import('eslint-plugin-jsx-a11y')),
-		interopDefault(import('eslint-plugin-react')),
-		interopDefault(import('eslint-plugin-react-hooks')),
-		interopDefault(import('eslint-plugin-react-refresh')),
-	] as const);
+	const [pluginA11y, pluginReact, pluginReactHooks, pluginReactRefresh] =
+		await Promise.all([
+			interopDefault(import('eslint-plugin-jsx-a11y')),
+			interopDefault(import('eslint-plugin-react')),
+			interopDefault(import('eslint-plugin-react-hooks')),
+			interopDefault(import('eslint-plugin-react-refresh')),
+		] as const);
 
 	const isAllowConstantExport = ReactRefreshAllowPackages.some(i =>
 		isPackageExists(i),
@@ -66,7 +62,7 @@ export const react = async (
 				// react refresh
 				'react-refresh/only-export-components': [
 					'warn',
-					{ allowConstantExport: isAllowConstantExport },
+					{allowConstantExport: isAllowConstantExport},
 				],
 
 				// recommended rules react
@@ -98,28 +94,16 @@ export const react = async (
 						unnamedComponents: 'arrow-function',
 					},
 				],
-				'react/hook-use-state': [
-					'error',
-				],
-				'react/iframe-missing-sandbox': [
-					'error',
-				],
-				'react/jsx-boolean-value': [
-					'error',
-					'never',
-				],
+				'react/hook-use-state': ['error'],
+				'react/iframe-missing-sandbox': ['error'],
+				'react/jsx-boolean-value': ['error', 'never'],
 				'react/jsx-filename-extension': [
 					'warn',
 					{
-						extensions: [
-							'.tsx',
-						],
+						extensions: ['.tsx'],
 					},
 				],
-				'react/jsx-fragments': [
-					'error',
-					'syntax',
-				],
+				'react/jsx-fragments': ['error', 'syntax'],
 				'react/jsx-handler-names': [
 					'error',
 					{
@@ -153,17 +137,13 @@ export const react = async (
 						ignoreCase: false,
 					},
 				],
-				'react/jsx-no-leaked-render': [
-					'error',
-				],
+				'react/jsx-no-leaked-render': ['error'],
 				'react/jsx-no-script-url': [
 					'error',
 					[
 						{
 							name: 'Link',
-							props: [
-								'to',
-							],
+							props: ['to'],
 						},
 					],
 				],
@@ -201,20 +181,12 @@ export const react = async (
 						noTemplateLiterals: true,
 					},
 				],
-				'react/no-this-in-sfc': [
-					'error',
-				],
-				'react/no-typos': [
-					'error',
-				],
+				'react/no-this-in-sfc': ['error'],
+				'react/no-typos': ['error'],
 				'react/no-unescaped-entities': 'error',
 				'react/no-unknown-property': 'error',
-				'react/no-unstable-nested-components': [
-					'error',
-				],
-				'react/no-unused-class-component-methods': [
-					'error',
-				],
+				'react/no-unstable-nested-components': ['error'],
+				'react/no-unused-class-component-methods': ['error'],
 				'react/no-unused-prop-types': [
 					'error',
 					{
@@ -222,22 +194,11 @@ export const react = async (
 						skipShapeProps: true,
 					},
 				],
-				'react/no-unused-state': [
-					'error',
-				],
-				'react/no-will-update-set-state': [
-					'error',
-				],
-				'react/prefer-es6-class': [
-					'error',
-					'always',
-				],
-				'react/prefer-exact-props': [
-					'error',
-				],
-				'react/prefer-read-only-props': [
-					'error',
-				],
+				'react/no-unused-state': ['error'],
+				'react/no-will-update-set-state': ['error'],
+				'react/prefer-es6-class': ['error', 'always'],
+				'react/prefer-exact-props': ['error'],
+				'react/prefer-read-only-props': ['error'],
 				'react/prefer-stateless-function': [
 					'error',
 					{
@@ -261,28 +222,16 @@ export const react = async (
 						html: true,
 					},
 				],
-				'react/sort-default-props': [
-					'error',
-				],
-				'react/state-in-constructor': [
-					'error',
-					'never',
-				],
-				'react/static-property-placement': [
-					'error',
-					'property assignment',
-				],
+				'react/sort-default-props': ['error'],
+				'react/state-in-constructor': ['error', 'never'],
+				'react/static-property-placement': ['error', 'property assignment'],
 				'react/style-prop-object': [
 					'error',
 					{
-						allow: [
-							'FormattedNumber',
-						],
+						allow: ['FormattedNumber'],
 					},
 				],
-				'react/void-dom-elements-no-children': [
-					'error',
-				],
+				'react/void-dom-elements-no-children': ['error'],
 
 				'style/jsx-curly-brace-presence': [
 					'error',
@@ -312,7 +261,7 @@ export const react = async (
 						object: [],
 					},
 				],
-				'jsx-a11y/anchor-has-content': ['warn', { components: [] }],
+				'jsx-a11y/anchor-has-content': ['warn', {components: []}],
 				'jsx-a11y/anchor-is-valid': [
 					'warn',
 					{
@@ -324,9 +273,9 @@ export const react = async (
 				'jsx-a11y/aria-activedescendant-has-tabindex': ['warn'],
 				'jsx-a11y/aria-props': ['warn'],
 				'jsx-a11y/aria-proptypes': ['warn'],
-				'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: false }],
+				'jsx-a11y/aria-role': ['warn', {ignoreNonDOM: false}],
 				'jsx-a11y/aria-unsupported-elements': ['warn'],
-				'jsx-a11y/autocomplete-valid': ['off', { inputComponents: [] }],
+				'jsx-a11y/autocomplete-valid': ['off', {inputComponents: []}],
 				'jsx-a11y/click-events-have-key-events': ['warn'],
 				'jsx-a11y/control-has-associated-label': [
 					'warn',
@@ -357,7 +306,7 @@ export const react = async (
 						labelAttributes: ['label'],
 					},
 				],
-				'jsx-a11y/heading-has-content': ['warn', { components: [''] }],
+				'jsx-a11y/heading-has-content': ['warn', {components: ['']}],
 				'jsx-a11y/html-has-lang': ['warn'],
 				'jsx-a11y/iframe-has-title': ['warn'],
 				'jsx-a11y/img-redundant-alt': ['warn'],
@@ -393,14 +342,14 @@ export const react = async (
 				],
 				'jsx-a11y/mouse-events-have-key-events': ['warn'],
 				'jsx-a11y/no-access-key': ['warn'],
-				'jsx-a11y/no-autofocus': ['warn', { ignoreNonDOM: true }],
+				'jsx-a11y/no-autofocus': ['warn', {ignoreNonDOM: true}],
 				'jsx-a11y/no-distracting-elements': [
 					'warn',
-					{ elements: ['marquee', 'blink'] },
+					{elements: ['marquee', 'blink']},
 				],
 				'jsx-a11y/no-interactive-element-to-noninteractive-role': [
 					'warn',
-					{ tr: ['none', 'presentation'] },
+					{tr: ['none', 'presentation']},
 				],
 				'jsx-a11y/no-noninteractive-element-interactions': [
 					'warn',
@@ -443,7 +392,7 @@ export const react = async (
 				],
 				'jsx-a11y/no-noninteractive-tabindex': [
 					'warn',
-					{ roles: ['tabpanel'], tags: [] },
+					{roles: ['tabpanel'], tags: []},
 				],
 				'jsx-a11y/no-onchange': ['off'],
 				'jsx-a11y/no-redundant-roles': ['warn'],

@@ -1,7 +1,7 @@
-import { interopDefault } from '../utils';
-import { pluginAntfu } from '../plugins';
-import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
-import type { FlatConfigItem, OptionsOverrides, StylisticConfig } from '../types';
+import {interopDefault} from '../utils';
+import {pluginAntfu} from '../plugins';
+import {DEFAULT_INDENT, PADDING_LINES} from '../constants';
+import type {FlatConfigItem, OptionsOverrides, StylisticConfig} from '../types';
 
 export const StylisticConfigDefaults: StylisticConfig = {
 	indent: DEFAULT_INDENT,
@@ -24,7 +24,9 @@ export const stylistic = async (
 		...options,
 	};
 
-	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
+	const pluginStylistic = await interopDefault(
+		import('@stylistic/eslint-plugin'),
+	);
 
 	const config = pluginStylistic.configs.customize({
 		arrowParens: false,
@@ -74,7 +76,10 @@ export const stylistic = async (
 					},
 				],
 
-				'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
+				'style/no-multiple-empty-lines': [
+					'error',
+					{max: 1, maxBOF: 0, maxEOF: 0},
+				],
 				'style/padding-line-between-statements': ['error', ...PADDING_LINES],
 
 				...overrides,

@@ -1,6 +1,6 @@
-import { GLOB_SRC } from '../globs';
-import { pluginPromise } from '../plugins';
-import type { FlatConfigItem } from '../types';
+import {GLOB_SRC} from '../globs';
+import {pluginPromise} from '../plugins';
+import type {FlatConfigItem} from '../types';
 
 export const promise = (): FlatConfigItem[] => {
 	return [
@@ -11,7 +11,7 @@ export const promise = (): FlatConfigItem[] => {
 				promise: pluginPromise,
 			},
 			rules: {
-				'promise/always-return': ['error', { ignoreLastCallback: true }],
+				'promise/always-return': ['error', {ignoreLastCallback: true}],
 				'promise/catch-or-return': ['error'],
 				'promise/no-callback-in-promise': ['warn'],
 				'promise/no-nesting': ['warn'],

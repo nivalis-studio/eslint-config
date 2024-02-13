@@ -1,6 +1,6 @@
-import { GLOB_SRC } from '../globs';
-import { pluginUnicorn } from '../plugins';
-import type { FlatConfigItem } from '../types';
+import {GLOB_SRC} from '../globs';
+import {pluginUnicorn} from '../plugins';
+import type {FlatConfigItem} from '../types';
 
 // eslint-disable-next-line ts/require-await
 export const unicorn = async (): Promise<FlatConfigItem[]> => {
@@ -28,7 +28,7 @@ export const unicorn = async (): Promise<FlatConfigItem[]> => {
 				'unicorn/filename-case': [
 					'warn',
 					{
-						cases: { kebabCase: true, pascalCase: true },
+						cases: {kebabCase: true, pascalCase: true},
 						ignore: [/^[A-Z]+\..*$/],
 					},
 				],
@@ -77,7 +77,7 @@ export const unicorn = async (): Promise<FlatConfigItem[]> => {
 				'unicorn/prefer-dom-node-dataset': 'error',
 				'unicorn/prefer-dom-node-remove': 'error',
 				'unicorn/prefer-dom-node-text-content': 'error',
-				'unicorn/prefer-export-from': ['error', { ignoreUsedVariables: true }],
+				'unicorn/prefer-export-from': ['error', {ignoreUsedVariables: true}],
 				'unicorn/prefer-includes': 'error',
 				'unicorn/prefer-keyboard-event-key': 'error',
 				'unicorn/prefer-logical-operator-over-ternary': 'error',
@@ -102,7 +102,7 @@ export const unicorn = async (): Promise<FlatConfigItem[]> => {
 				'unicorn/prefer-string-trim-start-end': 'error',
 				'unicorn/prefer-switch': [
 					'error',
-					{ emptyDefaultCase: 'do-nothing-comment' },
+					{emptyDefaultCase: 'do-nothing-comment'},
 				],
 				'unicorn/prefer-ternary': ['error', 'only-single-line'],
 				'unicorn/prefer-top-level-await': 'error',
@@ -122,7 +122,7 @@ export const unicorn = async (): Promise<FlatConfigItem[]> => {
 					},
 				],
 				'unicorn/switch-case-braces': 'error',
-				'unicorn/template-indent': ['warn', { indent: '\t' }],
+				'unicorn/template-indent': ['warn', {indent: '\t'}],
 				'unicorn/text-encoding-identifier-case': 'error',
 				'unicorn/throw-new-error': 'error',
 			},

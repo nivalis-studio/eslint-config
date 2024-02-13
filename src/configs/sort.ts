@@ -1,4 +1,4 @@
-import type { FlatConfigItem } from '../types';
+import type {FlatConfigItem} from '../types';
 
 /**
  * Sort package.json
@@ -14,7 +14,7 @@ export const sortPackageJson = (): FlatConfigItem[] => {
 				'jsonc/sort-array-values': [
 					'error',
 					{
-						order: { type: 'asc' },
+						order: {type: 'asc'},
 						pathPattern: '^files$',
 					},
 				],
@@ -69,20 +69,16 @@ export const sortPackageJson = (): FlatConfigItem[] => {
 						pathPattern: '^$',
 					},
 					{
-						order: { type: 'asc' },
-						pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
+						order: {type: 'asc'},
+						pathPattern:
+							'^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
 					},
 					{
-						order: { type: 'asc' },
+						order: {type: 'asc'},
 						pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
 					},
 					{
-						order: [
-							'types',
-							'import',
-							'require',
-							'default',
-						],
+						order: ['types', 'import', 'require', 'default'],
 						pathPattern: '^exports.*$',
 					},
 				],

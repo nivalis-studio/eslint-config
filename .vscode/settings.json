@@ -1,34 +1,35 @@
 {
-	"eslint.experimental.useFlatConfig": true,
-	"prettier.enable": false,
-	"editor.formatOnSave": false,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit",
-		"source.organizeImports": "never"
-	},
-	"eslint.rules.customizations": [
-		{ "rule": "style/*", "severity": "warn" },
-		{ "rule": "*-indent", "severity": "warn" },
-		{ "rule": "*-spacing", "severity": "warn" },
-		{ "rule": "*-spaces", "severity": "warn" },
-		{ "rule": "*-order", "severity": "warn" },
-		{ "rule": "*-dangle", "severity": "warn" },
-		{ "rule": "*-newline", "severity": "warn" },
-		{ "rule": "*quotes", "severity": "warn" },
-		{ "rule": "*semi", "severity": "warn" }
-	],
+  "eslint.experimental.useFlatConfig": true,
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.rules.customizations": [
+    {"rule": "prettier/*", "severity": "off"},
+    {"rule": "style/*", "severity": "off"},
+    {"rule": "*-indent", "severity": "off"},
+    {"rule": "*-spacing", "severity": "off"},
+    {"rule": "*-spaces", "severity": "off"},
+    {"rule": "*-order", "severity": "off"},
+    {"rule": "*-dangle", "severity": "off"},
+    {"rule": "*-newline", "severity": "off"},
+    {"rule": "*quotes", "severity": "off"},
+    {"rule": "*semi", "severity": "off"}
+  ],
 
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"vue",
-		"html",
-		"markdown",
-		"json",
-		"jsonc",
-		"yaml",
-		"toml"
-	]
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml"
+  ]
 }

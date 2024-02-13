@@ -1,18 +1,26 @@
 /* eslint-disable max-lines */
 import globals from 'globals';
-import { pluginAntfu, pluginUnusedImports } from '../plugins';
-import { GLOB_SRC, GLOB_SRC_EXT } from '../globs';
-import { MAX_COMPLEXITY, MAX_LINES, MAX_LINES_PER_FUNCTION, MAX_NESTED_CALLBACKS, MAX_PARAMS, MAX_STATEMENTS } from '../constants';
-import type { FlatConfigItem, OptionsIsInEditor, OptionsOverrides } from '../types';
+import {pluginAntfu, pluginUnusedImports} from '../plugins';
+import {GLOB_SRC, GLOB_SRC_EXT} from '../globs';
+import {
+	MAX_COMPLEXITY,
+	MAX_LINES,
+	MAX_LINES_PER_FUNCTION,
+	MAX_NESTED_CALLBACKS,
+	MAX_PARAMS,
+	MAX_STATEMENTS,
+} from '../constants';
+import type {
+	FlatConfigItem,
+	OptionsIsInEditor,
+	OptionsOverrides,
+} from '../types';
 
 // eslint-disable-next-line max-lines-per-function
 export const javascript = (
 	options: OptionsIsInEditor & OptionsOverrides = {},
 ): FlatConfigItem[] => {
-	const {
-		isInEditor = false,
-		overrides = {},
-	} = options;
+	const {isInEditor = false, overrides = {}} = options;
 
 	return [
 		{
@@ -53,7 +61,10 @@ export const javascript = (
 						setWithoutGet: true,
 					},
 				],
-				'array-callback-return': ['error', { allowImplicit: true, checkForEach: false }],
+				'array-callback-return': [
+					'error',
+					{allowImplicit: true, checkForEach: false},
+				],
 				'block-scoped-var': 'error',
 				'callback-return': ['error', ['callback']],
 				camelcase: [
@@ -67,14 +78,14 @@ export const javascript = (
 				],
 				'class-methods-use-this': [
 					'error',
-					{ enforceForClassFields: true, exceptMethods: [] },
+					{enforceForClassFields: true, exceptMethods: []},
 				],
 				complexity: ['error', MAX_COMPLEXITY],
 				'constructor-super': 'error',
-				'default-case': ['error', { commentPattern: '(?:)' }],
+				'default-case': ['error', {commentPattern: '(?:)'}],
 				'default-case-last': 'error',
 				'default-param-last': 'error',
-				'dot-notation': ['error', { allowKeywords: true }],
+				'dot-notation': ['error', {allowKeywords: true}],
 				eqeqeq: ['error', 'smart'],
 				'for-direction': ['error'],
 				'func-name-matching': [
@@ -86,8 +97,8 @@ export const javascript = (
 					},
 				],
 				'func-names': ['warn'],
-				'func-style': ['error', 'expression', { allowArrowFunctions: true }],
-				'getter-return': ['error', { allowImplicit: true }],
+				'func-style': ['error', 'expression', {allowArrowFunctions: true}],
+				'getter-return': ['error', {allowImplicit: true}],
 				'grouped-accessor-pairs': ['error', 'getBeforeSet'],
 				'id-denylist': ['error', 'native'],
 				'id-length': [
@@ -139,9 +150,9 @@ export const javascript = (
 				'no-class-assign': ['error'],
 				'no-compare-neg-zero': 'error',
 				'no-cond-assign': ['error', 'always'],
-				'no-console': ['warn', { allow: ['warn', 'error'] }],
+				'no-console': ['warn', {allow: ['warn', 'error']}],
 				'no-const-assign': 'error',
-				'no-constant-condition': ['error', { checkLoops: false }],
+				'no-constant-condition': ['error', {checkLoops: false}],
 				'no-constructor-return': ['error'],
 				'no-control-regex': 'error',
 				'no-debugger': 'warn',
@@ -152,12 +163,12 @@ export const javascript = (
 				'no-dupe-else-if': ['error'],
 				'no-dupe-keys': 'error',
 				'no-duplicate-case': ['error'],
-				'no-else-return': ['error', { allowElseIf: false }],
-				'no-empty': ['error', { allowEmptyCatch: true }],
+				'no-else-return': ['error', {allowElseIf: false}],
+				'no-empty': ['error', {allowEmptyCatch: true}],
 				'no-empty-character-class': 'error',
 				'no-empty-function': [
 					'error',
-					{ allow: ['arrowFunctions', 'functions'] },
+					{allow: ['arrowFunctions', 'functions']},
 				],
 				'no-empty-pattern': 'error',
 				'no-empty-static-block': ['error'],
@@ -167,7 +178,7 @@ export const javascript = (
 				'no-extra-bind': ['error'],
 				'no-extra-boolean-cast': ['error'],
 				'no-extra-label': ['error'],
-				'no-fallthrough': ['warn', { commentPattern: 'break[\\s\\w]*omitted' }],
+				'no-fallthrough': ['warn', {commentPattern: 'break[\\s\\w]*omitted'}],
 				'no-func-assign': 'error',
 				'no-global-assign': 'error',
 				'no-implicit-coercion': [
@@ -184,7 +195,7 @@ export const javascript = (
 				'no-implied-eval': ['error'],
 				'no-import-assign': ['error'],
 				'no-inner-declarations': ['error', 'functions'],
-				'no-invalid-regexp': ['error', { allowConstructorFlags: ['u', 'y'] }],
+				'no-invalid-regexp': ['error', {allowConstructorFlags: ['u', 'y']}],
 				'no-invalid-this': ['error'],
 				'no-irregular-whitespace': 'error',
 				'no-iterator': ['error'],
@@ -240,24 +251,26 @@ export const javascript = (
 					},
 				],
 				'no-path-concat': ['error'],
-				'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+				'no-plusplus': ['error', {allowForLoopAfterthoughts: true}],
 				'no-process-env': ['error'],
 				'no-process-exit': ['error'],
 				'no-promise-executor-return': ['error'],
 				'no-proto': ['error'],
 				'no-prototype-builtins': ['error'],
-				'no-redeclare': ['error', { builtinGlobals: false }],
+				'no-redeclare': ['error', {builtinGlobals: false}],
 				'no-regex-spaces': ['error'],
 				'no-restricted-globals': [
 					'error',
-					{ message: 'Use `globalThis` instead.', name: 'global' },
-					{ message: 'Use `globalThis` instead.', name: 'self' },
+					{message: 'Use `globalThis` instead.', name: 'global'},
+					{message: 'Use `globalThis` instead.', name: 'self'},
 					{
-						message: 'Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite',
+						message:
+							'Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite',
 						name: 'isFinite',
 					},
 					{
-						message: 'Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan',
+						message:
+							'Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan',
 						name: 'isNaN',
 					},
 				],
@@ -274,7 +287,8 @@ export const javascript = (
 						property: 'callee',
 					},
 					{
-						message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.',
+						message:
+							'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.',
 						property: '__proto__',
 					},
 					{
@@ -338,18 +352,18 @@ export const javascript = (
 					},
 					{
 						message: 'Avoid PropTypes. Use Typescript instead.',
-						selector: 'Identifier[name=\'PropTypes\']',
+						selector: "Identifier[name='PropTypes']",
 					},
 					{
 						message: 'Avoid PropTypes. Use Typescript instead.',
-						selector: 'Identifier[name=\'propTypes\']',
+						selector: "Identifier[name='propTypes']",
 					},
 				],
 				'no-return-assign': ['error', 'always'],
 				'no-script-url': ['error'],
-				'no-self-assign': ['error', { props: true }],
+				'no-self-assign': ['error', {props: true}],
 				'no-self-compare': 'error',
-				'no-sequences': ['error', { allowInParentheses: false }],
+				'no-sequences': ['error', {allowInParentheses: false}],
 				'no-setter-return': ['error'],
 				'no-shadow': [
 					'warn',
@@ -368,39 +382,48 @@ export const javascript = (
 				'no-undef-init': 'error',
 				'no-unexpected-multiline': ['error'],
 				'no-unmodified-loop-condition': ['error'],
-				'no-unneeded-ternary': ['error', { defaultAssignment: false }],
+				'no-unneeded-ternary': ['error', {defaultAssignment: false}],
 				'no-unreachable': 'error',
 				'no-unreachable-loop': 'error',
 				'no-unsafe-finally': 'error',
-				'no-unsafe-negation': ['error', { enforceForOrderingRelations: true }],
+				'no-unsafe-negation': ['error', {enforceForOrderingRelations: true}],
 				'no-unsafe-optional-chaining': [
 					'error',
-					{ disallowArithmeticOperators: true },
+					{disallowArithmeticOperators: true},
 				],
-				'no-unused-expressions': ['error', {
-					allowShortCircuit: true,
-					allowTaggedTemplates: true,
-					allowTernary: true,
-					enforceForJSX: true,
-				}],
+				'no-unused-expressions': [
+					'error',
+					{
+						allowShortCircuit: true,
+						allowTaggedTemplates: true,
+						allowTernary: true,
+						enforceForJSX: true,
+					},
+				],
 				'no-unused-labels': ['error'],
 				'no-unused-private-class-members': ['error'],
-				'no-unused-vars': ['error', {
-					args: 'none',
-					caughtErrors: 'none',
-					ignoreRestSiblings: true,
-					vars: 'all',
-				}],
-				'no-use-before-define': ['error', {
-					allowNamedExports: false,
-					classes: false,
-					functions: false,
-					variables: true,
-				}],
+				'no-unused-vars': [
+					'error',
+					{
+						args: 'none',
+						caughtErrors: 'none',
+						ignoreRestSiblings: true,
+						vars: 'all',
+					},
+				],
+				'no-use-before-define': [
+					'error',
+					{
+						allowNamedExports: false,
+						classes: false,
+						functions: false,
+						variables: true,
+					},
+				],
 				'no-useless-backreference': 'error',
 				'no-useless-call': 'error',
 				'no-useless-catch': 'error',
-				'no-useless-computed-key': ['error', { enforceForClassMembers: true }],
+				'no-useless-computed-key': ['error', {enforceForClassMembers: true}],
 				'no-useless-concat': ['error'],
 				'no-useless-constructor': ['error'],
 				'no-useless-escape': ['error'],
@@ -416,7 +439,7 @@ export const javascript = (
 				'no-useless-return': ['error'],
 				'no-var': ['error'],
 				'no-void': ['error'],
-				'no-warning-comments': ['warn', { terms: ['fixme', 'todo'] }],
+				'no-warning-comments': ['warn', {terms: ['fixme', 'todo']}],
 				'no-with': 'error',
 				'object-shorthand': [
 					'error',
@@ -426,7 +449,7 @@ export const javascript = (
 						ignoreConstructors: false,
 					},
 				],
-				'one-var': ['error', { initialized: 'never' }],
+				'one-var': ['error', {initialized: 'never'}],
 				'prefer-arrow-callback': [
 					'error',
 					{
@@ -442,13 +465,13 @@ export const javascript = (
 					},
 				],
 				'prefer-exponentiation-operator': 'error',
-				'prefer-promise-reject-errors': ['error', { allowEmptyReject: true }],
-				'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+				'prefer-promise-reject-errors': ['error', {allowEmptyReject: true}],
+				'prefer-regex-literals': ['error', {disallowRedundantWrapping: true}],
 				'prefer-rest-params': 'error',
 				'prefer-spread': 'error',
 				'prefer-template': 'error',
 				radix: ['error'],
-				'require-atomic-updates': ['error', { allowProperties: true }],
+				'require-atomic-updates': ['error', {allowProperties: true}],
 				'require-await': ['error'],
 				'require-yield': ['error'],
 				'sort-imports': [
@@ -467,10 +490,18 @@ export const javascript = (
 				'unused-imports/no-unused-imports': isInEditor ? 'off' : 'error',
 				'unused-imports/no-unused-vars': [
 					'error',
-					{ args: 'after-used', argsIgnorePattern: '^_', vars: 'all', varsIgnorePattern: '^_' },
+					{
+						args: 'after-used',
+						argsIgnorePattern: '^_',
+						vars: 'all',
+						varsIgnorePattern: '^_',
+					},
 				],
-				'use-isnan': ['error', { enforceForIndexOf: true, enforceForSwitchCase: true }],
-				'valid-typeof': ['error', { requireStringLiterals: true }],
+				'use-isnan': [
+					'error',
+					{enforceForIndexOf: true, enforceForSwitchCase: true},
+				],
+				'valid-typeof': ['error', {requireStringLiterals: true}],
 				'vars-on-top': 'error',
 				yoda: [
 					'error',

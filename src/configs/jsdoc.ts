@@ -1,11 +1,11 @@
-import { interopDefault } from '../utils';
-import { GLOB_SRC } from '../globs';
-import type { FlatConfigItem, OptionsStylistic } from '../types';
+import {interopDefault} from '../utils';
+import {GLOB_SRC} from '../globs';
+import type {FlatConfigItem, OptionsStylistic} from '../types';
 
-export const jsdoc = async (options: OptionsStylistic = {}): Promise<FlatConfigItem[]> => {
-	const {
-		stylistic = true,
-	} = options;
+export const jsdoc = async (
+	options: OptionsStylistic = {},
+): Promise<FlatConfigItem[]> => {
+	const {stylistic = true} = options;
 
 	return [
 		{
@@ -31,12 +31,12 @@ export const jsdoc = async (options: OptionsStylistic = {}): Promise<FlatConfigI
 				'jsdoc/require-returns-description': 'warn',
 				'jsdoc/require-yields-check': 'warn',
 
-				...stylistic
+				...(stylistic
 					? {
 							'jsdoc/check-alignment': 'warn',
 							'jsdoc/multiline-blocks': 'warn',
 						}
-					: {},
+					: {}),
 			},
 		},
 	];

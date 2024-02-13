@@ -23,34 +23,38 @@ import {
 	unicorn,
 	yaml,
 } from './configs';
-import { combine, interopDefault } from './utils';
-import { formatters } from './configs/formatters';
-import { HAS_REACT, HAS_TAILWINDCSS, HAS_TYPESCRIPT, IN_IS_EDITOR } from './environment';
-import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types';
+import {combine, interopDefault} from './utils';
+import {formatters} from './configs/formatters';
+import {
+	HAS_REACT,
+	HAS_TAILWINDCSS,
+	HAS_TYPESCRIPT,
+	IN_IS_EDITOR,
+} from './environment';
+import type {
+	Awaitable,
+	FlatConfigItem,
+	OptionsConfig,
+	UserConfigItem,
+} from './types';
 
-export type ResolvedOptions<T> = T extends boolean
-	? never
-	: NonNullable<T>;
+export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
 
-export const resolveSubOptions = <K extends keyof OptionsConfig> (
+export const resolveSubOptions = <K extends keyof OptionsConfig>(
 	options: OptionsConfig,
 	key: K,
 ): ResolvedOptions<OptionsConfig[K]> => {
-	return typeof options[key] === 'boolean'
-		? {} as any
-		: options[key] || {};
+	return typeof options[key] === 'boolean' ? ({} as any) : options[key] || {};
 };
 
-export const getOverrides = <K extends keyof OptionsConfig> (
+export const getOverrides = <K extends keyof OptionsConfig>(
 	options: OptionsConfig,
 	key: K,
-): undefined | { [x: string]: any } => {
+): undefined | {[x: string]: any} => {
 	const sub = resolveSubOptions(options, key);
 
 	return {
-		...'overrides' in sub
-			? sub.overrides
-			: {},
+		...('overrides' in sub ? sub.overrides : {}),
 	};
 };
 
@@ -84,11 +88,11 @@ export const nivalis = async (
 		typescript: enableTypeScript = HAS_TYPESCRIPT,
 	} = options;
 
-	const stylisticOptions = options.stylistic === false
-		? false
-		: typeof options.stylistic === 'object'
+	const stylisticOptions = options.stylistic
+		? typeof options.stylistic === 'object'
 			? options.stylistic
-			: {};
+			: {}
+		: false;
 
 	if (stylisticOptions && !('jsx' in stylisticOptions)) {
 		stylisticOptions.jsx = options.jsx ?? true;
@@ -98,9 +102,17 @@ export const nivalis = async (
 
 	if (enableGitignore) {
 		if (typeof enableGitignore !== 'boolean') {
-			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(mod => [mod(enableGitignore)]));
+			configs.push(
+				interopDefault(import('eslint-config-flat-gitignore')).then(mod => [
+					mod(enableGitignore),
+				]),
+			);
 		} else if (fs.existsSync('.gitignore')) {
-			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(mod => [mod()]));
+			configs.push(
+				interopDefault(import('eslint-config-flat-gitignore')).then(mod => [
+					mod(),
+				]),
+			);
 		}
 	}
 
@@ -126,38 +138,48 @@ export const nivalis = async (
 	);
 
 	if (enableTypeScript) {
-		configs.push(typescript({
-			...resolveSubOptions(options, 'typescript'),
-			componentExts,
-			overrides: getOverrides(options, 'typescript'),
-		}));
+		configs.push(
+			typescript({
+				...resolveSubOptions(options, 'typescript'),
+				componentExts,
+				overrides: getOverrides(options, 'typescript'),
+			}),
+		);
 	}
 
 	if (options.test) {
-		configs.push(test({
-			isInEditor,
-			overrides: getOverrides(options, 'test'),
-		}));
+		configs.push(
+			test({
+				isInEditor,
+				overrides: getOverrides(options, 'test'),
+			}),
+		);
 	}
 
 	if (enableGraphQL) {
-		configs.push(graphql({
-			overrides: getOverrides(options, 'graphQL'),
-		}));
+		configs.push(
+			graphql({
+				overrides: getOverrides(options, 'graphQL'),
+			}),
+		);
 	}
 
 	if (enableReact) {
-		configs.push(react({
-			overrides: getOverrides(options, 'react'),
-			typescript: !!enableTypeScript,
-		}));
+		configs.push(
+			react({
+				overrides: getOverrides(options, 'react'),
+				typescript: !!enableTypeScript,
+			}),
+		);
 	}
 
 	if (enableTailwindCSS) {
-		configs.push(tailwindcss({
-			...resolveSubOptions(options, 'tailwindcss'),
-			overrides: getOverrides(options, 'tailwindcss'),
-		}));
+		configs.push(
+			tailwindcss({
+				...resolveSubOptions(options, 'tailwindcss'),
+				overrides: getOverrides(options, 'tailwindcss'),
+			}),
+		);
 	}
 
 	if (options.jsonc ?? true) {
@@ -172,42 +194,48 @@ export const nivalis = async (
 	}
 
 	if (options.yaml ?? true) {
-		configs.push(yaml({
-			overrides: getOverrides(options, 'yaml'),
-			stylistic: stylisticOptions,
-		}));
+		configs.push(
+			yaml({
+				overrides: getOverrides(options, 'yaml'),
+				stylistic: stylisticOptions,
+			}),
+		);
 	}
 
 	if (options.toml ?? true) {
-		configs.push(toml({
-			overrides: getOverrides(options, 'toml'),
-			stylistic: stylisticOptions,
-		}));
+		configs.push(
+			toml({
+				overrides: getOverrides(options, 'toml'),
+				stylistic: stylisticOptions,
+			}),
+		);
 	}
 
 	if (options.markdown ?? true) {
 		configs.push(
-			markdown(
-				{
-					componentExts,
-					overrides: getOverrides(options, 'markdown'),
-				},
-			),
+			markdown({
+				componentExts,
+				overrides: getOverrides(options, 'markdown'),
+			}),
 		);
 	}
 
 	if (options.formatters) {
-		configs.push(formatters(
-			options.formatters,
-			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
-		));
+		configs.push(
+			formatters(
+				options.formatters,
+				typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
+			),
+		);
 	}
 
 	if (stylisticOptions) {
-		configs.push(stylistic({
-			...stylisticOptions,
-			overrides: getOverrides(options, 'stylistic'),
-		}));
+		configs.push(
+			stylistic({
+				...stylisticOptions,
+				overrides: getOverrides(options, 'stylistic'),
+			}),
+		);
 	} else {
 		configs.push(prettier());
 	}
@@ -227,10 +255,7 @@ export const nivalis = async (
 		configs.push([fusedConfig]);
 	}
 
-	const merged = combine(
-		...configs,
-		...userConfigs,
-	);
+	const merged = combine(...configs, ...userConfigs);
 
 	return merged;
 };

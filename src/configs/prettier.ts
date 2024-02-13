@@ -1,8 +1,13 @@
-import { interopDefault } from '../utils';
-import { DEFAULT_INDENT } from '../constants';
-import { StylisticConfigDefaults } from '.';
-import type { FlatConfigItem, OptionsFormatters, StylisticConfig } from '../types';
-import type { VendoredPrettierOptions } from '../vender/prettier-types';
+import {interopDefault} from '../utils';
+import {DEFAULT_INDENT} from '../constants';
+import {GLOB_SRC} from '../globs';
+import {StylisticConfigDefaults} from '.';
+import type {
+	FlatConfigItem,
+	OptionsFormatters,
+	StylisticConfig,
+} from '../types';
+import type {VendoredPrettierOptions} from '../vender/prettier-types';
 
 export const prettier = async (
 	options: OptionsFormatters | true = {},
@@ -23,26 +28,26 @@ export const prettier = async (
 		};
 	}
 
-	const {
-		indent,
-		quotes,
-		semi,
-	} = {
+	const {indent, quotes, semi} = {
 		...StylisticConfigDefaults,
 		...stylistic,
 	};
 
-	const _prettierOptions: VendoredPrettierOptions = Object.assign({
-		endOfLine: 'auto',
-		semi,
-		singleQuote: quotes === 'single',
-		tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
-		trailingComma: 'all',
-		useTabs: indent === 'tab',
-	} satisfies VendoredPrettierOptions,	options.prettierOptions ?? {});
+	const _prettierOptions: VendoredPrettierOptions = Object.assign(
+		{
+			endOfLine: 'auto',
+			semi,
+			singleQuote: quotes === 'single',
+			tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
+			trailingComma: 'all',
+			useTabs: indent === 'tab',
+		} satisfies VendoredPrettierOptions,
+		options.prettierOptions ?? {},
+	);
 
 	return [
 		{
+			files: [GLOB_SRC],
 			plugins: {
 				prettier: pluginPrettier,
 			},

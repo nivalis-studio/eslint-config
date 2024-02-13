@@ -1,25 +1,22 @@
-import { GLOB_TOML } from '../globs';
-import { interopDefault } from '../utils';
-import { DEFAULT_INDENT } from '../constants';
-import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsStylistic } from '../types';
+import {GLOB_TOML} from '../globs';
+import {interopDefault} from '../utils';
+import {DEFAULT_INDENT} from '../constants';
+import type {
+	FlatConfigItem,
+	OptionsFiles,
+	OptionsOverrides,
+	OptionsStylistic,
+} from '../types';
 
 export const toml = async (
 	options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		files = [GLOB_TOML],
-		overrides = {},
-		stylistic = true,
-	} = options;
+	const {files = [GLOB_TOML], overrides = {}, stylistic = true} = options;
 
-	const {
-		indent = DEFAULT_INDENT,
-	} = typeof stylistic === 'boolean' ? {} : stylistic;
+	const {indent = DEFAULT_INDENT} =
+		typeof stylistic === 'boolean' ? {} : stylistic;
 
-	const [
-		pluginToml,
-		parserToml,
-	] = await Promise.all([
+	const [pluginToml, parserToml] = await Promise.all([
 		interopDefault(import('eslint-plugin-toml')),
 		interopDefault(import('toml-eslint-parser')),
 	] as const);
@@ -51,12 +48,15 @@ export const toml = async (
 
 				'unicorn/filename-case': 'off',
 
-				...stylistic
+				...(stylistic
 					? {
 							'toml/array-bracket-newline': 'error',
 							'toml/array-bracket-spacing': 'error',
 							'toml/array-element-newline': 'error',
-							'toml/indent': ['error', indent === 'tab' ? DEFAULT_INDENT : indent],
+							'toml/indent': [
+								'error',
+								indent === 'tab' ? DEFAULT_INDENT : indent,
+							],
 							'toml/inline-table-curly-spacing': 'error',
 							'toml/key-spacing': 'error',
 							'toml/padding-line-between-pairs': 'error',
@@ -65,7 +65,7 @@ export const toml = async (
 							'toml/spaced-comment': 'error',
 							'toml/table-bracket-spacing': 'error',
 						}
-					: {},
+					: {}),
 
 				...overrides,
 			},

@@ -1,6 +1,6 @@
-import { GLOB_SRC } from '../globs';
-import { pluginNode } from '../plugins';
-import type { FlatConfigItem } from '../types';
+import {GLOB_SRC} from '../globs';
+import {pluginNode} from '../plugins';
+import type {FlatConfigItem} from '../types';
 
 export const node = (): FlatConfigItem[] => {
 	return [
@@ -14,7 +14,7 @@ export const node = (): FlatConfigItem[] => {
 				'node/handle-callback-err': ['error', '^(err|error)$'],
 				'node/no-deprecated-api': 'error',
 				'node/no-exports-assign': 'error',
-				'node/no-mixed-requires': ['error', { allowCall: true, grouping: true }],
+				'node/no-mixed-requires': ['error', {allowCall: true, grouping: true}],
 				'node/no-new-require': 'error',
 				'node/no-path-concat': 'error',
 				'node/no-unsupported-features/es-builtins': 'error',

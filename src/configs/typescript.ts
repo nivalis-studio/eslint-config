@@ -1,17 +1,24 @@
 /* eslint-disable max-lines-per-function */
-import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
-import { pluginAntfu } from '../plugins';
-import { interopDefault, renameRules, toArray } from '../utils';
-import type { FlatConfigItem, OptionsComponentExts, OptionsFiles, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from '../types';
+import {GLOB_SRC, GLOB_TS, GLOB_TSX} from '../globs';
+import {pluginAntfu} from '../plugins';
+import {interopDefault, renameRules, toArray} from '../utils';
+import type {
+	FlatConfigItem,
+	OptionsComponentExts,
+	OptionsFiles,
+	OptionsOverrides,
+	OptionsTypeScriptParserOptions,
+	OptionsTypeScriptWithTypes,
+} from '../types';
 
 export const typescript = async (
-	options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions = {},
+	options: OptionsFiles &
+		OptionsComponentExts &
+		OptionsOverrides &
+		OptionsTypeScriptWithTypes &
+		OptionsTypeScriptParserOptions = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		componentExts = [],
-		overrides = {},
-		parserOptions = {},
-	} = options;
+	const {componentExts = [], overrides = {}, parserOptions = {}} = options;
 
 	const files = options.files ?? [
 		GLOB_SRC,
@@ -42,22 +49,19 @@ export const typescript = async (
 		'ts/await-thenable': 'error',
 		'ts/consistent-type-exports': [
 			'error',
-			{ fixMixedExportsWithInlineTypeSpecifier: true },
+			{fixMixedExportsWithInlineTypeSpecifier: true},
 		],
-		'ts/dot-notation': ['error', { allowKeywords: true }],
+		'ts/dot-notation': ['error', {allowKeywords: true}],
 		'ts/naming-convention': [
 			'warn',
-			{ format: ['PascalCase', 'camelCase'], selector: 'function' },
+			{format: ['PascalCase', 'camelCase'], selector: 'function'},
 		],
 		'ts/no-array-delete': 'error',
 		'ts/no-base-to-string': 'error',
 		'ts/no-confusing-void-expression': 'error',
 		'ts/no-duplicate-type-constituents': 'error',
 		'ts/no-explicit-any': 'warn',
-		'ts/no-floating-promises': [
-			'error',
-			{ ignoreIIFE: true, ignoreVoid: true },
-		],
+		'ts/no-floating-promises': ['error', {ignoreIIFE: true, ignoreVoid: true}],
 		'ts/no-for-in-array': 'error',
 		'ts/no-implied-eval': 'error',
 		'ts/no-meaningless-void-operator': 'error',
@@ -91,7 +95,7 @@ export const typescript = async (
 			{
 				ignoreConditionalTests: true,
 				ignoreMixedLogicalExpressions: true,
-				ignorePrimitives: { number: true, string: true },
+				ignorePrimitives: {number: true, string: true},
 			},
 		],
 		'ts/prefer-optional-chain': ['error'],
@@ -102,40 +106,38 @@ export const typescript = async (
 		'ts/promise-function-async': 'error',
 		'ts/require-await': ['error'],
 		'ts/restrict-plus-operands': 'error',
-		'ts/restrict-template-expressions': [
-			'warn',
-			{ allowNumber: true },
-		],
+		'ts/restrict-template-expressions': ['warn', {allowNumber: true}],
 		'ts/switch-exhaustiveness-check': 'error',
 		'ts/unbound-method': 'error',
 	};
 
-	const [
-		pluginTs,
-		parserTs,
-	] = await Promise.all([
+	const [pluginTs, parserTs] = await Promise.all([
 		interopDefault(import('@typescript-eslint/eslint-plugin')),
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
-	// eslint-disable-next-line ts/no-shadow
-	const makeParser = (typeAware: boolean, files: string[], ignores?: string[]): FlatConfigItem => {
+	const makeParser = (
+		typeAware: boolean,
+		// eslint-disable-next-line ts/no-shadow
+		files: string[],
+		ignores?: string[],
+	): FlatConfigItem => {
 		return {
 			files,
-			...ignores ? { ignores } : {},
+			...(ignores ? {ignores} : {}),
 			languageOptions: {
 				parser: parserTs,
 
 				parserOptions: {
 					extraFileExtensions: componentExts.map(ext => `.${ext}`),
 					sourceType: 'module',
-					...typeAware
+					...(typeAware
 						? {
 								project: tsconfigPath,
 								tsconfigRootDir: process.cwd(),
 							}
-						: {},
-					...parserOptions as any,
+						: {}),
+					...(parserOptions as any),
 				},
 			},
 			name: `antfu:typescript:${typeAware ? 'type-aware-parser' : 'parser'}`,
@@ -152,12 +154,12 @@ export const typescript = async (
 			},
 		},
 		// assign type-aware parser for type-aware files and type-unaware parser for the rest
-		...isTypeAware
+		...(isTypeAware
 			? [
 					makeParser(true, filesTypeAware),
 					makeParser(false, files, filesTypeAware),
 				]
-			: [makeParser(false, files)],
+			: [makeParser(false, files)]),
 		{
 			files,
 			name: 'nivalis:typescript:rules',
@@ -194,7 +196,7 @@ export const typescript = async (
 				'no-useless-constructor': 'off',
 
 				'ts/adjacent-overload-signatures': ['error'],
-				'ts/array-type': ['error', { default: 'array-simple' }],
+				'ts/array-type': ['error', {default: 'array-simple'}],
 				'ts/ban-ts-comment': [
 					'error',
 					{
@@ -210,14 +212,14 @@ export const typescript = async (
 						types: {
 							'[[[[[]]]]]': '🦄💥',
 							'[[[[]]]]': 'ur drunk 🤡',
-							'[[[]]]': 'Don\'t use `[[[]]]`. Use `SomeType[][][]` instead.',
+							'[[[]]]': "Don't use `[[[]]]`. Use `SomeType[][][]` instead.",
 							'[[]]':
-        'Don\'t use `[[]]`. It only allows an array with a single element which is an empty array. Use `SomeType[][]` instead.',
-							'[]': 'Don\'t use the empty array type `[]`. It only allows empty arrays. Use `SomeType[]` instead.',
+								"Don't use `[[]]`. It only allows an array with a single element which is an empty array. Use `SomeType[][]` instead.",
+							'[]': "Don't use the empty array type `[]`. It only allows empty arrays. Use `SomeType[]` instead.",
 							'{}': {
 								fixWith: 'Record<string, unknown>',
 								message:
-         'The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.',
+									'The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.',
 							},
 							BigInt: {
 								fixWith: 'bigint',
@@ -228,7 +230,7 @@ export const typescript = async (
 								message: 'Use `boolean` instead.',
 							},
 							Function:
-        'Use a specific function type instead, like `() => void`.',
+								'Use a specific function type instead, like `() => void`.',
 							Number: {
 								fixWith: 'number',
 								message: 'Use `number` instead.',
@@ -236,12 +238,12 @@ export const typescript = async (
 							object: {
 								fixWith: 'Record<string, unknown>',
 								message:
-         'The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848',
+									'The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848',
 							},
 							Object: {
 								fixWith: 'Record<string, unknown>',
 								message:
-         'The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848',
+									'The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848',
 							},
 							String: {
 								fixWith: 'string',
@@ -255,14 +257,8 @@ export const typescript = async (
 					},
 				],
 				'ts/class-literal-property-style': ['error', 'getters'],
-				'ts/consistent-generic-constructors': [
-					'error',
-					'constructor',
-				],
-				'ts/consistent-indexed-object-style': [
-					'error',
-					'index-signature',
-				],
+				'ts/consistent-generic-constructors': ['error', 'constructor'],
+				'ts/consistent-indexed-object-style': ['error', 'index-signature'],
 				'ts/consistent-type-assertions': [
 					'error',
 					{
@@ -283,7 +279,7 @@ export const typescript = async (
 				'ts/lines-between-class-members': [
 					'error',
 					'always',
-					{ exceptAfterSingleLine: true },
+					{exceptAfterSingleLine: true},
 				],
 				'ts/member-ordering': ['error'],
 				'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
@@ -294,12 +290,9 @@ export const typescript = async (
 				'ts/no-dynamic-delete': 'off',
 				'ts/no-empty-function': [
 					'error',
-					{ allow: ['arrowFunctions', 'functions', 'methods'] },
+					{allow: ['arrowFunctions', 'functions', 'methods']},
 				],
-				'ts/no-empty-interface': [
-					'error',
-					{ allowSingleExtends: true },
-				],
+				'ts/no-empty-interface': ['error', {allowSingleExtends: true}],
 				'ts/no-explicit-any': 'off',
 				'ts/no-extra-non-null-assertion': ['error'],
 				'ts/no-extraneous-class': [
@@ -314,7 +307,7 @@ export const typescript = async (
 				'ts/no-import-type-side-effects': 'error',
 				'ts/no-inferrable-types': [
 					'error',
-					{ ignoreParameters: false, ignoreProperties: false },
+					{ignoreParameters: false, ignoreProperties: false},
 				],
 				'ts/no-invalid-void-type': ['error'],
 				'ts/no-loop-func': ['error'],
@@ -331,7 +324,7 @@ export const typescript = async (
 				'ts/no-misused-new': ['error'],
 				'ts/no-namespace': [
 					'error',
-					{ allowDeclarations: false, allowDefinitionFiles: false },
+					{allowDeclarations: false, allowDefinitionFiles: false},
 				],
 				'ts/no-non-null-asserted-nullish-coalescing': ['error'],
 				'ts/no-non-null-asserted-optional-chain': ['error'],
@@ -348,10 +341,7 @@ export const typescript = async (
 						ignoreTypeValueShadow: true,
 					},
 				],
-				'ts/no-this-alias': [
-					'error',
-					{ allowDestructuring: true },
-				],
+				'ts/no-this-alias': ['error', {allowDestructuring: true}],
 				'ts/no-unnecessary-type-constraint': ['error'],
 				'ts/no-unused-expressions': [
 					'error',
@@ -372,19 +362,19 @@ export const typescript = async (
 						varsIgnorePattern: '^_',
 					},
 				],
-				'ts/no-use-before-define': ['error', {
-					allowNamedExports: false,
-					classes: false,
-					functions: false,
-					variables: true,
-				}],
+				'ts/no-use-before-define': [
+					'error',
+					{
+						allowNamedExports: false,
+						classes: false,
+						functions: false,
+						variables: true,
+					},
+				],
 				'ts/no-useless-constructor': ['error'],
 				'ts/no-useless-empty-export': ['error'],
 				'ts/no-var-requires': ['error'],
-				'ts/parameter-properties': [
-					'error',
-					{ prefer: 'parameter-property' },
-				],
+				'ts/parameter-properties': ['error', {prefer: 'parameter-property'}],
 				'ts/prefer-as-const': ['error'],
 				'ts/prefer-for-of': ['error'],
 				'ts/prefer-function-type': ['error'],
@@ -393,11 +383,11 @@ export const typescript = async (
 				'ts/prefer-ts-expect-error': ['error'],
 				'ts/triple-slash-reference': [
 					'warn',
-					{ lib: 'never', path: 'never', types: 'never' },
+					{lib: 'never', path: 'never', types: 'never'},
 				],
 				'ts/unified-signatures': [
 					'error',
-					{ ignoreDifferentlyNamedParameters: true },
+					{ignoreDifferentlyNamedParameters: true},
 				],
 				'unused-imports/no-unused-vars': 'off',
 				...overrides,
@@ -407,7 +397,7 @@ export const typescript = async (
 			files: filesTypeAware,
 			name: 'nivalis:typescript:rules-type-aware',
 			rules: {
-				...tsconfigPath ? typeAwareRules : {},
+				...(tsconfigPath ? typeAwareRules : {}),
 				...overrides,
 			},
 		},

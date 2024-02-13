@@ -1,26 +1,22 @@
-import { GLOB_YAML } from '../globs';
-import { interopDefault } from '../utils';
-import { DEFAULT_INDENT } from '../constants';
-import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsStylistic } from '../types';
+import {GLOB_YAML} from '../globs';
+import {interopDefault} from '../utils';
+import {DEFAULT_INDENT} from '../constants';
+import type {
+	FlatConfigItem,
+	OptionsFiles,
+	OptionsOverrides,
+	OptionsStylistic,
+} from '../types';
 
 export const yaml = async (
 	options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
 ): Promise<FlatConfigItem[]> => {
-	const {
-		files = [GLOB_YAML],
-		overrides = {},
-		stylistic = true,
-	} = options;
+	const {files = [GLOB_YAML], overrides = {}, stylistic = true} = options;
 
-	const {
-		indent = DEFAULT_INDENT,
-		quotes = 'single',
-	} = typeof stylistic === 'boolean' ? {} : stylistic;
+	const {indent = DEFAULT_INDENT, quotes = 'single'} =
+		typeof stylistic === 'boolean' ? {} : stylistic;
 
-	const [
-		pluginYaml,
-		parserYaml,
-	] = await Promise.all([
+	const [pluginYaml, parserYaml] = await Promise.all([
 		interopDefault(import('eslint-plugin-yml')),
 		interopDefault(import('yaml-eslint-parser')),
 	] as const);
@@ -52,7 +48,7 @@ export const yaml = async (
 
 				'yaml/vue-custom-block/no-parsing-error': 'error',
 
-				...stylistic
+				...(stylistic
 					? {
 							'yaml/block-mapping-question-indicator-newline': 'error',
 							'yaml/block-sequence-hyphen-indicator-newline': 'error',
@@ -60,13 +56,16 @@ export const yaml = async (
 							'yaml/flow-mapping-curly-spacing': 'error',
 							'yaml/flow-sequence-bracket-newline': 'error',
 							'yaml/flow-sequence-bracket-spacing': 'error',
-							'yaml/indent': ['error', indent === 'tab' ? DEFAULT_INDENT : indent],
+							'yaml/indent': [
+								'error',
+								indent === 'tab' ? DEFAULT_INDENT : indent,
+							],
 							'yaml/key-spacing': 'error',
 							'yaml/no-tab-indent': 'error',
-							'yaml/quotes': ['error', { avoidEscape: false, prefer: quotes }],
+							'yaml/quotes': ['error', {avoidEscape: false, prefer: quotes}],
 							'yaml/spaced-comment': 'error',
 						}
-					: {},
+					: {}),
 
 				...overrides,
 			},

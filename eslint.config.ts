@@ -1,7 +1,7 @@
 /* eslint-disable ts/no-unsafe-assignment */
 // @ts-expect-error missing types
 import styleMigrate from '@stylistic/eslint-plugin-migrate';
-import { nivalis } from './src';
+import {nivalis} from './src';
 
 export default nivalis(
 	{
@@ -9,9 +9,6 @@ export default nivalis(
 			tsconfigPath: './tsconfig.json',
 		},
 		formatters: true,
-		stylistic: {
-			indent: 'tab',
-		},
 	},
 	{
 		files: ['src/**/*.ts'],
@@ -27,7 +24,7 @@ export default nivalis(
 			'style-migrate': styleMigrate,
 		},
 		rules: {
-			'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
+			'style-migrate/migrate': ['error', {namespaceTo: 'style'}],
 		},
 	},
 );
