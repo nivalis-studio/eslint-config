@@ -11,6 +11,7 @@ import {
 	markdown,
 	node,
 	perfectionist,
+	prettier,
 	react,
 	sortPackageJson,
 	sortTsconfig,
@@ -132,13 +133,6 @@ export const nivalis = async (
 		}));
 	}
 
-	if (stylisticOptions) {
-		configs.push(stylistic({
-			...stylisticOptions,
-			overrides: getOverrides(options, 'stylistic'),
-		}));
-	}
-
 	if (options.test) {
 		configs.push(test({
 			isInEditor,
@@ -207,6 +201,15 @@ export const nivalis = async (
 			options.formatters,
 			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
 		));
+	}
+
+	if (stylisticOptions) {
+		configs.push(stylistic({
+			...stylisticOptions,
+			overrides: getOverrides(options, 'stylistic'),
+		}));
+	} else {
+		configs.push(prettier());
 	}
 
 	/* User can optionally pass a flat config item to the first argument

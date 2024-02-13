@@ -399,6 +399,7 @@ export const typescript = async (
 					'error',
 					{ ignoreDifferentlyNamedParameters: true },
 				],
+				'unused-imports/no-unused-vars': 'off',
 				...overrides,
 			},
 		},

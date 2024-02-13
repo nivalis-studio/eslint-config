@@ -8,6 +8,7 @@ export { jsonc } from './jsonc';
 export { markdown } from './markdown';
 export { node } from './node';
 export { perfectionist } from './perfectionist';
+export { prettier } from './prettier';
 export { formatters } from './formatters';
 export { react } from './react';
 export { sortPackageJson, sortTsconfig } from './sort';
