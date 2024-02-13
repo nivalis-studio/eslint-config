@@ -233,15 +233,6 @@ export const react = async (
 				],
 				'react/void-dom-elements-no-children': ['error'],
 
-				'style/jsx-curly-brace-presence': [
-					'error',
-					{
-						children: 'ignore',
-						propElementValues: 'always',
-						props: 'never',
-					},
-				],
-
 				...(typescript
 					? {
 							'react/jsx-no-undef': 'off',

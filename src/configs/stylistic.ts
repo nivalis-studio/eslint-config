@@ -56,6 +56,14 @@ export const stylistic = async (
 				'antfu/top-level-function': 'off',
 
 				curly: ['error', 'multi-line', 'consistent'],
+				'style/jsx-curly-brace-presence': [
+					'error',
+					{
+						children: 'ignore',
+						propElementValues: 'always',
+						props: 'never',
+					},
+				],
 				'style/jsx-pascal-case': [
 					'error',
 					{
@@ -76,7 +84,6 @@ export const stylistic = async (
 						shorthandLast: false,
 					},
 				],
-
 				'style/no-multiple-empty-lines': [
 					'error',
 					{max: 1, maxBOF: 0, maxEOF: 0},
