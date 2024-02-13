@@ -66,7 +66,6 @@ export const javascript = (
 					{allowImplicit: true, checkForEach: false},
 				],
 				'block-scoped-var': 'error',
-				'callback-return': ['error', ['callback']],
 				camelcase: [
 					'error',
 					{
@@ -143,10 +142,8 @@ export const javascript = (
 				'no-array-constructor': 'error',
 				'no-async-promise-executor': 'error',
 				'no-await-in-loop': ['error'],
-				'no-buffer-constructor': ['error'],
 				'no-caller': 'error',
 				'no-case-declarations': 'error',
-				'no-catch-shadow': ['error'],
 				'no-class-assign': ['error'],
 				'no-compare-neg-zero': 'error',
 				'no-cond-assign': ['error', 'always'],
@@ -250,10 +247,7 @@ export const javascript = (
 						props: true,
 					},
 				],
-				'no-path-concat': ['error'],
 				'no-plusplus': ['error', {allowForLoopAfterthoughts: true}],
-				'no-process-env': ['error'],
-				'no-process-exit': ['error'],
 				'no-promise-executor-return': ['error'],
 				'no-proto': ['error'],
 				'no-prototype-builtins': ['error'],
@@ -526,12 +520,6 @@ export const javascript = (
 			files: [`**/*.{test,spec}.${GLOB_SRC_EXT}`],
 			rules: {
 				'no-unused-expressions': 'off',
-			},
-		},
-		{
-			files: ['**/env.{js,ts}', '**/environment.{js,ts}'],
-			rules: {
-				'no-process-env': 'off',
 			},
 		},
 		{

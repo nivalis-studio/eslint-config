@@ -12,7 +12,6 @@ export const unicorn = async (): Promise<FlatConfigItem[]> => {
 				unicorn: pluginUnicorn,
 			},
 			rules: {
-				'no-process-exit': 'off',
 				'unicorn/better-regex': [
 					'error',
 					{

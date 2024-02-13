@@ -35,6 +35,18 @@ import anotherConfig from 'another-config';
 import anotherPlugin from 'another-plugin';
 
 export default nivalis(
+	{
+    gitignore: true,
+    graphql: false, // true if graphql is installed
+    nextjs: false, // true if nextjs is installed
+    prettier: true,
+    react: true, // true if react is installed
+    sortKeys: false, // disabled by default
+    stylistic: false, // disabled by default
+    tailwindcss: true, // true if tailwindcss is installed
+    typescript: true, // true if typescript is installed
+    typescriptTypecheck: true, // true if typescript is installed
+  },
   [
     /* ignore some files */
     {
@@ -59,18 +71,6 @@ export default nivalis(
       },
     },
   ],
-  {
-    gitignore: true,
-    graphql: false, // true if graphql is installed
-    nextjs: false, // true if nextjs is installed
-    prettier: true,
-    react: true, // true if react is installed
-    sortKeys: false, // disabled by default
-    stylistic: false, // disabled by default
-    tailwindcss: true, // true if tailwindcss is installed
-    typescript: true, // true if typescript is installed
-    typescriptTypecheck: true, // true if typescript is installed
-  },
 );
 ```
 

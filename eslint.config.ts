@@ -5,9 +5,6 @@ import {nivalis} from './src';
 
 export default nivalis(
 	{
-		typescript: {
-			tsconfigPath: './tsconfig.json',
-		},
 		formatters: true,
 	},
 	{

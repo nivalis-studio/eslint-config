@@ -28,7 +28,7 @@ export const typescript = async (
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
 	const tsconfigPath = options?.tsconfigPath
 		? toArray(options.tsconfigPath)
-		: undefined;
+		: './tsconfig.json';
 
 	const isTypeAware = !!tsconfigPath;
 
@@ -38,14 +38,6 @@ export const typescript = async (
 		'no-throw-literal': 'off',
 		'prefer-promise-reject-errors': 'off',
 		'require-await': 'off',
-		// Adds support for triple-slash directives.
-		'spaced-comment': [
-			'error',
-			'always',
-			{
-				markers: ['/'],
-			},
-		],
 		'ts/await-thenable': 'error',
 		'ts/consistent-type-exports': [
 			'error',
@@ -187,7 +179,6 @@ export const typescript = async (
 				'no-magic-numbers': 'off',
 				'no-redeclare': 'off',
 				'no-restricted-imports': 'off',
-				'no-return-await': 'off',
 				'no-shadow': 'off',
 				'no-undef': 'off',
 				'no-unused-expressions': 'off',
@@ -276,11 +267,6 @@ export const typescript = async (
 					},
 				],
 				'ts/default-param-last': ['error'],
-				'ts/lines-between-class-members': [
-					'error',
-					'always',
-					{exceptAfterSingleLine: true},
-				],
 				'ts/member-ordering': ['error'],
 				'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
 				'ts/no-array-constructor': ['error'],

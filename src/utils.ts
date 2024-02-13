@@ -63,7 +63,6 @@ export const interopDefault = async <T>(
 };
 
 export const ensurePackages = (packages: string[]) => {
-	// eslint-disable-next-line no-process-env
 	if (process.env.CI || !process.stdout.isTTY) {
 		return;
 	}
