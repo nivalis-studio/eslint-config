@@ -1,11 +1,11 @@
-import {isPackageExists} from 'local-pkg';
+import { isPackageExists } from 'local-pkg';
 
 export const IN_IS_EDITOR = !!(
-	(process.env.VSCODE_PID ||
-		process.env.VSCODE_CWD ||
-		process.env.JETBRAINS_IDE ||
-		process.env.VIM) &&
-	!process.env.CI
+  (process.env.VSCODE_PID ||
+    process.env.VSCODE_CWD ||
+    process.env.JETBRAINS_IDE ||
+    process.env.VIM) &&
+  !process.env.CI
 );
 export const HAS_TYPESCRIPT = isPackageExists('typescript');
 export const HAS_REACT = isPackageExists('react');
