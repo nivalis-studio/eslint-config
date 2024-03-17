@@ -35,7 +35,7 @@ import anotherConfig from 'another-config';
 import anotherPlugin from 'another-plugin';
 
 export default nivalis(
-	{
+  {
     gitignore: true,
     graphql: false, // true if graphql is installed
     nextjs: false, // true if nextjs is installed

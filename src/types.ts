@@ -279,9 +279,16 @@ export interface OptionsConfig extends OptionsComponentExts {
   /**
    * Enable stylistic rules instead of Prettier.
    *
-   * @default false
+   * @default true
    */
   stylistic?: boolean | (StylisticConfig & OptionsOverrides);
+
+  /**
+   * Enable stylistic rules instead of Prettier.
+   *
+   * @default true
+   */
+  prettier?: boolean | OptionsOverrides;
 
   /**
    * Enable react rules.

@@ -83,16 +83,15 @@ export const nivalis = async (
     gitignore: enableGitignore = true,
     graphQL: enableGraphQL = false,
     isInEditor = IN_IS_EDITOR,
+    prettier: enablePrettier = true,
     react: enableReact = HAS_REACT,
+    stylistic: enableStylistic = true,
     tailwindcss: enableTailwindCSS = HAS_TAILWINDCSS,
     typescript: enableTypeScript = HAS_TYPESCRIPT,
   } = options;
 
-  const stylisticOptions = options.stylistic
-    ? typeof options.stylistic === 'object'
-      ? options.stylistic
-      : {}
-    : false;
+  const stylisticOptions =
+    typeof enableStylistic === 'object' ? enableStylistic : {};
 
   if (stylisticOptions && !('jsx' in stylisticOptions)) {
     stylisticOptions.jsx = options.jsx ?? true;
@@ -229,14 +228,16 @@ export const nivalis = async (
     );
   }
 
-  if (stylisticOptions) {
+  if (enableStylistic) {
     configs.push(
       stylistic({
         ...stylisticOptions,
         overrides: getOverrides(options, 'stylistic'),
       }),
     );
-  } else {
+  }
+
+  if (enablePrettier) {
     configs.push(prettier());
   }
 
