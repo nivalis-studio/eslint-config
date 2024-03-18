@@ -1,7 +1,7 @@
 import { interopDefault } from '../utils';
 import { pluginAntfu } from '../plugins';
 import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC, GLOB_YAML } from '../globs';
 import type {
   FlatConfigItem,
   OptionsOverrides,
@@ -99,7 +99,7 @@ export const stylistic = async (
       },
     },
     {
-      files: ['*.yaml'],
+      files: [GLOB_YAML],
       rules: {
         'style/spaced-comment': 'off',
       },
