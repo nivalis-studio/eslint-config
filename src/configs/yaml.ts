@@ -13,9 +13,6 @@ export const yaml = async (
 ): Promise<FlatConfigItem[]> => {
   const { files = [GLOB_YAML], overrides = {}, stylistic = true } = options;
 
-  const { indent = DEFAULT_INDENT, quotes = 'single' } =
-    typeof stylistic === 'boolean' ? {} : stylistic;
-
   const [pluginYaml, parserYaml] = await Promise.all([
     interopDefault(import('eslint-plugin-yml')),
     interopDefault(import('yaml-eslint-parser')),
@@ -56,13 +53,13 @@ export const yaml = async (
               'yaml/flow-mapping-curly-spacing': 'error',
               'yaml/flow-sequence-bracket-newline': 'error',
               'yaml/flow-sequence-bracket-spacing': 'error',
-              'yaml/indent': [
-                'error',
-                indent === 'tab' ? DEFAULT_INDENT : indent,
-              ],
+              'yaml/indent': ['error', DEFAULT_INDENT],
               'yaml/key-spacing': 'error',
               'yaml/no-tab-indent': 'error',
-              'yaml/quotes': ['error', { avoidEscape: false, prefer: quotes }],
+              'yaml/quotes': [
+                'error',
+                { avoidEscape: false, prefer: 'double' },
+              ],
               'yaml/spaced-comment': 'error',
             }
           : {}),

@@ -98,6 +98,12 @@ export const stylistic = async (
         ...overrides,
       },
     },
+    {
+      files: ['*.yaml'],
+      rules: {
+        'style/spaced-comment': 'off',
+      },
+    },
   ];
 };
 
