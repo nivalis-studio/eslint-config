@@ -19,9 +19,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "bin": "./bin/index.js",
   "files": [
-    "bin",
     "dist"
   ],
   "scripts": {
