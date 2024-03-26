@@ -1,18 +1,11 @@
 {
-  // Enable the ESlint flat config support
   "eslint.experimental.useFlatConfig": true,
-
-  // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,
-
-  // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
-
-  // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off" },
     { "rule": "*-indent", "severity": "off" },
@@ -24,8 +17,6 @@
     { "rule": "*quotes", "severity": "off" },
     { "rule": "*semi", "severity": "off" }
   ],
-
-  // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -38,12 +29,5 @@
     "jsonc",
     "yaml",
     "toml"
-  ],
-
-  "pair-diff.patterns": [
-    {
-      "source": "./fixtures/output/**/*.*",
-      "target": "./fixtures/input/<base>"
-    }
   ]
 }
