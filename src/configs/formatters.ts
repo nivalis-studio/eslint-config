@@ -1,74 +1,80 @@
-import { isPackageExists } from 'local-pkg'
-import { GLOB_ASTRO, GLOB_CSS, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs'
-import type { VendoredPrettierOptions } from '../vender/prettier-types'
-import { ensurePackages, interopDefault, parserPlain } from '../utils'
-import type { FlatConfigItem, OptionsFormatters, StylisticConfig } from '../types'
-import { StylisticConfigDefaults } from './stylistic'
+import { HAS_ASTRO } from '../environment';
+import {
+  GLOB_ASTRO,
+  GLOB_CSS,
+  GLOB_LESS,
+  GLOB_MARKDOWN,
+  GLOB_POSTCSS,
+  GLOB_SCSS,
+} from '../globs';
+import { ensurePackages, interopDefault, parserPlain } from '../utils';
+import { DEFAULT_INDENT } from '../constants';
+import { StylisticConfigDefaults } from './stylistic';
+import type { VendoredPrettierOptions } from '../vender/prettier-types';
+import type {
+  FlatConfigItem,
+  OptionsFormatters,
+  StylisticConfig,
+} from '../types';
 
-export async function formatters(
+export const formatters = async (
   options: OptionsFormatters | true = {},
   stylistic: StylisticConfig = {},
-): Promise<FlatConfigItem[]> {
+): Promise<FlatConfigItem[]> => {
   if (options === true) {
+    // eslint-disable-next-line no-param-reassign
     options = {
-      astro: isPackageExists('astro'),
+      astro: HAS_ASTRO,
       css: true,
       graphql: true,
       html: true,
       markdown: true,
-      slidev: isPackageExists('@slidev/cli'),
-    }
+    };
   }
 
-  await ensurePackages([
-    'eslint-plugin-format',
-    options.markdown && options.slidev ? 'prettier-plugin-slidev' : undefined,
-    options.astro ? 'prettier-plugin-astro' : undefined,
-  ])
+  ensurePackages(
+    [
+      'eslint-plugin-format',
+      options.astro ? 'prettier-plugin-astro' : undefined,
+    ].filter(Boolean) as string[],
+  );
 
-  if (options.slidev && options.markdown !== true && options.markdown !== 'prettier')
-    throw new Error('`slidev` option only works when `markdown` is enabled with `prettier`')
-
-  const {
-    indent,
-    quotes,
-    semi,
-  } = {
+  const { indent, quotes, semi } = {
     ...StylisticConfigDefaults,
     ...stylistic,
-  }
+  };
 
   const prettierOptions: VendoredPrettierOptions = Object.assign(
     {
       endOfLine: 'auto',
       semi,
       singleQuote: quotes === 'single',
-      tabWidth: typeof indent === 'number' ? indent : 2,
+      tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
       trailingComma: 'all',
       useTabs: indent === 'tab',
     } satisfies VendoredPrettierOptions,
-    options.prettierOptions || {},
-  )
+    options.prettierOptions ?? {},
+  );
 
   const dprintOptions = Object.assign(
     {
-      indentWidth: typeof indent === 'number' ? indent : 2,
+      indentWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
       quoteStyle: quotes === 'single' ? 'preferSingle' : 'preferDouble',
       useTabs: indent === 'tab',
     },
-    options.dprintOptions || {},
-  )
+    options.dprintOptions ?? {},
+  );
 
-  const pluginFormat = await interopDefault(import('eslint-plugin-format'))
+  const pluginFormat = await interopDefault(import('eslint-plugin-format'));
 
   const configs: FlatConfigItem[] = [
     {
-      name: 'antfu:formatters:setup',
+      name: 'nivalis:formatters:setup',
       plugins: {
         format: pluginFormat,
       },
     },
-  ]
+  ];
 
   if (options.css) {
     configs.push(
@@ -77,7 +83,7 @@ export async function formatters(
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:css',
+        name: 'nivalis:formatter:css',
         rules: {
           'format/prettier': [
             'error',
@@ -93,7 +99,7 @@ export async function formatters(
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:scss',
+        name: 'nivalis:formatter:scss',
         rules: {
           'format/prettier': [
             'error',
@@ -109,7 +115,7 @@ export async function formatters(
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:less',
+        name: 'nivalis:formatter:less',
         rules: {
           'format/prettier': [
             'error',
@@ -120,7 +126,7 @@ export async function formatters(
           ],
         },
       },
-    )
+    );
   }
 
   if (options.html) {
@@ -129,7 +135,7 @@ export async function formatters(
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:html',
+      name: 'nivalis:formatter:html',
       rules: {
         'format/prettier': [
           'error',
@@ -139,27 +145,18 @@ export async function formatters(
           },
         ],
       },
-    })
+    });
   }
 
   if (options.markdown) {
-    const formater = options.markdown === true
-      ? 'prettier'
-      : options.markdown
-
-    const GLOB_SLIDEV = !options.slidev
-      ? []
-      : options.slidev === true
-        ? ['**/slides.md']
-        : options.slidev.files
+    const formater = options.markdown === true ? 'prettier' : options.markdown;
 
     configs.push({
       files: [GLOB_MARKDOWN],
-      ignores: GLOB_SLIDEV,
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:markdown',
+      name: 'nivalis:formatter:markdown',
       rules: {
         [`format/${formater}`]: [
           'error',
@@ -176,31 +173,7 @@ export async function formatters(
               },
         ],
       },
-    })
-
-    if (options.slidev) {
-      configs.push({
-        files: GLOB_SLIDEV,
-        languageOptions: {
-          parser: parserPlain,
-        },
-        name: 'antfu:formatter:slidev',
-        rules: {
-          'format/prettier': [
-            'error',
-            {
-              printWidth: 120,
-              ...prettierOptions,
-              embeddedLanguageFormatting: 'off',
-              parser: 'slidev',
-              plugins: [
-                'prettier-plugin-slidev',
-              ],
-            },
-          ],
-        },
-      })
-    }
+    });
   }
 
   if (options.astro) {
@@ -209,20 +182,18 @@ export async function formatters(
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:astro',
+      name: 'nivalis:formatter:astro',
       rules: {
         'format/prettier': [
           'error',
           {
             ...prettierOptions,
             parser: 'astro',
-            plugins: [
-              'prettier-plugin-astro',
-            ],
+            plugins: ['prettier-plugin-astro'],
           },
         ],
       },
-    })
+    });
   }
 
   if (options.graphql) {
@@ -231,7 +202,7 @@ export async function formatters(
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:graphql',
+      name: 'nivalis:formatter:graphql',
       rules: {
         'format/prettier': [
           'error',
@@ -241,8 +212,8 @@ export async function formatters(
           },
         ],
       },
-    })
+    });
   }
 
-  return configs
-}
+  return configs;
+};

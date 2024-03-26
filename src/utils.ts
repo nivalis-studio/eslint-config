@@ -1,6 +1,5 @@
-import process from 'node:process'
-import { isPackageExists } from 'local-pkg'
-import type { Awaitable, UserConfigItem } from './types'
+import { isPackageExists } from 'local-pkg';
+import type { Awaitable, UserConfigItem } from './types';
 
 export const parserPlain = {
   meta: {
@@ -21,15 +20,18 @@ export const parserPlain = {
       Program: [],
     },
   }),
-}
+};
 
 /**
  * Combine array and non-array configs into a single array.
  */
-export async function combine(...configs: Awaitable<UserConfigItem | UserConfigItem[]>[]): Promise<UserConfigItem[]> {
-  const resolved = await Promise.all(configs)
-  return resolved.flat()
-}
+export const combine = async (
+  ...configs: Array<Awaitable<UserConfigItem | UserConfigItem[]>>
+): Promise<UserConfigItem[]> => {
+  const resolved = await Promise.all(configs);
+
+  return resolved.flat();
+};
 
 /**
  * Rename plugin prefixes in a rule object.
@@ -49,18 +51,21 @@ export async function combine(...configs: Awaitable<UserConfigItem | UserConfigI
  * }]
  * ```
  */
-export function renameRules(rules: Record<string, any>, map: Record<string, string>) {
+export const renameRules = (
+  rules: { [key: string]: any },
+  map: { [key: string]: string },
+) => {
   return Object.fromEntries(
-    Object.entries(rules)
-      .map(([key, value]) => {
-        for (const [from, to] of Object.entries(map)) {
-          if (key.startsWith(`${from}/`))
-            return [to + key.slice(from.length), value]
-        }
-        return [key, value]
-      }),
-  )
-}
+    Object.entries(rules).map(([key, value]) => {
+      for (const [from, to] of Object.entries(map)) {
+        if (key.startsWith(`${from}/`))
+          return [to + key.slice(from.length), value];
+      }
+
+      return [key, value];
+    }),
+  );
+};
 
 /**
  * Rename plugin names a flat configs array
@@ -76,46 +81,54 @@ export function renameRules(rules: Record<string, any>, map: Record<string, stri
  * })
  * ```
  */
-export function renamePluginInConfigs(configs: UserConfigItem[], map: Record<string, string>): UserConfigItem[] {
-  return configs.map((i) => {
-    const clone = { ...i }
-    if (clone.rules)
-      clone.rules = renameRules(clone.rules, map)
+export const renamePluginInConfigs = (
+  configs: UserConfigItem[],
+  map: { [key: string]: string },
+): UserConfigItem[] => {
+  return configs.map(i => {
+    const clone = { ...i };
+
+    if (clone.rules) clone.rules = renameRules(clone.rules, map);
+
     if (clone.plugins) {
       clone.plugins = Object.fromEntries(
-        Object.entries(clone.plugins)
-          .map(([key, value]) => {
-            if (key in map)
-              return [map[key], value]
-            return [key, value]
-          }),
-      )
+        Object.entries(clone.plugins).map(([key, value]) => {
+          if (key in map) return [map[key], value];
+
+          return [key, value];
+        }),
+      );
     }
-    return clone
-  })
-}
 
-export function toArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value]
-}
+    return clone;
+  });
+};
 
-export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
-  const resolved = await m
-  return (resolved as any).default || resolved
-}
+export const toArray = <T>(value: T | T[]): T[] => {
+  return Array.isArray(value) ? value : [value];
+};
 
-export async function ensurePackages(packages: (string | undefined)[]) {
-  if (process.env.CI || process.stdout.isTTY === false)
-    return
+export const interopDefault = async <T>(
+  mod: Awaitable<T>,
+): Promise<T extends { default: infer U } ? U : T> => {
+  const resolved = await mod;
 
-  const nonExistingPackages = packages.filter(i => i && !isPackageExists(i)) as string[]
-  if (nonExistingPackages.length === 0)
-    return
+  // eslint-disable-next-line ts/no-unsafe-return, ts/no-unsafe-member-access
+  return (resolved as any).default || resolved;
+};
 
-  const p = await import('@clack/prompts')
-  const result = await p.confirm({
-    message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
-  })
-  if (result)
-    await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }))
-}
+export const ensurePackages = (packages: string[]) => {
+  if (process.env.CI || !process.stdout.isTTY) {
+    return;
+  }
+
+  const nonExistingPackages = packages.filter(i => !isPackageExists(i));
+
+  if (nonExistingPackages.length === 0) {
+    return;
+  }
+
+  throw new Error(
+    `This package(s) are required for this config: ${nonExistingPackages.join(', ')}. Please install them.`,
+  );
+};

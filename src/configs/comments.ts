@@ -1,10 +1,10 @@
-import type { FlatConfigItem } from '../types'
-import { pluginComments } from '../plugins'
+import { pluginComments } from '../plugins';
+import type { FlatConfigItem } from '../types';
 
-export async function comments(): Promise<FlatConfigItem[]> {
+export const comments = (): FlatConfigItem[] => {
   return [
     {
-      name: 'antfu:eslint-comments',
+      name: 'nivalis:eslint-comments',
       plugins: {
         'eslint-comments': pluginComments,
       },
@@ -12,8 +12,9 @@ export async function comments(): Promise<FlatConfigItem[]> {
         'eslint-comments/no-aggregating-enable': 'error',
         'eslint-comments/no-duplicate-disable': 'error',
         'eslint-comments/no-unlimited-disable': 'error',
+        'eslint-comments/no-unused-disable': 'error',
         'eslint-comments/no-unused-enable': 'error',
       },
     },
-  ]
-}
+  ];
+};

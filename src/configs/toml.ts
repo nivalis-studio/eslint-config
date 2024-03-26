@@ -1,31 +1,29 @@
-import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsStylistic } from '../types'
-import { GLOB_TOML } from '../globs'
-import { interopDefault } from '../utils'
+import { GLOB_TOML } from '../globs';
+import { interopDefault } from '../utils';
+import { DEFAULT_INDENT } from '../constants';
+import type {
+  FlatConfigItem,
+  OptionsFiles,
+  OptionsOverrides,
+  OptionsStylistic,
+} from '../types';
 
-export async function toml(
+export const toml = async (
   options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
-): Promise<FlatConfigItem[]> {
-  const {
-    files = [GLOB_TOML],
-    overrides = {},
-    stylistic = true,
-  } = options
+): Promise<FlatConfigItem[]> => {
+  const { files = [GLOB_TOML], overrides = {}, stylistic = true } = options;
 
-  const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+  const { indent = DEFAULT_INDENT } =
+    typeof stylistic === 'boolean' ? {} : stylistic;
 
-  const [
-    pluginToml,
-    parserToml,
-  ] = await Promise.all([
+  const [pluginToml, parserToml] = await Promise.all([
     interopDefault(import('eslint-plugin-toml')),
     interopDefault(import('toml-eslint-parser')),
-  ] as const)
+  ] as const);
 
   return [
     {
-      name: 'antfu:toml:setup',
+      name: 'nivalis:toml:setup',
       plugins: {
         toml: pluginToml,
       },
@@ -35,7 +33,7 @@ export async function toml(
       languageOptions: {
         parser: parserToml,
       },
-      name: 'antfu:toml:rules',
+      name: 'nivalis:toml:rules',
       rules: {
         'style/spaced-comment': 'off',
 
@@ -46,15 +44,19 @@ export async function toml(
         'toml/precision-of-fractional-seconds': 'error',
         'toml/precision-of-integer': 'error',
         'toml/tables-order': 'error',
-
         'toml/vue-custom-block/no-parsing-error': 'error',
 
-        ...stylistic
+        'unicorn/filename-case': 'off',
+
+        ...(stylistic
           ? {
               'toml/array-bracket-newline': 'error',
               'toml/array-bracket-spacing': 'error',
               'toml/array-element-newline': 'error',
-              'toml/indent': ['error', indent === 'tab' ? 2 : indent],
+              'toml/indent': [
+                'error',
+                indent === 'tab' ? DEFAULT_INDENT : indent,
+              ],
               'toml/inline-table-curly-spacing': 'error',
               'toml/key-spacing': 'error',
               'toml/padding-line-between-pairs': 'error',
@@ -63,10 +65,10 @@ export async function toml(
               'toml/spaced-comment': 'error',
               'toml/table-bracket-spacing': 'error',
             }
-          : {},
+          : {}),
 
         ...overrides,
       },
     },
-  ]
-}
+  ];
+};

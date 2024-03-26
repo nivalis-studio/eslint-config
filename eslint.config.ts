@@ -1,22 +1,18 @@
+/* eslint-disable ts/no-unsafe-assignment */
 // @ts-expect-error missing types
-import styleMigrate from '@stylistic/eslint-plugin-migrate'
-import antfu from './src'
+import styleMigrate from '@stylistic/eslint-plugin-migrate';
+import { nivalis } from './src';
 
-export default antfu(
+export default nivalis(
   {
-    vue: true,
-    // react: true,
-    typescript: true,
-    ignores: [
-      'fixtures',
-      '_fixtures',
-    ],
     formatters: true,
   },
   {
     files: ['src/**/*.ts'],
     rules: {
       'perfectionist/sort-objects': 'error',
+      'ts/no-unsafe-assignment': 'off',
+      'ts/no-explicit-any': 'off',
     },
   },
   {
@@ -28,4 +24,7 @@ export default antfu(
       'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
     },
   },
-)
+  {
+    ignores: ['fixtures/**/*'],
+  },
+);

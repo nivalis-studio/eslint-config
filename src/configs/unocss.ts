@@ -1,43 +1,36 @@
-import { ensurePackages, interopDefault } from '../utils'
-import type { FlatConfigItem, OptionsUnoCSS } from '../types'
+import { ensurePackages, interopDefault } from '../utils';
+import type { FlatConfigItem, OptionsUnoCSS } from '../types';
 
-export async function unocss(
+export const unocss = async (
   options: OptionsUnoCSS = {},
-): Promise<FlatConfigItem[]> {
-  const {
-    attributify = true,
-    strict = false,
-  } = options
+): Promise<FlatConfigItem[]> => {
+  const { attributify = true, strict = false } = options;
 
-  await ensurePackages([
-    '@unocss/eslint-plugin',
-  ])
+  ensurePackages(['@unocss/eslint-plugin']);
 
-  const [
-    pluginUnoCSS,
-  ] = await Promise.all([
+  const [pluginUnoCSS] = await Promise.all([
     interopDefault(import('@unocss/eslint-plugin')),
-  ] as const)
+  ] as const);
 
   return [
     {
-      name: 'antfu:unocss',
+      name: 'nivalis:unocss',
       plugins: {
         unocss: pluginUnoCSS,
       },
       rules: {
         'unocss/order': 'warn',
-        ...attributify
+        ...(attributify
           ? {
               'unocss/order-attributify': 'warn',
             }
-          : {},
-        ...strict
+          : {}),
+        ...(strict
           ? {
               'unocss/blocklist': 'error',
             }
-          : {},
+          : {}),
       },
     },
-  ]
-}
+  ];
+};
