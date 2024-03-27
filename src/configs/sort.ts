@@ -1,15 +1,15 @@
-import type { FlatConfigItem } from '../types'
+import type { FlatConfigItem } from '../types';
 
 /**
  * Sort package.json
  *
  * Requires `jsonc` config
  */
-export async function sortPackageJson(): Promise<FlatConfigItem[]> {
+export const sortPackageJson = (): FlatConfigItem[] => {
   return [
     {
       files: ['**/package.json'],
-      name: 'antfu:sort-package-json',
+      name: 'nivalis:sort-package-json',
       rules: {
         'jsonc/sort-array-values': [
           'error',
@@ -70,53 +70,33 @@ export async function sortPackageJson(): Promise<FlatConfigItem[]> {
           },
           {
             order: { type: 'asc' },
-            pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
+            pathPattern:
+              '^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
           },
           {
             order: { type: 'asc' },
             pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
           },
           {
-            order: [
-              'types',
-              'import',
-              'require',
-              'default',
-            ],
+            order: ['types', 'import', 'require', 'default'],
             pathPattern: '^exports.*$',
-          },
-          {
-            order: [
-              // client hooks only
-              'pre-commit',
-              'prepare-commit-msg',
-              'commit-msg',
-              'post-commit',
-              'pre-rebase',
-              'post-rewrite',
-              'post-checkout',
-              'post-merge',
-              'pre-push',
-              'pre-auto-gc',
-            ],
-            pathPattern: '^(?:gitHooks|husky|simple-git-hooks)$',
           },
         ],
       },
     },
-  ]
-}
+  ];
+};
 /**
  * Sort tsconfig.json
  *
  * Requires `jsonc` config
  */
 
-export function sortTsconfig(): FlatConfigItem[] {
+export const sortTsconfig = (): FlatConfigItem[] => {
   return [
     {
       files: ['**/tsconfig.json', '**/tsconfig.*.json'],
-      name: 'antfu:sort-tsconfig',
+      name: 'nivalis:sort-tsconfig',
       rules: {
         'jsonc/sort-keys': [
           'error',
@@ -235,5 +215,5 @@ export function sortTsconfig(): FlatConfigItem[] {
         ],
       },
     },
-  ]
-}
+  ];
+};

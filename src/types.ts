@@ -1,20 +1,20 @@
-import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore'
-import type { ParserOptions } from '@typescript-eslint/parser'
-import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
-import type { Linter } from 'eslint'
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
-import type { VendoredPrettierOptions } from './vender/prettier-types'
-import type { RulesOptions } from './typegen'
+/* eslint-disable ts/consistent-type-definitions */
+import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
+import type { ParserOptions } from '@typescript-eslint/parser';
+import type { ESLint, Linter } from 'eslint';
+import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
+import type { VendoredPrettierOptions } from './vender/prettier-types';
+import type { RulesOptions } from './typegen';
 
-export type Awaitable<T> = T | Promise<T>
+export type Awaitable<T> = T | Promise<T>;
 
-export type Rules = RulesOptions
+export type Rules = RulesOptions;
 
 export type FlatConfigItem = Omit<Linter.FlatConfig, 'plugins' | 'rules'> & {
   /**
    * Custom name of each config item
    */
-  name?: string
+  name?: string;
 
   // Relax plugins type limitation, as most of the plugins did not have correct type info yet.
   /**
@@ -22,21 +22,22 @@ export type FlatConfigItem = Omit<Linter.FlatConfig, 'plugins' | 'rules'> & {
    *
    * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
    */
-  plugins?: Record<string, any>
+
+  plugins?: { [key: string]: ESLint.Plugin };
 
   /**
    * An object containing a name-value mapping of rules to use.
    */
   rules?: {
-    [key: string]: Linter.RuleEntry
-  } & RulesOptions
-}
+    [key: string]: Linter.RuleEntry;
+  } & RulesOptions;
+};
 
 export interface OptionsFiles {
   /**
    * Override the `files` option to provide custom globs.
    */
-  files?: string[]
+  files?: string[];
 }
 
 export interface OptionsVue extends OptionsOverrides {
@@ -46,19 +47,20 @@ export interface OptionsVue extends OptionsOverrides {
    * @see https://github.com/antfu/eslint-processor-vue-blocks
    * @default true
    */
-  sfcBlocks?: boolean | VueBlocksOptions
+  sfcBlocks?: boolean;
 
   /**
    * Vue version. Apply different rules set from `eslint-plugin-vue`.
    *
    * @default 3
    */
-  vueVersion?: 2 | 3
+  // eslint-disable-next-line ts/no-magic-numbers
+  vueVersion?: 2 | 3;
 }
 
 export type OptionsTypescript =
-  (OptionsTypeScriptWithTypes & OptionsOverrides)
-  | (OptionsTypeScriptParserOptions & OptionsOverrides)
+  | (OptionsTypeScriptWithTypes & OptionsOverrides)
+  | (OptionsTypeScriptParserOptions & OptionsOverrides);
 
 export interface OptionsFormatters {
   /**
@@ -66,14 +68,14 @@ export interface OptionsFormatters {
    *
    * Currently only support Prettier.
    */
-  css?: 'prettier' | boolean
+  css?: 'prettier' | boolean;
 
   /**
    * Enable formatting support for HTML.
    *
    * Currently only support Prettier.
    */
-  html?: 'prettier' | boolean
+  html?: 'prettier' | boolean;
 
   /**
    * Enable formatting support for Markdown.
@@ -82,42 +84,33 @@ export interface OptionsFormatters {
    *
    * When set to `true`, it will use Prettier.
    */
-  markdown?: 'prettier' | 'dprint' | boolean
+  markdown?: 'prettier' | 'dprint' | boolean;
 
   /**
    * Enable formatting support for GraphQL.
    */
-  graphql?: 'prettier' | boolean
+  graphql?: 'prettier' | boolean;
 
   /**
    * Custom options for Prettier.
    *
    * By default it's controlled by our own config.
    */
-  prettierOptions?: VendoredPrettierOptions
+  prettierOptions?: VendoredPrettierOptions;
 
   /**
    * Custom options for dprint.
    *
    * By default it's controlled by our own config.
    */
-  dprintOptions?: boolean
-
-  /**
-   * Install the prettier plugin for handle Slidev markdown
-   *
-   * Only works when `markdown` is enabled with `prettier`.
-   */
-  slidev?: boolean | {
-    files?: string[]
-  }
+  dprintOptions?: boolean;
 
   /**
    * Enable formatting support for Astro.
    *
    * Currently only support Prettier.
    */
-  astro?: 'prettier' | boolean
+  astro?: 'prettier' | boolean;
 }
 
 export interface OptionsComponentExts {
@@ -127,20 +120,20 @@ export interface OptionsComponentExts {
    * @example ['vue']
    * @default []
    */
-  componentExts?: string[]
+  componentExts?: string[];
 }
 
 export interface OptionsTypeScriptParserOptions {
   /**
    * Additional parser options for TypeScript.
    */
-  parserOptions?: Partial<ParserOptions>
+  parserOptions?: Partial<ParserOptions>;
 
   /**
    * Glob patterns for files that should be type aware.
    * @default ['**\/*.{ts,tsx}']
    */
-  filesTypeAware?: string[]
+  filesTypeAware?: string[];
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -148,39 +141,43 @@ export interface OptionsTypeScriptWithTypes {
    * When this options is provided, type aware rules will be enabled.
    * @see https://typescript-eslint.io/linting/typed-linting/
    */
-  tsconfigPath?: string | string[]
+  tsconfigPath?: string | string[];
 }
 
 export interface OptionsHasTypeScript {
-  typescript?: boolean
+  typescript?: boolean;
 }
 
 export interface OptionsStylistic {
-  stylistic?: boolean | StylisticConfig
+  stylistic?: boolean | StylisticConfig;
 }
 
-export interface StylisticConfig extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> {
-}
+export type StylisticConfig = Pick<
+  StylisticCustomizeOptions,
+  'indent' | 'quotes' | 'jsx' | 'semi' | 'blockSpacing'
+>;
 
 export interface OptionsOverrides {
-  overrides?: FlatConfigItem['rules']
+  overrides?: FlatConfigItem['rules'];
 }
 
 export interface OptionsIsInEditor {
-  isInEditor?: boolean
+  isInEditor?: boolean;
 }
+
+export interface OptionsTailwindCSS extends OptionsOverrides {}
 
 export interface OptionsUnoCSS extends OptionsOverrides {
   /**
    * Enable attributify support.
    * @default true
    */
-  attributify?: boolean
+  attributify?: boolean;
   /**
    * Enable strict mode by throwing errors about blocklisted classes.
    * @default false
    */
-  strict?: boolean
+  strict?: boolean;
 }
 
 export interface OptionsConfig extends OptionsComponentExts {
@@ -192,12 +189,22 @@ export interface OptionsConfig extends OptionsComponentExts {
    * @see https://github.com/antfu/eslint-config-flat-gitignore
    * @default true
    */
-  gitignore?: boolean | FlatGitignoreOptions
+  gitignore?: boolean | FlatGitignoreOptions;
+
+  /**
+   * Enable graphql.
+   *
+   * Requires installing:
+   * - `@graphql-eslint/eslint-plugin`
+   *
+   * @default false
+   */
+  graphQL?: OptionsOverrides;
 
   /**
    * Core rules. Can't be disabled.
    */
-  javascript?: OptionsOverrides
+  javascript?: OptionsOverrides;
 
   /**
    * Enable TypeScript support.
@@ -206,7 +213,7 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default auto-detect based on the dependencies
    */
-  typescript?: boolean | OptionsTypescript
+  typescript?: boolean | OptionsTypescript;
 
   /**
    * Enable JSX related rules.
@@ -215,42 +222,46 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default true
    */
-  jsx?: boolean
+  jsx?: boolean;
 
   /**
    * Enable test support.
    *
-   * @default true
+   * Requires installing:
+   * - `eslint-plugin-vitest`
+   * - `eslint-plugin-no-only-tests`
+   *
+   * @default false
    */
-  test?: boolean | OptionsOverrides
+  test?: boolean | OptionsOverrides;
 
   /**
    * Enable Vue support.
    *
    * @default auto-detect based on the dependencies
    */
-  vue?: boolean | OptionsVue
+  vue?: boolean | OptionsVue;
 
   /**
    * Enable JSONC support.
    *
    * @default true
    */
-  jsonc?: boolean | OptionsOverrides
+  jsonc?: boolean | OptionsOverrides;
 
   /**
    * Enable YAML support.
    *
    * @default true
    */
-  yaml?: boolean | OptionsOverrides
+  yaml?: boolean | OptionsOverrides;
 
   /**
    * Enable TOML support.
    *
    * @default true
    */
-  toml?: boolean | OptionsOverrides
+  toml?: boolean | OptionsOverrides;
 
   /**
    * Enable ASTRO support.
@@ -263,7 +274,7 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default false
    */
-  astro?: boolean | OptionsOverrides
+  astro?: boolean | OptionsOverrides;
 
   /**
    * Enable linting for **code snippets** in Markdown.
@@ -272,26 +283,28 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default true
    */
-  markdown?: boolean | OptionsOverrides
+  markdown?: boolean | OptionsOverrides;
 
   /**
-   * Enable stylistic rules.
+   * Enable stylistic rules instead of Prettier.
    *
    * @default true
    */
-  stylistic?: boolean | (StylisticConfig & OptionsOverrides)
+  stylistic?: boolean | (StylisticConfig & OptionsOverrides);
+
+  /**
+   * Enable stylistic rules instead of Prettier.
+   *
+   * @default true
+   */
+  prettier?: boolean | OptionsOverrides;
 
   /**
    * Enable react rules.
    *
-   * Requires installing:
-   * - `eslint-plugin-react`
-   * - `eslint-plugin-react-hooks`
-   * - `eslint-plugin-react-refresh`
-   *
-   * @default false
+   * @default auto-detect
    */
-  react?: boolean | OptionsOverrides
+  react?: boolean | OptionsOverrides;
 
   /**
    * Enable svelte rules.
@@ -301,7 +314,7 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default false
    */
-  svelte?: boolean
+  svelte?: boolean;
 
   /**
    * Enable unocss rules.
@@ -311,7 +324,14 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default false
    */
-  unocss?: boolean | OptionsUnoCSS
+  unocss?: boolean | OptionsUnoCSS;
+
+  /**
+   * Enable tailwindcss rules.
+   *
+   * @default false
+   */
+  tailwindcss?: boolean | OptionsTailwindCSS;
 
   /**
    * Use external formatters to format files.
@@ -323,20 +343,20 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default false
    */
-  formatters?: boolean | OptionsFormatters
+  formatters?: boolean | OptionsFormatters;
 
   /**
    * Control to disable some rules in editors.
    * @default auto-detect based on the process.env
    */
-  isInEditor?: boolean
+  isInEditor?: boolean;
 
   /**
    * Automatically rename plugins in the config.
    *
    * @default true
    */
-  autoRenamePlugins?: boolean
+  autoRenamePlugins?: boolean;
 
   /**
    * Provide overrides for rules for each integration.
@@ -344,16 +364,16 @@ export interface OptionsConfig extends OptionsComponentExts {
    * @deprecated use `overrides` option in each integration key instead
    */
   overrides?: {
-    stylistic?: FlatConfigItem['rules']
-    javascript?: FlatConfigItem['rules']
-    typescript?: FlatConfigItem['rules']
-    test?: FlatConfigItem['rules']
-    vue?: FlatConfigItem['rules']
-    jsonc?: FlatConfigItem['rules']
-    markdown?: FlatConfigItem['rules']
-    yaml?: FlatConfigItem['rules']
-    toml?: FlatConfigItem['rules']
-    react?: FlatConfigItem['rules']
-    svelte?: FlatConfigItem['rules']
-  }
+    stylistic?: FlatConfigItem['rules'];
+    javascript?: FlatConfigItem['rules'];
+    typescript?: FlatConfigItem['rules'];
+    test?: FlatConfigItem['rules'];
+    vue?: FlatConfigItem['rules'];
+    jsonc?: FlatConfigItem['rules'];
+    markdown?: FlatConfigItem['rules'];
+    yaml?: FlatConfigItem['rules'];
+    toml?: FlatConfigItem['rules'];
+    react?: FlatConfigItem['rules'];
+    svelte?: FlatConfigItem['rules'];
+  };
 }

@@ -1,41 +1,130 @@
-import type { FlatConfigItem } from '../types'
-import { pluginUnicorn } from '../plugins'
+import { GLOB_SRC } from '../globs';
+import { pluginUnicorn } from '../plugins';
+import type { FlatConfigItem } from '../types';
 
-export async function unicorn(): Promise<FlatConfigItem[]> {
+// eslint-disable-next-line ts/require-await
+export const unicorn = async (): Promise<FlatConfigItem[]> => {
   return [
     {
-      name: 'antfu:unicorn',
+      files: [GLOB_SRC],
+      name: 'nivalis:unicorn',
       plugins: {
         unicorn: pluginUnicorn,
       },
       rules: {
-        // Pass error message when throwing errors
+        'unicorn/better-regex': [
+          'error',
+          {
+            sortCharacterClasses: false,
+          },
+        ],
+        'unicorn/catch-error-name': 'error',
+        'unicorn/custom-error-definition': 'error',
         'unicorn/error-message': 'error',
-        // Uppercase regex escapes
         'unicorn/escape-case': 'error',
-        // Array.isArray instead of instanceof
+        'unicorn/expiring-todo-comments': 'error',
+        'unicorn/explicit-length-check': 'error',
+        'unicorn/filename-case': [
+          'warn',
+          {
+            cases: { kebabCase: true, pascalCase: true },
+            ignore: [/^[A-Z]+\..*$/],
+          },
+        ],
+        'unicorn/import-style': 'error',
+        'unicorn/new-for-builtins': 'error',
+        'unicorn/no-array-for-each': 'warn',
+        'unicorn/no-array-method-this-argument': 'error',
+        'unicorn/no-array-push-push': 'error',
+        'unicorn/no-await-expression-member': 'error',
+        'unicorn/no-console-spaces': 'error',
+        'unicorn/no-document-cookie': 'error',
+        'unicorn/no-empty-file': 'error',
+        'unicorn/no-for-loop': 'error',
+        'unicorn/no-hex-escape': 'error',
         'unicorn/no-instanceof-array': 'error',
-        // Ban `new Array` as `Array` constructor's params are ambiguous
+        'unicorn/no-invalid-remove-event-listener': 'error',
+        'unicorn/no-lonely-if': 'error',
         'unicorn/no-new-array': 'error',
-        // Prevent deprecated `new Buffer()`
         'unicorn/no-new-buffer': 'error',
-        // Lowercase number formatting for octal, hex, binary (0x1'error' instead of 0X1'error')
-        'unicorn/number-literal-case': 'error',
-        // textContent instead of innerText
+        'unicorn/no-object-as-default-parameter': 'error',
+        'unicorn/no-process-exit': 'error',
+        'unicorn/no-static-only-class': 'error',
+        'unicorn/no-this-assignment': 'error',
+        'unicorn/no-unnecessary-await': 'error',
+        'unicorn/no-unreadable-array-destructuring': 'error',
+        'unicorn/no-unreadable-iife': 'error',
+        'unicorn/no-useless-fallback-in-spread': 'error',
+        'unicorn/no-useless-length-check': 'error',
+        'unicorn/no-useless-promise-resolve-reject': 'error',
+        'unicorn/no-useless-spread': 'error',
+        'unicorn/no-useless-switch-case': 'error',
+        'unicorn/no-zero-fractions': 'error',
+        'unicorn/numeric-separators-style': 'error',
+        'unicorn/prefer-add-event-listener': 'error',
+        'unicorn/prefer-array-find': 'error',
+        'unicorn/prefer-array-flat': 'error',
+        'unicorn/prefer-array-flat-map': 'error',
+        'unicorn/prefer-array-index-of': 'error',
+        'unicorn/prefer-array-some': 'error',
+        'unicorn/prefer-at': 'error',
+        'unicorn/prefer-blob-reading-methods': 'error',
+        'unicorn/prefer-code-point': 'error',
+        'unicorn/prefer-date-now': 'error',
+        'unicorn/prefer-default-parameters': 'error',
+        'unicorn/prefer-dom-node-append': 'error',
+        'unicorn/prefer-dom-node-dataset': 'error',
+        'unicorn/prefer-dom-node-remove': 'error',
         'unicorn/prefer-dom-node-text-content': 'error',
-        // includes over indexOf when checking for existence
+        'unicorn/prefer-export-from': ['error', { ignoreUsedVariables: true }],
         'unicorn/prefer-includes': 'error',
-        // Prefer using the node: protocol
+        'unicorn/prefer-keyboard-event-key': 'error',
+        'unicorn/prefer-logical-operator-over-ternary': 'error',
+        'unicorn/prefer-math-trunc': 'error',
+        'unicorn/prefer-modern-dom-apis': 'error',
+        'unicorn/prefer-modern-math-apis': 'error',
+        'unicorn/prefer-module': 'error',
+        'unicorn/prefer-negative-index': 'error',
         'unicorn/prefer-node-protocol': 'error',
-        // Prefer using number properties like `Number.isNaN` rather than `isNaN`
         'unicorn/prefer-number-properties': 'error',
-        // String methods startsWith/endsWith instead of more complicated stuff
+        'unicorn/prefer-object-from-entries': 'error',
+        'unicorn/prefer-optional-catch-binding': 'error',
+        'unicorn/prefer-prototype-methods': 'error',
+        'unicorn/prefer-query-selector': 'error',
+        'unicorn/prefer-reflect-apply': 'error',
+        'unicorn/prefer-regexp-test': 'error',
+        'unicorn/prefer-set-has': 'error',
+        'unicorn/prefer-spread': 'error',
+        'unicorn/prefer-string-replace-all': 'error',
+        'unicorn/prefer-string-slice': 'error',
         'unicorn/prefer-string-starts-ends-with': 'error',
-        // Enforce throwing type error when throwing error while checking typeof
+        'unicorn/prefer-string-trim-start-end': 'error',
+        'unicorn/prefer-switch': [
+          'error',
+          { emptyDefaultCase: 'do-nothing-comment' },
+        ],
+        'unicorn/prefer-ternary': ['error', 'only-single-line'],
+        'unicorn/prefer-top-level-await': 'error',
         'unicorn/prefer-type-error': 'error',
-        // Use new when throwing error
+        'unicorn/relative-url-style': 'error',
+        'unicorn/require-array-join-separator': 'error',
+        'unicorn/require-number-to-fixed-digits-argument': 'error',
+        'unicorn/string-content': [
+          'error',
+          {
+            patterns: {
+              '(?!(?=.*(0.0.0.0|127.0.0.1|localhost|www.w3.org)))^http:': {
+                message: 'Please use `https` for better security.`.',
+                suggest: 'https:',
+              },
+            },
+          },
+        ],
+        'unicorn/switch-case-braces': 'error',
+        'unicorn/template-indent': ['warn', { indent: '\t' }],
+        'unicorn/text-encoding-identifier-case': 'error',
         'unicorn/throw-new-error': 'error',
       },
     },
-  ]
-}
+  ];
+};

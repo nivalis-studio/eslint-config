@@ -1,6 +1,5 @@
-import fs from 'node:fs/promises'
-import { pluginsToRulesOptions } from 'eslint-typegen'
-import type { ESLint } from 'eslint'
+import fs from 'node:fs/promises';
+import { pluginsToRulesOptions } from 'eslint-typegen';
 import {
   astro,
   combine,
@@ -22,11 +21,11 @@ import {
   typescript,
   unicorn,
   unocss,
-  vue,
   yaml,
-} from '../src'
+} from '../src';
+import type { ESLint } from 'eslint';
 
-const plugins: Record<string, ESLint.Plugin> = {}
+const plugins: { [key: string]: ESLint.Plugin } = {};
 
 const configs = await combine(
   astro(),
@@ -48,15 +47,15 @@ const configs = await combine(
   typescript(),
   unicorn(),
   unocss(),
-  vue(),
   yaml(),
-)
+);
 
-for (const config of configs)
-  Object.assign(plugins, config.plugins)
+for (const config of configs) {
+  Object.assign(plugins, config?.plugins);
+}
 
-console.log(Object.keys(plugins))
+console.log(Object.keys(plugins));
 
-const dts = await pluginsToRulesOptions(plugins)
+const dts = await pluginsToRulesOptions(plugins);
 
-await fs.writeFile('src/typegen.d.ts', dts)
+await fs.writeFile('src/typegen.d.ts', dts);

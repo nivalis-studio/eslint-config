@@ -1,28 +1,24 @@
 // @ts-check
-import styleMigrate from '@stylistic/eslint-plugin-migrate'
-import JITI from 'jiti'
+import styleMigrate from '@stylistic/eslint-plugin-migrate';
+import JITI from 'jiti';
 
-const jiti = JITI(import.meta.url)
+const jiti = JITI(import.meta.url);
 /**
  * @type {import('./src').default}
  */
-const antfu = jiti('./src').default
+const nivalis = jiti('./src').default;
 
-export default antfu(
+export default nivalis(
   {
-    vue: true,
-    // react: true,
-    typescript: true,
-    ignores: [
-      'fixtures',
-      '_fixtures',
-    ],
+    ignores: ['fixtures', '_fixtures'],
     formatters: true,
   },
   {
     files: ['src/**/*.ts'],
     rules: {
       'perfectionist/sort-objects': 'error',
+      'ts/no-unsafe-assignment': 'off',
+      'ts/no-explicit-any': 'off',
     },
   },
   {
@@ -34,4 +30,4 @@ export default antfu(
       'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
     },
   },
-)
+);
