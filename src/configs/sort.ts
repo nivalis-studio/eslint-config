@@ -1,11 +1,11 @@
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
 /**
  * Sort package.json
  *
  * Requires `jsonc` config
  */
-export const sortPackageJson = (): FlatConfigItem[] => {
+export const sortPackageJson = (): TypedFlatConfigItem[] => {
   return [
     {
       files: ['**/package.json'],
@@ -92,7 +92,7 @@ export const sortPackageJson = (): FlatConfigItem[] => {
  * Requires `jsonc` config
  */
 
-export const sortTsconfig = (): FlatConfigItem[] => {
+export const sortTsconfig = (): TypedFlatConfigItem[] => {
   return [
     {
       files: ['**/tsconfig.json', '**/tsconfig.*.json'],

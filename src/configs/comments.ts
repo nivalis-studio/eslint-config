@@ -1,8 +1,8 @@
 import { pluginComments } from '../plugins';
 import type { ESLint } from 'eslint';
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
-export const comments = (): FlatConfigItem[] => {
+export const comments = (): TypedFlatConfigItem[] => {
   return [
     {
       name: 'nivalis:eslint-comments',

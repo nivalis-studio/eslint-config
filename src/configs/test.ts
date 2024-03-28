@@ -1,16 +1,16 @@
 import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_TESTS } from '../globs';
 import type {
-  FlatConfigItem,
   OptionsFiles,
   OptionsIsInEditor,
   OptionsOverrides,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 export const test = async (
   options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
 
   ensurePackages(['eslint-plugin-vitest', 'eslint-plugin-no-only-tests']);

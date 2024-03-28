@@ -1,5 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import type { Awaitable, FlatConfigItem } from './types';
+import type { Awaitable, TypedFlatConfigItem } from './types';
 
 export const parserPlain = {
   meta: {
@@ -26,8 +26,8 @@ export const parserPlain = {
  * Combine array and non-array configs into a single array.
  */
 export const combine = async (
-  ...configs: Array<Awaitable<FlatConfigItem | FlatConfigItem[]>>
-): Promise<FlatConfigItem[]> => {
+  ...configs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
+): Promise<TypedFlatConfigItem[]> => {
   const resolved = await Promise.all(configs);
 
   return resolved.flat();
@@ -82,9 +82,9 @@ export const renameRules = (
  * ```
  */
 export const renamePluginInConfigs = (
-  configs: FlatConfigItem[],
+  configs: TypedFlatConfigItem[],
   map: { [key: string]: string },
-): FlatConfigItem[] => {
+): TypedFlatConfigItem[] => {
   return configs.map(i => {
     const clone = { ...i };
 

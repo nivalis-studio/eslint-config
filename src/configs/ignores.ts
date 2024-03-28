@@ -1,7 +1,7 @@
 import { GLOB_EXCLUDE } from '../globs';
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
-export const ignores = (): FlatConfigItem[] => {
+export const ignores = (): TypedFlatConfigItem[] => {
   return [
     {
       ignores: GLOB_EXCLUDE,

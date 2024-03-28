@@ -2,11 +2,11 @@ import { DEFAULT_INDENT } from '../constants';
 import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_SVELTE } from '../globs';
 import type {
-  FlatConfigItem,
   OptionsFiles,
   OptionsHasTypeScript,
   OptionsOverrides,
   OptionsStylistic,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
@@ -15,7 +15,7 @@ export const svelte = async (
     OptionsOverrides &
     OptionsStylistic &
     OptionsFiles = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { files = [GLOB_SVELTE], overrides = {}, stylistic = true } = options;
 
   const { indent = DEFAULT_INDENT, quotes = 'single' } =

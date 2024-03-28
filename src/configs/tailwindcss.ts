@@ -1,14 +1,14 @@
 import { GLOB_HTML, GLOB_REACT } from '../globs';
 import { interopDefault } from '../utils';
 import type {
-  FlatConfigItem,
   OptionsIsInEditor,
   OptionsOverrides,
+  TypedFlatConfigItem,
 } from '../types';
 
 export const tailwindcss = async (
   options: OptionsIsInEditor & OptionsOverrides = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { isInEditor = false, overrides = {} } = options;
 
   return [

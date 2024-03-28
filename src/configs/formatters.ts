@@ -13,15 +13,15 @@ import { ensurePackages, interopDefault, parserPlain } from '../utils';
 import { StylisticConfigDefaults } from './stylistic';
 import type { VendoredPrettierOptions } from '../vender/prettier-types';
 import type {
-  FlatConfigItem,
   OptionsFormatters,
   StylisticConfig,
+  TypedFlatConfigItem,
 } from '../types';
 
 export const formatters = async (
   options: OptionsFormatters | true = {},
   stylistic: StylisticConfig = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   if (options === true) {
     // eslint-disable-next-line no-param-reassign
     options = {
@@ -68,7 +68,7 @@ export const formatters = async (
 
   const pluginFormat = await interopDefault(import('eslint-plugin-format'));
 
-  const configs: FlatConfigItem[] = [
+  const configs: TypedFlatConfigItem[] = [
     {
       name: 'antfu:formatters:setup',
       plugins: {

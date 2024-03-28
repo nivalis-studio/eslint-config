@@ -1,16 +1,16 @@
 import { GLOB_ASTRO } from '../globs';
 import { interopDefault } from '../utils';
 import type {
-  FlatConfigItem,
   OptionsFiles,
   OptionsOverrides,
   OptionsStylistic,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 export const astro = async (
   options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;
 
   const [pluginAstro, parserAstro, parserTs] = await Promise.all([

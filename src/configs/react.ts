@@ -3,10 +3,10 @@ import { isPackageExists } from 'local-pkg';
 import { interopDefault } from '../utils';
 import { GLOB_REACT } from '../globs';
 import type {
-  FlatConfigItem,
   OptionsFiles,
   OptionsHasTypeScript,
   OptionsOverrides,
+  TypedFlatConfigItem,
 } from '../types';
 
 // react refresh
@@ -14,7 +14,7 @@ const ReactRefreshAllowPackages = ['vite'];
 
 export const react = async (
   options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { files = [GLOB_REACT], overrides = {}, typescript = true } = options;
 
   const [pluginA11y, pluginReact, pluginReactHooks, pluginReactRefresh] =

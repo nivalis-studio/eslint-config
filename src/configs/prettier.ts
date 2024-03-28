@@ -3,16 +3,16 @@ import { interopDefault } from '../utils';
 import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
 import { StylisticConfigDefaults } from './stylistic';
 import type {
-  FlatConfigItem,
   OptionsFormatters,
   StylisticConfig,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 export const prettier = async (
   options: OptionsFormatters | true = {},
   stylistic: StylisticConfig = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const [_configPrettier, pluginPrettier, pluginStylistic] = await Promise.all([
     interopDefault(import('eslint-config-prettier')),
     interopDefault(import('eslint-plugin-prettier')),

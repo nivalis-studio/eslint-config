@@ -37,9 +37,9 @@ import {
   HAS_TYPESCRIPT,
   IN_IS_EDITOR,
 } from './environment';
-import type { Awaitable, FlatConfigItem, OptionsConfig } from './types';
+import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
 
-const flatConfigProps: Array<keyof FlatConfigItem> = [
+const flatConfigProps: Array<keyof TypedFlatConfigItem> = [
   'name',
   'files',
   'ignores',
@@ -83,17 +83,17 @@ export const getOverrides = <K extends keyof OptionsConfig>(
 /**
  * Construct an array of ESLint flat config items.
  *
- * @param {OptionsConfig & FlatConfigItem} options
+ * @param {OptionsConfig & TypedFlatConfigItem} options
  *  The options for generating the ESLint configurations.
- * @param {Awaitable<FlatConfigItem | FlatConfigItem[]>[]} userConfigs
+ * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]} userConfigs
  *  The user configurations to be merged with the generated configurations.
- * @returns {Promise<FlatConfigItem[]>}
+ * @returns {Promise<TypedFlatConfigItem[]>}
  *  The merged ESLint configurations.
  */
 export const nivalis = async (
-  options: OptionsConfig & FlatConfigItem = {},
-  ...userConfigs: Array<Awaitable<FlatConfigItem | FlatConfigItem[]>>
-): Promise<FlatConfigPipeline<FlatConfigItem>> => {
+  options: OptionsConfig & TypedFlatConfigItem = {},
+  ...userConfigs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
+): Promise<FlatConfigPipeline<TypedFlatConfigItem>> => {
   const {
     astro: enableAstro = false,
     autoRenamePlugins = true,
@@ -117,7 +117,7 @@ export const nivalis = async (
     stylisticOptions.jsx = options.jsx ?? true;
   }
 
-  const configs: Array<Awaitable<FlatConfigItem[]>> = [];
+  const configs: Array<Awaitable<TypedFlatConfigItem[]>> = [];
 
   if (enableGitignore) {
     if (typeof enableGitignore !== 'boolean') {
@@ -291,20 +291,23 @@ export const nivalis = async (
 
   /* User can optionally pass a flat config item to the first argument
      We pick the known keys as ESLint would do schema validation */
-  const fusedConfig = flatConfigProps.reduce<FlatConfigItem>((acc, key) => {
-    if (key in options) {
-      // eslint-disable-next-line no-param-reassign
-      acc[key] = options[key] as any;
-    }
+  const fusedConfig = flatConfigProps.reduce<TypedFlatConfigItem>(
+    (acc, key) => {
+      if (key in options) {
+        // eslint-disable-next-line no-param-reassign
+        acc[key] = options[key] as any;
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {},
+  );
 
   if (Object.keys(fusedConfig).length > 0) {
     configs.push([fusedConfig]);
   }
 
-  let pipeline = new FlatConfigPipeline<FlatConfigItem>();
+  let pipeline = new FlatConfigPipeline<TypedFlatConfigItem>();
 
   pipeline = pipeline.append(...configs, ...userConfigs);
 

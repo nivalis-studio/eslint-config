@@ -3,12 +3,12 @@ import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
 import { pluginAntfu } from '../plugins';
 import { interopDefault, renameRules, toArray } from '../utils';
 import type {
-  FlatConfigItem,
   OptionsComponentExts,
   OptionsFiles,
   OptionsOverrides,
   OptionsTypeScriptParserOptions,
   OptionsTypeScriptWithTypes,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
@@ -18,7 +18,7 @@ export const typescript = async (
     OptionsOverrides &
     OptionsTypeScriptWithTypes &
     OptionsTypeScriptParserOptions = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { componentExts = [], overrides = {}, parserOptions = {} } = options;
 
   const files = options.files ?? [
@@ -33,7 +33,7 @@ export const typescript = async (
 
   const isTypeAware = !!tsconfigPath;
 
-  const typeAwareRules: FlatConfigItem['rules'] = {
+  const typeAwareRules: TypedFlatConfigItem['rules'] = {
     'dot-notation': 'off',
     'no-implied-eval': 'off',
     'no-throw-literal': 'off',
@@ -117,7 +117,7 @@ export const typescript = async (
     // eslint-disable-next-line ts/no-shadow
     files: string[],
     ignores?: string[],
-  ): FlatConfigItem => {
+  ): TypedFlatConfigItem => {
     return {
       files,
       ...(ignores ? { ignores } : {}),

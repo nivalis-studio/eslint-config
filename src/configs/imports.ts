@@ -1,9 +1,11 @@
 import { pluginAntfu, pluginImport } from '../plugins';
 import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs';
-import type { FlatConfigItem, OptionsStylistic } from '../types';
+import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
-export const imports = (options: OptionsStylistic = {}): FlatConfigItem[] => {
+export const imports = (
+  options: OptionsStylistic = {},
+): TypedFlatConfigItem[] => {
   const { stylistic = true } = options;
 
   return [

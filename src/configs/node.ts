@@ -1,8 +1,8 @@
 import { GLOB_SRC } from '../globs';
 import { pluginNode } from '../plugins';
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
-export const node = (): FlatConfigItem[] => {
+export const node = (): TypedFlatConfigItem[] => {
   return [
     {
       files: [GLOB_SRC],

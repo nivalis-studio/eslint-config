@@ -1,10 +1,10 @@
 import { ensurePackages, interopDefault } from '../utils';
-import type { FlatConfigItem, OptionsUnoCSS } from '../types';
+import type { OptionsUnoCSS, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
 export const unocss = async (
   options: OptionsUnoCSS = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { attributify = true, strict = false } = options;
 
   ensurePackages(['@unocss/eslint-plugin']);

@@ -3,9 +3,9 @@ import { pluginAntfu } from '../plugins';
 import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
 import { GLOB_SRC, GLOB_YAML } from '../globs';
 import type {
-  FlatConfigItem,
   OptionsOverrides,
   StylisticConfig,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
@@ -19,7 +19,7 @@ export const StylisticConfigDefaults: StylisticConfig = {
 
 export const stylistic = async (
   options: StylisticConfig & OptionsOverrides = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const {
     indent,
     jsx,
@@ -108,7 +108,7 @@ export const stylistic = async (
   ];
 };
 
-export const prettierStylistic = (): FlatConfigItem[] => [
+export const prettierStylistic = (): TypedFlatConfigItem[] => [
   {
     files: [GLOB_SRC],
     // Rules disabled by Prettier normally

@@ -3,12 +3,12 @@ import fs from 'fs-extra';
 import { afterAll, beforeAll, it } from 'vitest';
 import { execa } from 'execa';
 import fg from 'fast-glob';
-import type { FlatConfigItem, OptionsConfig } from '../src/types';
+import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 const runWithConfig = (
   name: string,
   configs: OptionsConfig,
-  ...items: FlatConfigItem[]
+  ...items: TypedFlatConfigItem[]
 ) => {
   it.concurrent(
     name,

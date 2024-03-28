@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import { pluginsToRulesOptions } from 'eslint-typegen';
+import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import {
   astro,
   combine,
@@ -11,7 +11,7 @@ import {
   jsonc,
   markdown,
   node,
-  perfectionist,
+  // perfectionist,
   react,
   sortPackageJson,
   stylistic,
@@ -23,9 +23,6 @@ import {
   unocss,
   yaml,
 } from '../src';
-import type { ESLint } from 'eslint';
-
-const plugins: { [key: string]: ESLint.Plugin } = {};
 
 const configs = await combine(
   astro(),
@@ -37,7 +34,7 @@ const configs = await combine(
   jsonc(),
   markdown(),
   node(),
-  perfectionist(),
+  // perfectionist(),
   react(),
   sortPackageJson(),
   stylistic(),
@@ -50,12 +47,8 @@ const configs = await combine(
   yaml(),
 );
 
-for (const config of configs) {
-  Object.assign(plugins, config?.plugins);
-}
-
-console.log(Object.keys(plugins));
-
-const dts = await pluginsToRulesOptions(plugins);
+const dts = await flatConfigsToRulesDTS(configs, {
+  includeAugmentation: false,
+});
 
 await fs.writeFile('src/typegen.d.ts', dts);

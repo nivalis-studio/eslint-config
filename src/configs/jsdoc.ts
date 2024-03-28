@@ -1,10 +1,10 @@
 import { interopDefault } from '../utils';
 import { GLOB_SRC } from '../globs';
-import type { FlatConfigItem, OptionsStylistic } from '../types';
+import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 
 export const jsdoc = async (
   options: OptionsStylistic = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { stylistic = true } = options;
 
   return [

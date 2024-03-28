@@ -1,9 +1,9 @@
 import { GLOB_SRC } from '../globs';
 import { pluginUnicorn } from '../plugins';
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
 // eslint-disable-next-line ts/require-await
-export const unicorn = async (): Promise<FlatConfigItem[]> => {
+export const unicorn = async (): Promise<TypedFlatConfigItem[]> => {
   return [
     {
       files: [GLOB_SRC],

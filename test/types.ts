@@ -1,9 +1,9 @@
 import type { Linter } from 'eslint';
-import type { FlatConfigItem } from '../src';
+import type { TypedFlatConfigItem } from '../src';
 
 // Make sure they are compatible
 // eslint-disable-next-line ts/consistent-type-assertions
-((): Linter.FlatConfig => ({}) as FlatConfigItem)();
+((): Linter.FlatConfig => ({}) as TypedFlatConfigItem)();
 
 // eslint-disable-next-line ts/consistent-type-assertions
-((): FlatConfigItem => ({}) as Linter.FlatConfig)();
+((): TypedFlatConfigItem => ({}) as Linter.FlatConfig)();

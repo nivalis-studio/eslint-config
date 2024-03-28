@@ -6,16 +6,16 @@ import {
 } from '../globs';
 import { interopDefault, parserPlain } from '../utils';
 import type {
-  FlatConfigItem,
   OptionsComponentExts,
   OptionsFiles,
   OptionsOverrides,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 export const markdown = async (
   options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const {
     componentExts = [],
     files = [GLOB_MARKDOWN],

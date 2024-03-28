@@ -1,11 +1,11 @@
 import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_GRAPHQL } from '../globs';
-import type { FlatConfigItem, OptionsOverrides } from '../types';
+import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
 export const graphql = async (
   options: OptionsOverrides = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   ensurePackages(['@graphql-eslint/eslint-plugin']);
   const pluginGraphql = await interopDefault(
     import('@graphql-eslint/eslint-plugin'),

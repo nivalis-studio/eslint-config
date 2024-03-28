@@ -1,9 +1,9 @@
 import { interopDefault } from '../utils';
 import { GLOB_REACT } from '../globs';
-import type { FlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
-export const promise = async (): Promise<FlatConfigItem[]> => {
+export const promise = async (): Promise<TypedFlatConfigItem[]> => {
   const pluginNextjs = await interopDefault<ESLint.Plugin>(
     import('@next/eslint-plugin-next'),
   );

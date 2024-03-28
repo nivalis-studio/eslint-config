@@ -11,16 +11,16 @@ import {
   MAX_STATEMENTS,
 } from '../constants';
 import type {
-  FlatConfigItem,
   OptionsIsInEditor,
   OptionsOverrides,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 // eslint-disable-next-line max-lines-per-function
 export const javascript = (
   options: OptionsIsInEditor & OptionsOverrides = {},
-): FlatConfigItem[] => {
+): TypedFlatConfigItem[] => {
   const { isInEditor = false, overrides = {} } = options;
 
   return [

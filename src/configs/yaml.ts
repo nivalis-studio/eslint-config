@@ -2,16 +2,16 @@ import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
 import { DEFAULT_INDENT } from '../constants';
 import type {
-  FlatConfigItem,
   OptionsFiles,
   OptionsOverrides,
   OptionsStylistic,
+  TypedFlatConfigItem,
 } from '../types';
 import type { ESLint } from 'eslint';
 
 export const yaml = async (
   options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
-): Promise<FlatConfigItem[]> => {
+): Promise<TypedFlatConfigItem[]> => {
   const { files = [GLOB_YAML], overrides = {}, stylistic = true } = options;
 
   const [pluginYaml, parserYaml] = await Promise.all([
