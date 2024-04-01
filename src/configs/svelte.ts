@@ -1,38 +1,38 @@
-import { ensurePackages, interopDefault } from '../utils'
-import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
-import { GLOB_SVELTE } from '../globs'
+import { DEFAULT_INDENT } from '../constants';
+import { ensurePackages, interopDefault } from '../utils';
+import { GLOB_SVELTE } from '../globs';
+import type {
+  OptionsFiles,
+  OptionsHasTypeScript,
+  OptionsOverrides,
+  OptionsStylistic,
+  TypedFlatConfigItem,
+} from '../types';
+import type { ESLint } from 'eslint';
 
-export async function svelte(
-  options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {},
-): Promise<TypedFlatConfigItem[]> {
-  const {
-    files = [GLOB_SVELTE],
-    overrides = {},
-    stylistic = true,
-  } = options
+export const svelte = async (
+  options: OptionsHasTypeScript &
+    OptionsOverrides &
+    OptionsStylistic &
+    OptionsFiles = {},
+): Promise<TypedFlatConfigItem[]> => {
+  const { files = [GLOB_SVELTE], overrides = {}, stylistic = true } = options;
 
-  const {
-    indent = 2,
-    quotes = 'single',
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+  const { indent = DEFAULT_INDENT, quotes = 'single' } =
+    typeof stylistic === 'boolean' ? {} : stylistic;
 
-  await ensurePackages([
-    'eslint-plugin-svelte',
-  ])
+  ensurePackages(['eslint-plugin-svelte']);
 
-  const [
-    pluginSvelte,
-    parserSvelte,
-  ] = await Promise.all([
+  const [pluginSvelte, parserSvelte] = await Promise.all([
     interopDefault(import('eslint-plugin-svelte')),
     interopDefault(import('svelte-eslint-parser')),
-  ] as const)
+  ] as const);
 
   return [
     {
-      name: 'antfu:svelte:setup',
+      name: 'nivalis:svelte:setup',
       plugins: {
-        svelte: pluginSvelte,
+        svelte: pluginSvelte as unknown as ESLint.Plugin,
       },
     },
     {
@@ -42,22 +42,27 @@ export async function svelte(
         parserOptions: {
           extraFileExtensions: ['.svelte'],
           parser: options.typescript
-            ? await interopDefault(import('@typescript-eslint/parser')) as any
+            ? ((await interopDefault(
+                import('@typescript-eslint/parser'),
+              )) as unknown)
             : null,
         },
       },
-      name: 'antfu:svelte:rules',
+      name: 'nivalis:svelte:rules',
       processor: pluginSvelte.processors['.svelte'],
       rules: {
         'import/no-mutable-exports': 'off',
         'no-undef': 'off', // incompatible with most recent (attribute-form) generic types RFC
-        'no-unused-vars': ['error', {
-          args: 'none',
-          caughtErrors: 'none',
-          ignoreRestSiblings: true,
-          vars: 'all',
-          varsIgnorePattern: '^\\$\\$Props$',
-        }],
+        'no-unused-vars': [
+          'error',
+          {
+            args: 'none',
+            caughtErrors: 'none',
+            ignoreRestSiblings: true,
+            vars: 'all',
+            varsIgnorePattern: '^\\$\\$Props$',
+          },
+        ],
 
         'svelte/comment-directive': 'error',
         'svelte/no-at-debug-tags': 'warn',
@@ -83,26 +88,34 @@ export async function svelte(
 
         'unused-imports/no-unused-vars': [
           'error',
-          { args: 'after-used', argsIgnorePattern: '^_', vars: 'all', varsIgnorePattern: '^(_|\\$\\$Props$)' },
+          {
+            args: 'after-used',
+            argsIgnorePattern: '^_',
+            vars: 'all',
+            varsIgnorePattern: '^(_|\\$\\$Props$)',
+          },
         ],
 
-        ...stylistic
+        ...(stylistic
           ? {
               'style/indent': 'off', // superseded by svelte/indent
               'style/no-trailing-spaces': 'off', // superseded by svelte/no-trailing-spaces
               'svelte/derived-has-same-inputs-outputs': 'error',
               'svelte/html-closing-bracket-spacing': 'error',
               'svelte/html-quotes': ['error', { prefer: quotes }],
-              'svelte/indent': ['error', { alignAttributesVertically: true, indent }],
+              'svelte/indent': [
+                'error',
+                { alignAttributesVertically: true, indent },
+              ],
               'svelte/mustache-spacing': 'error',
               'svelte/no-spaces-around-equal-signs-in-attribute': 'error',
               'svelte/no-trailing-spaces': 'error',
               'svelte/spaced-html-comment': 'error',
             }
-          : {},
+          : {}),
 
         ...overrides,
       },
     },
-  ]
-}
+  ];
+};

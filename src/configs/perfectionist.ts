@@ -1,18 +1,18 @@
-import type { TypedFlatConfigItem } from '../types'
-import { pluginPerfectionist } from '../plugins'
+import { pluginPerfectionist } from '../plugins';
+import type { TypedFlatConfigItem } from '../types';
 
 /**
  * Optional perfectionist plugin for props and items sorting.
  *
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
+export const perfectionist = (): TypedFlatConfigItem[] => {
   return [
     {
-      name: 'antfu:perfectionist',
+      name: 'nivalis:perfectionist',
       plugins: {
         perfectionist: pluginPerfectionist,
       },
     },
-  ]
-}
+  ];
+};

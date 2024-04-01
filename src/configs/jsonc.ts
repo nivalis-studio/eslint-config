@@ -1,33 +1,36 @@
-import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
-import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs'
-import { interopDefault } from '../utils'
+import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
+import { interopDefault } from '../utils';
+import { DEFAULT_INDENT } from '../constants';
+import type {
+  OptionsFiles,
+  OptionsOverrides,
+  OptionsStylistic,
+  TypedFlatConfigItem,
+} from '../types';
+import type { ESLint } from 'eslint';
 
-export async function jsonc(
+export const jsonc = async (
   options: OptionsFiles & OptionsStylistic & OptionsOverrides = {},
-): Promise<TypedFlatConfigItem[]> {
+): Promise<TypedFlatConfigItem[]> => {
   const {
     files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
     overrides = {},
     stylistic = true,
-  } = options
+  } = options;
 
-  const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+  const { indent = DEFAULT_INDENT } =
+    typeof stylistic === 'boolean' ? {} : stylistic;
 
-  const [
-    pluginJsonc,
-    parserJsonc,
-  ] = await Promise.all([
+  const [pluginJsonc, parserJsonc] = await Promise.all([
     interopDefault(import('eslint-plugin-jsonc')),
     interopDefault(import('jsonc-eslint-parser')),
-  ] as const)
+  ] as const);
 
   return [
     {
-      name: 'antfu:jsonc:setup',
+      name: 'nivalis:jsonc:setup',
       plugins: {
-        jsonc: pluginJsonc as any,
+        jsonc: pluginJsonc as unknown as ESLint.Plugin,
       },
     },
     {
@@ -35,7 +38,7 @@ export async function jsonc(
       languageOptions: {
         parser: parserJsonc,
       },
-      name: 'antfu:jsonc:rules',
+      name: 'nivalis:jsonc:rules',
       rules: {
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
@@ -64,23 +67,46 @@ export async function jsonc(
         'jsonc/valid-json-number': 'error',
         'jsonc/vue-custom-block/no-parsing-error': 'error',
 
-        ...stylistic
+        ...(stylistic
           ? {
               'jsonc/array-bracket-spacing': ['error', 'never'],
               'jsonc/comma-dangle': ['error', 'never'],
               'jsonc/comma-style': ['error', 'last'],
               'jsonc/indent': ['error', indent],
-              'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
-              'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
+              'jsonc/key-spacing': [
+                'error',
+                { afterColon: true, beforeColon: false },
+              ],
+              'jsonc/object-curly-newline': [
+                'error',
+                { consistent: true, multiline: true },
+              ],
               'jsonc/object-curly-spacing': ['error', 'always'],
-              'jsonc/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
+              'jsonc/object-property-newline': [
+                'error',
+                { allowMultiplePropertiesPerLine: true },
+              ],
               'jsonc/quote-props': 'error',
               'jsonc/quotes': 'error',
             }
-          : {},
+          : {}),
 
         ...overrides,
       },
     },
-  ]
-}
+    {
+      files: [GLOB_JSON],
+      rules: {
+        'jsonc/no-comments': 'error',
+        'jsonc/valid-json-number': 'error',
+      },
+    },
+    {
+      files: [GLOB_JSON5],
+      rules: {
+        'jsonc/no-infinity': 'error',
+        'jsonc/no-nan': 'error',
+      },
+    },
+  ];
+};

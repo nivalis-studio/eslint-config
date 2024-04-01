@@ -1,22 +1,24 @@
-export * from './comments'
-export * from './ignores'
-export * from './imports'
-export * from './javascript'
-export * from './jsdoc'
-export * from './jsonc'
-export * from './markdown'
-export * from './node'
-export * from './perfectionist'
-export * from './formatters'
-export * from './react'
-export * from './sort'
-export * from './stylistic'
-export * from './svelte'
-export * from './test'
-export * from './typescript'
-export * from './unicorn'
-export * from './unocss'
-export * from './vue'
-export * from './yaml'
-export * from './toml'
-export * from './astro'
+export { comments } from './comments';
+export { graphql } from './graphql';
+export { ignores } from './ignores';
+export { imports } from './imports';
+export { javascript } from './javascript';
+export { jsdoc } from './jsdoc';
+export { jsonc } from './jsonc';
+export { markdown } from './markdown';
+export { node } from './node';
+export { perfectionist } from './perfectionist';
+export { prettier } from './prettier';
+export { formatters } from './formatters';
+export { react } from './react';
+export { sortPackageJson, sortTsconfig } from './sort';
+export { stylistic, StylisticConfigDefaults } from './stylistic';
+export { svelte } from './svelte';
+export { test } from './test';
+export { typescript } from './typescript';
+export { unicorn } from './unicorn';
+export { unocss } from './unocss';
+export { tailwindcss } from './tailwindcss';
+export { yaml } from './yaml';
+export { toml } from './toml';
+export { astro } from './astro';
