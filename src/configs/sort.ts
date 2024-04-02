@@ -9,7 +9,7 @@ export const sortPackageJson = (): TypedFlatConfigItem[] => {
   return [
     {
       files: ['**/package.json'],
-      name: 'nivalis:sort-package-json',
+      name: 'nivalis:sort:package-json',
       rules: {
         'jsonc/sort-array-values': [
           'error',
@@ -96,7 +96,7 @@ export const sortTsconfig = (): TypedFlatConfigItem[] => {
   return [
     {
       files: ['**/tsconfig.json', '**/tsconfig.*.json'],
-      name: 'nivalis:sort-tsconfig',
+      name: 'nivalis:sort:tsconfig',
       rules: {
         'jsonc/sort-keys': [
           'error',

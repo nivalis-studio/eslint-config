@@ -512,7 +512,7 @@ export const javascript = (
     },
     {
       files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-      name: 'nivalis:scripts-overrides',
+      name: 'nivalis:disables:cli',
       rules: {
         'no-console': 'off',
       },

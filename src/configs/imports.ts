@@ -83,7 +83,7 @@ export const imports = (
     },
     {
       files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-      name: 'nivalis:imports:bin',
+      name: 'nivalis:disables:imports-bin',
       rules: {
         'antfu/no-import-dist': 'off',
         'antfu/no-import-node-modules-by-path': 'off',
