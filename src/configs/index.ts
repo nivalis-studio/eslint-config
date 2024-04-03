@@ -22,3 +22,4 @@ export { tailwindcss } from './tailwindcss';
 export { yaml } from './yaml';
 export { toml } from './toml';
 export { astro } from './astro';
+export { neverthrow } from './neverthrow';

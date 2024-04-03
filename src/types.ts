@@ -332,6 +332,13 @@ export interface OptionsConfig extends OptionsComponentExts {
   tailwindcss?: boolean | OptionsTailwindCSS;
 
   /**
+   * Enable neverthrow rules.
+   *
+   * @default false
+   */
+  neverthrow?: boolean;
+
+  /**
    * Use external formatters to format files.
    *
    * Requires installing:

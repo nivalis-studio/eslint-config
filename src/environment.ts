@@ -17,3 +17,7 @@ export const HAS_ASTRO = isPackageExists('astro');
 const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
 
 export const HAS_VUE = VuePackages.some(i => isPackageExists(i));
+
+const ResultPackages = ['neverthrow', '@nivalis/std'];
+
+export const HAS_RESULT = ResultPackages.some(i => isPackageExists(i));
