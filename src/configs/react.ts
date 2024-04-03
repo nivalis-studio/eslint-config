@@ -31,7 +31,7 @@ export const react = async (
 
   return [
     {
-      name: 'nivalis:react:setup',
+      name: 'nivalis/react/setup',
       plugins: {
         'jsx-a11y': pluginA11y,
         react: pluginReact,
@@ -53,7 +53,7 @@ export const react = async (
           },
         },
       },
-      name: 'nivalis:react:rules',
+      name: 'nivalis/react/rules',
       rules: {
         // react-hooks
         'react-hooks/exhaustive-deps': 'warn',

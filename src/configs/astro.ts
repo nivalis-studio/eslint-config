@@ -21,7 +21,7 @@ export const astro = async (
 
   return [
     {
-      name: 'nivalis:astro:setup',
+      name: 'nivalis/astro/setup',
       plugins: {
         astro: pluginAstro as unknown as ESLint.Plugin,
       },
@@ -35,7 +35,7 @@ export const astro = async (
           parser: parserTs as unknown,
         },
       },
-      name: 'nivalis:astro:rules',
+      name: 'nivalis/astro/rules',
       rules: {
         'astro/no-set-html-directive': 'off',
         'astro/semi': 'off',

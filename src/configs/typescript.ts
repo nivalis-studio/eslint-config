@@ -137,14 +137,14 @@ export const typescript = async (
           ...(parserOptions as any),
         },
       },
-      name: `nivalis:typescript:${typeAware ? 'type-aware-parser' : 'parser'}`,
+      name: `nivalis/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
     };
   };
 
   return [
     {
       // Install the plugins without globs, so they can be configured separately.
-      name: 'nivalis:typescript:setup',
+      name: 'nivalis/typescript/setup',
       plugins: {
         antfu: pluginAntfu,
         ts: pluginTs as unknown as ESLint.Plugin,
@@ -159,7 +159,7 @@ export const typescript = async (
       : [makeParser(false, files)]),
     {
       files,
-      name: 'nivalis:typescript:rules',
+      name: 'nivalis/typescript/rules',
       rules: {
         ...renameRules(
           // eslint-disable-next-line ts/no-non-null-assertion, ts/no-non-null-asserted-optional-chain
@@ -382,17 +382,21 @@ export const typescript = async (
         ...overrides,
       },
     },
-    {
-      files: filesTypeAware,
-      name: 'nivalis:typescript:rules-type-aware',
-      rules: {
-        ...(tsconfigPath ? typeAwareRules : {}),
-        ...overrides,
-      },
-    },
+    ...(isTypeAware
+      ? [
+          {
+            files: filesTypeAware,
+            name: 'nivalis/typescript/rules-type-aware',
+            rules: {
+              ...(tsconfigPath ? typeAwareRules : {}),
+              ...overrides,
+            },
+          },
+        ]
+      : []),
     {
       files: ['**/*.d.ts'],
-      name: 'nivalis:typescript:dts-overrides',
+      name: 'nivalis/typescript/disables/dts',
       rules: {
         'eslint-comments/no-unlimited-disable': 'off',
         'import/no-duplicates': 'off',
@@ -402,14 +406,14 @@ export const typescript = async (
     },
     {
       files: ['**/*.{test,spec}.ts?(x)'],
-      name: 'nivalis:typescript:tests-overrides',
+      name: 'nivalis/typescript/disables/test',
       rules: {
         'no-unused-expressions': 'off',
       },
     },
     {
       files: ['**/*.js', '**/*.cjs'],
-      name: 'nivalis:typescript:javascript-overrides',
+      name: 'nivalis/typescript/disables/cjss',
       rules: {
         'ts/no-require-imports': 'off',
         'ts/no-var-requires': 'off',

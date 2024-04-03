@@ -70,7 +70,7 @@ export const formatters = async (
 
   const configs: TypedFlatConfigItem[] = [
     {
-      name: 'antfu:formatter:setup',
+      name: 'antfu/formatter/setup',
       plugins: {
         format: pluginFormat,
       },
@@ -84,7 +84,7 @@ export const formatters = async (
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:css',
+        name: 'antfu/formatter/css',
         rules: {
           'format/prettier': [
             'error',
@@ -100,7 +100,7 @@ export const formatters = async (
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:scss',
+        name: 'antfu/formatter/scss',
         rules: {
           'format/prettier': [
             'error',
@@ -116,7 +116,7 @@ export const formatters = async (
         languageOptions: {
           parser: parserPlain,
         },
-        name: 'antfu:formatter:less',
+        name: 'antfu/formatter/less',
         rules: {
           'format/prettier': [
             'error',
@@ -136,7 +136,7 @@ export const formatters = async (
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:html',
+      name: 'antfu/formatter/html',
       rules: {
         'format/prettier': [
           'error',
@@ -157,7 +157,7 @@ export const formatters = async (
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:markdown',
+      name: 'antfu/formatter/markdown',
       rules: {
         [`format/${formater}`]: [
           'error',
@@ -183,7 +183,7 @@ export const formatters = async (
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:astro',
+      name: 'antfu/formatter/astro',
       rules: {
         'format/prettier': [
           'error',
@@ -203,7 +203,7 @@ export const formatters = async (
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'antfu:formatter:graphql',
+      name: 'antfu/formatter/graphql',
       rules: {
         'format/prettier': [
           'error',

@@ -30,7 +30,7 @@ export const svelte = async (
 
   return [
     {
-      name: 'nivalis:svelte:setup',
+      name: 'nivalis/svelte/setup',
       plugins: {
         svelte: pluginSvelte as unknown as ESLint.Plugin,
       },
@@ -48,7 +48,7 @@ export const svelte = async (
             : null,
         },
       },
-      name: 'nivalis:svelte:rules',
+      name: 'nivalis/svelte/rules',
       processor: pluginSvelte.processors['.svelte'],
       rules: {
         'import/no-mutable-exports': 'off',

@@ -5,7 +5,7 @@ import type { TypedFlatConfigItem } from '../types';
 export const comments = (): TypedFlatConfigItem[] => {
   return [
     {
-      name: 'nivalis:eslint-comments',
+      name: 'nivalis/eslint-comments/rules',
       plugins: {
         'eslint-comments': pluginComments as unknown as ESLint.Plugin,
       },

@@ -48,7 +48,7 @@ export const javascript = (
       linterOptions: {
         reportUnusedDisableDirectives: true,
       },
-      name: 'nivalis:javascript',
+      name: 'nivalis/javascript/rules',
       plugins: {
         antfu: pluginAntfu,
         'unused-imports': pluginUnusedImports as unknown as ESLint.Plugin,
@@ -512,7 +512,7 @@ export const javascript = (
     },
     {
       files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-      name: 'nivalis:disables:cli',
+      name: 'nivalis/javascript/disables/cli',
       rules: {
         'no-console': 'off',
       },

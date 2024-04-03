@@ -28,7 +28,7 @@ export const markdown = async (
 
   return [
     {
-      name: 'nivalis:markdown:setup',
+      name: 'nivalis/markdown/setup',
       plugins: {
         markdown: markdownPlugin,
       },
@@ -36,7 +36,7 @@ export const markdown = async (
     {
       files,
       ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
-      name: 'nivalis:markdown:processor',
+      name: 'nivalis/markdown/processor',
       /* `eslint-plugin-markdown` only creates virtual files for code blocks,
          but not the markdown file itself. We use `eslint-merge-processors` to
          add a pass-through processor for the markdown file itself. */
@@ -51,7 +51,7 @@ export const markdown = async (
       languageOptions: {
         parser: parserPlain,
       },
-      name: 'nivalis:markdown:parser',
+      name: 'nivalis/markdown/parser',
     },
     {
       files: [
@@ -65,7 +65,7 @@ export const markdown = async (
           },
         },
       },
-      name: 'nivalis:markdown:disables',
+      name: 'nivalis/markdown/disables',
       rules: {
         'import/newline-after-import': 'off',
 

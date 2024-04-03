@@ -24,7 +24,7 @@ export const toml = async (
 
   return [
     {
-      name: 'nivalis:toml:setup',
+      name: 'nivalis/toml/setup',
       plugins: {
         toml: pluginToml as unknown as ESLint.Plugin,
       },
@@ -34,7 +34,7 @@ export const toml = async (
       languageOptions: {
         parser: parserToml,
       },
-      name: 'nivalis:toml:rules',
+      name: 'nivalis/toml/rules',
       rules: {
         'style/spaced-comment': 'off',
 

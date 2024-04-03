@@ -28,7 +28,7 @@ export const jsonc = async (
 
   return [
     {
-      name: 'nivalis:jsonc:setup',
+      name: 'nivalis/jsonc/setup',
       plugins: {
         jsonc: pluginJsonc as unknown as ESLint.Plugin,
       },
@@ -38,7 +38,7 @@ export const jsonc = async (
       languageOptions: {
         parser: parserJsonc,
       },
-      name: 'nivalis:jsonc:rules',
+      name: 'nivalis/jsonc/rules',
       rules: {
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',

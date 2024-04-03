@@ -9,7 +9,7 @@ import type { TypedFlatConfigItem } from '../types';
 export const perfectionist = (): TypedFlatConfigItem[] => {
   return [
     {
-      name: 'nivalis:perfectionist',
+      name: 'nivalis/perfectionist/setup',
       plugins: {
         perfectionist: pluginPerfectionist,
       },

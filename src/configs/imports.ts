@@ -11,7 +11,7 @@ export const imports = (
   return [
     {
       files: [GLOB_SRC],
-      name: 'nivalis:imports',
+      name: 'nivalis/imports/rules',
       plugins: {
         antfu: pluginAntfu,
         import: pluginImport as unknown as ESLint.Plugin,
@@ -83,7 +83,7 @@ export const imports = (
     },
     {
       files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-      name: 'nivalis:disables:imports-bin',
+      name: 'nivalis/imports/disables/bin',
       rules: {
         'antfu/no-import-dist': 'off',
         'antfu/no-import-node-modules-by-path': 'off',

@@ -7,7 +7,7 @@ export const unicorn = async (): Promise<TypedFlatConfigItem[]> => {
   return [
     {
       files: [GLOB_SRC],
-      name: 'nivalis:unicorn',
+      name: 'nivalis/unicorn/rules',
       plugins: {
         unicorn: pluginUnicorn,
       },

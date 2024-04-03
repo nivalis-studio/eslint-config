@@ -10,7 +10,7 @@ export const jsdoc = async (
   return [
     {
       files: [GLOB_SRC],
-      name: 'nivalis:jsdoc',
+      name: 'nivalis/jsdoc/rules',
       plugins: {
         jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),
       },

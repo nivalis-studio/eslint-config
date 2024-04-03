@@ -15,7 +15,7 @@ export const unocss = async (
 
   return [
     {
-      name: 'nivalis:unocss',
+      name: 'nivalis/unocss',
       plugins: {
         unocss: pluginUnoCSS as unknown as ESLint.Plugin,
       },

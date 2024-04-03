@@ -10,9 +10,13 @@ const nivalis = jiti('./src').default;
 
 export default nivalis(
   {
-    ignores: ['fixtures', '_fixtures'],
+    react: true,
+    svelte: true,
+    astro: true,
+    typescript: true,
     formatters: true,
   },
+  { ignores: ['fixtures', '_fixtures'] },
   {
     files: ['src/**/*.ts'],
     rules: {

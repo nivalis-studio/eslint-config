@@ -6,7 +6,7 @@ export const node = (): TypedFlatConfigItem[] => {
   return [
     {
       files: [GLOB_SRC],
-      name: 'nivalis:node',
+      name: 'nivalis/node/rules',
       plugins: {
         node: pluginNode,
       },

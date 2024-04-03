@@ -21,7 +21,7 @@ export const yaml = async (
 
   return [
     {
-      name: 'nivalis:yaml:setup',
+      name: 'nivalis/yaml/setup',
       plugins: {
         yaml: pluginYaml as unknown as ESLint.Plugin,
       },
@@ -31,7 +31,7 @@ export const yaml = async (
       languageOptions: {
         parser: parserYaml,
       },
-      name: 'nivalis:yaml:rules',
+      name: 'nivalis/yaml/rules',
       rules: {
         'style/spaced-comment': 'off',
 

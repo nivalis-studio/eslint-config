@@ -50,7 +50,7 @@ export const stylistic = async (
 
   return [
     {
-      name: 'nivalis:stylistic',
+      name: 'nivalis/stylistic/rules',
       plugins: {
         antfu: pluginAntfu,
         style: pluginStylistic as unknown as ESLint.Plugin,

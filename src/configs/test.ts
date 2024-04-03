@@ -22,7 +22,7 @@ export const test = async (
 
   return [
     {
-      name: 'nivalis:test:setup',
+      name: 'nivalis/test/setup',
       plugins: {
         test: {
           ...pluginVitest,
@@ -36,7 +36,7 @@ export const test = async (
     },
     {
       files,
-      name: 'nivalis:test:rules',
+      name: 'nivalis/test/rules',
       rules: {
         'node/prefer-global/process': 'off',
 

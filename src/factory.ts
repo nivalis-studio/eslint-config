@@ -2,7 +2,7 @@
 /* eslint-disable max-statements */
 /* eslint-disable ts/no-unsafe-return */
 import fs from 'node:fs';
-import { FlatConfigPipeline } from 'eslint-flat-config-utils';
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import {
   astro,
   comments,
@@ -37,6 +37,7 @@ import {
   HAS_TYPESCRIPT,
   IN_IS_EDITOR,
 } from './environment';
+import type { Linter } from 'eslint';
 import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
 
 const flatConfigProps: Array<keyof TypedFlatConfigItem> = [
@@ -92,8 +93,15 @@ export const getOverrides = <K extends keyof OptionsConfig>(
  */
 export const nivalis = async (
   options: OptionsConfig & TypedFlatConfigItem = {},
-  ...userConfigs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
-): Promise<FlatConfigPipeline<TypedFlatConfigItem>> => {
+  ...userConfigs: Array<
+    Awaitable<
+      | TypedFlatConfigItem
+      | TypedFlatConfigItem[]
+      | FlatConfigComposer<any>
+      | Linter.FlatConfig[]
+    >
+  >
+): Promise<FlatConfigComposer<TypedFlatConfigItem>> => {
   const {
     astro: enableAstro = false,
     autoRenamePlugins = true,
@@ -307,9 +315,12 @@ export const nivalis = async (
     configs.push([fusedConfig]);
   }
 
-  let pipeline = new FlatConfigPipeline<TypedFlatConfigItem>();
+  let pipeline = new FlatConfigComposer<TypedFlatConfigItem>();
 
-  pipeline = pipeline.append(...configs, ...userConfigs);
+  pipeline = pipeline.append(
+    ...configs,
+    ...(userConfigs as TypedFlatConfigItem[]),
+  );
 
   if (autoRenamePlugins) {
     pipeline = pipeline.renamePlugins(defaultPluginRenaming);
