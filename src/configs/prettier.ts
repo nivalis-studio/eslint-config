@@ -13,8 +13,7 @@ export const prettier = async (
   options: OptionsFormatters | true = {},
   stylistic: StylisticConfig = {},
 ): Promise<TypedFlatConfigItem[]> => {
-  const [_configPrettier, pluginPrettier, pluginStylistic] = await Promise.all([
-    interopDefault(import('eslint-config-prettier')),
+  const [pluginPrettier, pluginStylistic] = await Promise.all([
     interopDefault(import('eslint-plugin-prettier')),
     interopDefault(import('@stylistic/eslint-plugin')),
   ]);
