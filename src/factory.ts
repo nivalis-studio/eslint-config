@@ -34,7 +34,6 @@ import { interopDefault } from './utils';
 import { formatters } from './configs/formatters';
 import {
   HAS_REACT,
-  HAS_RESULT,
   HAS_TAILWINDCSS,
   HAS_TYPESCRIPT,
   IN_IS_EDITOR,
@@ -111,7 +110,7 @@ export const nivalis = async (
     gitignore: enableGitignore = true,
     graphQL: enableGraphQL = false,
     isInEditor = IN_IS_EDITOR,
-    neverthrow: enableNeverthrow = HAS_RESULT,
+    neverthrow: enableNeverthrow = false,
     prettier: enablePrettier = true,
     react: enableReact = HAS_REACT,
     stylistic: enableStylistic = true,
