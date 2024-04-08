@@ -1,3 +1,4 @@
+// eslint-disable-next-line unicorn/import-style
 import { join, resolve } from 'node:path';
 import fs from 'fs-extra';
 import { afterAll, beforeAll, it } from 'vitest';
