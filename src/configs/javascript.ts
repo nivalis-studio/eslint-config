@@ -488,6 +488,7 @@ export const javascript = (
           {
             args: 'after-used',
             argsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
             vars: 'all',
             varsIgnorePattern: '^_',
           },

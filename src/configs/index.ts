@@ -23,3 +23,4 @@ export { yaml } from './yaml';
 export { toml } from './toml';
 export { astro } from './astro';
 export { neverthrow } from './neverthrow';
+export { solid } from './solid';

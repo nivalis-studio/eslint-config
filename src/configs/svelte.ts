@@ -60,7 +60,7 @@ export const svelte = async (
             caughtErrors: 'none',
             ignoreRestSiblings: true,
             vars: 'all',
-            varsIgnorePattern: '^\\$\\$Props$',
+            varsIgnorePattern: '^(\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)',
           },
         ],
 
@@ -92,7 +92,7 @@ export const svelte = async (
             args: 'after-used',
             argsIgnorePattern: '^_',
             vars: 'all',
-            varsIgnorePattern: '^(_|\\$\\$Props$)',
+            varsIgnorePattern: '^(_|\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)',
           },
         ],
 

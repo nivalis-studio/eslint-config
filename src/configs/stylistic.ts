@@ -17,8 +17,13 @@ export const StylisticConfigDefaults: StylisticConfig = {
   semi: true,
 };
 
+export type StylisticOptions = {
+  lessOpinionated?: boolean;
+} & StylisticConfig &
+  OptionsOverrides;
+
 export const stylistic = async (
-  options: StylisticConfig & OptionsOverrides = {},
+  options: StylisticOptions = {},
 ): Promise<TypedFlatConfigItem[]> => {
   const {
     indent,

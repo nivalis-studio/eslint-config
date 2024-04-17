@@ -4,18 +4,18 @@ import type { ParserOptions } from '@typescript-eslint/parser';
 import type { ESLint, Linter } from 'eslint';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { VendoredPrettierOptions } from './vender/prettier-types';
-import type { RuleOptions } from './typegen';
+import type { ConfigNames, RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
 
 export type Rules = RuleOptions;
 
-export type TypedFlatConfigItem = Omit<Linter.FlatConfig, 'plugins'> & {
-  /**
-   * Custom name of each config item
-   */
-  name?: string;
+export type { ConfigNames };
 
+export type TypedFlatConfigItem = Omit<
+  Linter.FlatConfig<Linter.RulesRecord & Rules>,
+  'plugins'
+> & {
   // Relax plugins type limitation, as most of the plugins did not have correct type info yet.
   /**
    * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
@@ -24,11 +24,6 @@ export type TypedFlatConfigItem = Omit<Linter.FlatConfig, 'plugins'> & {
    */
 
   plugins?: { [key: string]: ESLint.Plugin };
-
-  /**
-   * An object containing a name-value mapping of rules to use.
-   */
-  rules?: Linter.RulesRecord & Rules;
 };
 
 export interface OptionsFiles {
@@ -190,6 +185,17 @@ export interface OptionsConfig extends OptionsComponentExts {
   gitignore?: boolean | FlatGitignoreOptions;
 
   /**
+   * Disable some opinionated rules to Anthony's preference.
+   *
+   * Including:
+   * - `antfu/top-level-function`
+   * - `antfu/if-newline`
+   *
+   * @default false
+   */
+  lessOpinionated?: boolean;
+
+  /**
    * Enable graphql.
    *
    * Requires installing:
@@ -305,6 +311,16 @@ export interface OptionsConfig extends OptionsComponentExts {
   react?: boolean | OptionsOverrides;
 
   /**
+   * Enable solid rules.
+   *
+   * Requires installing:
+   * - `eslint-plugin-solid`
+   *
+   * @default false
+   */
+  solid?: boolean | OptionsOverrides;
+
+  /**
    * Enable svelte rules.
    *
    * Requires installing:
@@ -379,6 +395,7 @@ export interface OptionsConfig extends OptionsComponentExts {
     yaml?: TypedFlatConfigItem['rules'];
     toml?: TypedFlatConfigItem['rules'];
     react?: TypedFlatConfigItem['rules'];
+    soldi: TypedFlatConfigItem['rules'];
     svelte?: TypedFlatConfigItem['rules'];
   };
 }

@@ -8,6 +8,9 @@ import type {
 } from '../types';
 import type { ESLint } from 'eslint';
 
+// Hold the reference so we don't redeclare the plugin on each call
+let _pluginTest: any;
+
 export const test = async (
   options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {},
 ): Promise<TypedFlatConfigItem[]> => {
@@ -20,18 +23,20 @@ export const test = async (
     interopDefault<ESLint.Plugin>(import('eslint-plugin-no-only-tests')),
   ] as const);
 
+  _pluginTest = _pluginTest || {
+    ...pluginVitest,
+    rules: {
+      ...pluginVitest.rules,
+      // extend `test/no-only-tests` rule
+      ...pluginNoOnlyTests.rules,
+    },
+  };
+
   return [
     {
       name: 'nivalis/test/setup',
       plugins: {
-        test: {
-          ...pluginVitest,
-          rules: {
-            ...(pluginVitest.rules as unknown as ESLint.Plugin['rules']),
-            // extend `test/no-only-tests` rule
-            ...pluginNoOnlyTests.rules,
-          },
-        },
+        test: _pluginTest,
       },
     },
     {

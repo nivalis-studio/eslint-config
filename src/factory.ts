@@ -18,6 +18,7 @@ import {
   perfectionist,
   prettier,
   react,
+  solid,
   sortPackageJson,
   sortTsconfig,
   stylistic,
@@ -39,7 +40,12 @@ import {
   IN_IS_EDITOR,
 } from './environment';
 import type { Linter } from 'eslint';
-import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
+import type {
+  Awaitable,
+  ConfigNames,
+  OptionsConfig,
+  TypedFlatConfigItem,
+} from './types';
 
 const flatConfigProps: Array<keyof TypedFlatConfigItem> = [
   'name',
@@ -98,11 +104,11 @@ export const nivalis = async (
     Awaitable<
       | TypedFlatConfigItem
       | TypedFlatConfigItem[]
-      | FlatConfigComposer<any>
+      | FlatConfigComposer<any, any>
       | Linter.FlatConfig[]
     >
   >
-): Promise<FlatConfigComposer<TypedFlatConfigItem>> => {
+): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> => {
   const {
     astro: enableAstro = false,
     autoRenamePlugins = true,
@@ -113,6 +119,7 @@ export const nivalis = async (
     neverthrow: enableNeverthrow = false,
     prettier: enablePrettier = true,
     react: enableReact = HAS_REACT,
+    solid: enableSolid = false,
     stylistic: enableStylistic = true,
     svelte: enableSvelte = false,
     tailwindcss: enableTailwindCSS = HAS_TAILWINDCSS,
@@ -206,6 +213,16 @@ export const nivalis = async (
     configs.push(
       react({
         overrides: getOverrides(options, 'react'),
+        typescript: !!enableTypeScript,
+      }),
+    );
+  }
+
+  if (enableSolid) {
+    configs.push(
+      solid({
+        overrides: getOverrides(options, 'solid'),
+        tsconfigPath: getOverrides(options, 'typescript')?.tsconfigPath,
         typescript: !!enableTypeScript,
       }),
     );
