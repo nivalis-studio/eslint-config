@@ -69,8 +69,8 @@ importers:
         specifier: 6.1.1
         version: 6.1.1(eslint@9.0.0)
       eslint-plugin-react:
-        specifier: 7.34.1
-        version: 7.34.1(eslint@9.0.0)
+        specifier: 7.34.0
+        version: 7.34.0(eslint@9.0.0)
       eslint-plugin-react-hooks:
         specifier: 4.6.0
         version: 4.6.0(eslint@9.0.0)
@@ -1848,8 +1848,8 @@ packages:
     peerDependencies:
       eslint: '>=7'
 
-  eslint-plugin-react@7.34.1:
-    resolution: {integrity: sha512-N97CxlouPT1AHt8Jn0mhhN2RrADlUAsk1/atcT2KyA/l9Q/E6ll7OIGwNumFmWfZ9skV3XXccYS19h80rHtgkw==}
+  eslint-plugin-react@7.34.0:
+    resolution: {integrity: sha512-MeVXdReleBTdkz/bvcQMSnCXGi+c9kvy51IpinjnJgutl3YTHWsDdke7Z1ufZpGfDG8xduBDKyjtB9JH1eBKIQ==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -5697,7 +5697,7 @@ snapshots:
     dependencies:
       eslint: 9.0.0
 
-  eslint-plugin-react@7.34.1(eslint@9.0.0):
+  eslint-plugin-react@7.34.0(eslint@9.0.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlast: 1.2.5
