@@ -1,7 +1,7 @@
 {
   "name": "@nivalis/eslint-config",
   "type": "module",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "packageManager": "pnpm@9.0.1",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "license": "MIT",
