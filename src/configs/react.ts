@@ -2,6 +2,7 @@
 import { isPackageExists } from 'local-pkg';
 import { interopDefault } from '../utils';
 import { GLOB_REACT } from '../globs';
+import { HAS_NEXTJS } from '../environment';
 import type {
   OptionsFiles,
   OptionsHasTypeScript,
@@ -62,7 +63,21 @@ export const react = async (
         // react refresh
         'react-refresh/only-export-components': [
           'warn',
-          { allowConstantExport: isAllowConstantExport },
+          {
+            allowConstantExport: isAllowConstantExport,
+            allowExportNames: [
+              ...(HAS_NEXTJS
+                ? [
+                    'config',
+                    'generateStaticParams',
+                    'metadata',
+                    'generateMetadata',
+                    'viewport',
+                    'generateViewport',
+                  ]
+                : []),
+            ],
+          },
         ],
 
         // recommended rules react
