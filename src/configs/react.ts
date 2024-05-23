@@ -18,13 +18,19 @@ export const react = async (
 ): Promise<TypedFlatConfigItem[]> => {
   const { files = [GLOB_REACT], overrides = {}, typescript = true } = options;
 
-  const [pluginA11y, pluginReact, pluginReactHooks, pluginReactRefresh] =
-    await Promise.all([
-      interopDefault(import('eslint-plugin-jsx-a11y')),
-      interopDefault(import('eslint-plugin-react')),
-      interopDefault(import('eslint-plugin-react-hooks')),
-      interopDefault(import('eslint-plugin-react-refresh')),
-    ] as const);
+  const [
+    pluginA11y,
+    pluginReact,
+    pluginReactHooks,
+    pluginReactRefresh,
+    pluginReactCompiler,
+  ] = await Promise.all([
+    interopDefault(import('eslint-plugin-jsx-a11y')),
+    interopDefault(import('eslint-plugin-react')),
+    interopDefault(import('eslint-plugin-react-hooks')),
+    interopDefault(import('eslint-plugin-react-refresh')),
+    interopDefault(import('eslint-plugin-react-compiler')),
+  ] as const);
 
   const isAllowConstantExport = ReactRefreshAllowPackages.some(i =>
     isPackageExists(i),
@@ -36,6 +42,7 @@ export const react = async (
       plugins: {
         'jsx-a11y': pluginA11y,
         react: pluginReact,
+        'react-compiler': pluginReactCompiler,
         'react-hooks': pluginReactHooks,
         'react-refresh': pluginReactRefresh,
       },
@@ -56,6 +63,9 @@ export const react = async (
       },
       name: 'nivalis/react/rules',
       rules: {
+        // react-compiler
+        'react-compiler/react-compiler': 'error',
+
         // react-hooks
         'react-hooks/exhaustive-deps': 'warn',
         'react-hooks/rules-of-hooks': 'error',

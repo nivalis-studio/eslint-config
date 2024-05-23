@@ -60,6 +60,7 @@ export const stylistic = async (
         antfu: pluginAntfu,
         style: pluginStylistic as unknown as ESLint.Plugin,
       },
+      // @ts-expect-error versionning issue
       rules: {
         ...config.rules,
 
@@ -95,6 +96,7 @@ export const stylistic = async (
             shorthandLast: false,
           },
         ],
+        'style/multiline-comment-style': ['warn', 'bare-block'],
         'style/no-multiple-empty-lines': [
           'error',
           { max: 1, maxBOF: 0, maxEOF: 0 },
@@ -164,6 +166,7 @@ export const prettierStylistic = (): TypedFlatConfigItem[] => [
       'style/max-len': 'off',
       'style/max-statements-per-line': 'off',
       'style/member-delimiter-style': 'off',
+      'style/multiline-comment-style': 'off',
       'style/multiline-ternary': 'off',
       'style/new-parens': 'off',
       'style/newline-per-chained-call': 'off',

@@ -130,7 +130,6 @@ export const javascript = (
         'max-nested-callbacks': ['error', MAX_NESTED_CALLBACKS],
         'max-params': ['error', MAX_PARAMS],
         'max-statements': ['error', MAX_STATEMENTS],
-        'multiline-comment-style': ['warn', 'bare-block'],
         'new-cap': [
           'warn',
           {
