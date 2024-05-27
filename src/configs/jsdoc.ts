@@ -1,11 +1,15 @@
 import { interopDefault } from '../utils';
 import { GLOB_SRC } from '../globs';
-import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
+import type {
+  OptionsIsQuiet,
+  OptionsStylistic,
+  TypedFlatConfigItem,
+} from '../types';
 
 export const jsdoc = async (
-  options: OptionsStylistic = {},
+  options: OptionsIsQuiet & OptionsStylistic = {},
 ): Promise<TypedFlatConfigItem[]> => {
-  const { stylistic = true } = options;
+  const { isInQuietMode = false, stylistic = true } = options;
 
   return [
     {
@@ -15,26 +19,26 @@ export const jsdoc = async (
         jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),
       },
       rules: {
-        'jsdoc/check-access': 'warn',
-        'jsdoc/check-param-names': 'warn',
-        'jsdoc/check-property-names': 'warn',
-        'jsdoc/check-types': 'warn',
-        'jsdoc/empty-tags': 'warn',
-        'jsdoc/implements-on-classes': 'warn',
-        'jsdoc/no-defaults': 'warn',
-        'jsdoc/no-multi-asterisks': 'warn',
-        'jsdoc/require-param-name': 'warn',
-        'jsdoc/require-property': 'warn',
-        'jsdoc/require-property-description': 'warn',
-        'jsdoc/require-property-name': 'warn',
-        'jsdoc/require-returns-check': 'warn',
-        'jsdoc/require-returns-description': 'warn',
-        'jsdoc/require-yields-check': 'warn',
+        'jsdoc/check-access': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/check-param-names': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/check-property-names': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/check-types': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/empty-tags': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/implements-on-classes': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/no-defaults': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/no-multi-asterisks': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-param-name': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-property': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-property-description': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-property-name': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-returns-check': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-returns-description': isInQuietMode ? 'off' : 'warn',
+        'jsdoc/require-yields-check': isInQuietMode ? 'off' : 'warn',
 
         ...(stylistic
           ? {
-              'jsdoc/check-alignment': 'warn',
-              'jsdoc/multiline-blocks': 'warn',
+              'jsdoc/check-alignment': isInQuietMode ? 'off' : 'warn',
+              'jsdoc/multiline-blocks': isInQuietMode ? 'off' : 'warn',
             }
           : {}),
       },

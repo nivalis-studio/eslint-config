@@ -33,24 +33,6 @@ export interface OptionsFiles {
   files?: string[];
 }
 
-export interface OptionsVue extends OptionsOverrides {
-  /**
-   * Create virtual files for Vue SFC blocks to enable linting.
-   *
-   * @see https://github.com/antfu/eslint-processor-vue-blocks
-   * @default true
-   */
-  sfcBlocks?: boolean;
-
-  /**
-   * Vue version. Apply different rules set from `eslint-plugin-vue`.
-   *
-   * @default 3
-   */
-  // eslint-disable-next-line ts/no-magic-numbers
-  vueVersion?: 2 | 3;
-}
-
 export type OptionsTypescript =
   | (OptionsTypeScriptWithTypes & OptionsOverrides)
   | (OptionsTypeScriptParserOptions & OptionsOverrides);
@@ -97,13 +79,6 @@ export interface OptionsFormatters {
    * By default it's controlled by our own config.
    */
   dprintOptions?: boolean;
-
-  /**
-   * Enable formatting support for Astro.
-   *
-   * Currently only support Prettier.
-   */
-  astro?: 'prettier' | boolean;
 }
 
 export interface OptionsComponentExts {
@@ -127,6 +102,13 @@ export interface OptionsTypeScriptParserOptions {
    * @default ['**\/*.{ts,tsx}']
    */
   filesTypeAware?: string[];
+
+  /**
+   * Enable 'typeware' rules.
+   *
+   * @default true
+   */
+  typeaware?: boolean;
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -158,20 +140,11 @@ export interface OptionsIsInEditor {
   isInEditor?: boolean;
 }
 
-export interface OptionsTailwindCSS extends OptionsOverrides {}
-
-export interface OptionsUnoCSS extends OptionsOverrides {
-  /**
-   * Enable attributify support.
-   * @default true
-   */
-  attributify?: boolean;
-  /**
-   * Enable strict mode by throwing errors about blocklisted classes.
-   * @default false
-   */
-  strict?: boolean;
+export interface OptionsIsQuiet {
+  isInQuietMode?: boolean;
 }
+
+export type OptionsTailwindCSS = OptionsOverrides;
 
 export interface OptionsConfig extends OptionsComponentExts {
   /**
@@ -183,17 +156,6 @@ export interface OptionsConfig extends OptionsComponentExts {
    * @default true
    */
   gitignore?: boolean | FlatGitignoreOptions;
-
-  /**
-   * Disable some opinionated rules to Anthony's preference.
-   *
-   * Including:
-   * - `antfu/top-level-function`
-   * - `antfu/if-newline`
-   *
-   * @default false
-   */
-  lessOpinionated?: boolean;
 
   /**
    * Enable graphql.
@@ -240,13 +202,6 @@ export interface OptionsConfig extends OptionsComponentExts {
   test?: boolean | OptionsOverrides;
 
   /**
-   * Enable Vue support.
-   *
-   * @default auto-detect based on the dependencies
-   */
-  vue?: boolean | OptionsVue;
-
-  /**
    * Enable JSONC support.
    *
    * @default true
@@ -266,19 +221,6 @@ export interface OptionsConfig extends OptionsComponentExts {
    * @default true
    */
   toml?: boolean | OptionsOverrides;
-
-  /**
-   * Enable ASTRO support.
-   *
-   * Requires installing:
-   * - `eslint-plugin-astro`
-   *
-   * Requires installing for formatting .astro:
-   * - `prettier-plugin-astro`
-   *
-   * @default false
-   */
-  astro?: boolean | OptionsOverrides;
 
   /**
    * Enable linting for **code snippets** in Markdown.
@@ -331,21 +273,18 @@ export interface OptionsConfig extends OptionsComponentExts {
   svelte?: boolean;
 
   /**
-   * Enable unocss rules.
-   *
-   * Requires installing:
-   * - `@unocss/eslint-plugin`
-   *
-   * @default false
-   */
-  unocss?: boolean | OptionsUnoCSS;
-
-  /**
    * Enable tailwindcss rules.
    *
    * @default false
    */
   tailwindcss?: boolean | OptionsTailwindCSS;
+
+  /**
+   * Disable 'warn' rules.
+   *
+   * @default false
+   */
+  quiet?: boolean;
 
   /**
    * Enable neverthrow rules.
@@ -395,7 +334,7 @@ export interface OptionsConfig extends OptionsComponentExts {
     yaml?: TypedFlatConfigItem['rules'];
     toml?: TypedFlatConfigItem['rules'];
     react?: TypedFlatConfigItem['rules'];
-    soldi: TypedFlatConfigItem['rules'];
+    solid: TypedFlatConfigItem['rules'];
     svelte?: TypedFlatConfigItem['rules'];
   };
 }

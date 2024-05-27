@@ -6,7 +6,6 @@ export default nivalis(
   {
     react: true,
     svelte: true,
-    astro: true,
     solid: true,
     typescript: true,
     formatters: true,

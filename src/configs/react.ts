@@ -6,6 +6,7 @@ import { HAS_NEXTJS } from '../environment';
 import type {
   OptionsFiles,
   OptionsHasTypeScript,
+  OptionsIsQuiet,
   OptionsOverrides,
   TypedFlatConfigItem,
 } from '../types';
@@ -13,10 +14,19 @@ import type {
 // react refresh
 const ReactRefreshAllowPackages = ['vite'];
 
+// eslint-disable-next-line complexity
 export const react = async (
-  options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {},
+  options: OptionsIsQuiet &
+    OptionsHasTypeScript &
+    OptionsOverrides &
+    OptionsFiles = {},
 ): Promise<TypedFlatConfigItem[]> => {
-  const { files = [GLOB_REACT], overrides = {}, typescript = true } = options;
+  const {
+    files = [GLOB_REACT],
+    isInQuietMode = false,
+    overrides = {},
+    typescript = true,
+  } = options;
 
   const [
     pluginA11y,
@@ -67,12 +77,12 @@ export const react = async (
         'react-compiler/react-compiler': 'error',
 
         // react-hooks
-        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/exhaustive-deps': isInQuietMode ? 'off' : 'warn',
         'react-hooks/rules-of-hooks': 'error',
 
         // react refresh
         'react-refresh/only-export-components': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             allowConstantExport: isAllowConstantExport,
             allowExportNames: [
@@ -92,7 +102,7 @@ export const react = async (
 
         // recommended rules react
         'react/boolean-prop-naming': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             rule: '^(is|has|are|can|should|did|will)[A-Z]([A-Za-z0-9])+',
             validateNested: true,
@@ -123,7 +133,7 @@ export const react = async (
         'react/iframe-missing-sandbox': ['error'],
         'react/jsx-boolean-value': ['error', 'never'],
         'react/jsx-filename-extension': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             extensions: ['.tsx'],
           },
@@ -266,9 +276,9 @@ export const react = async (
           : {}),
 
         // a11y rules
-        'jsx-a11y/accessible-emoji': ['warn'],
+        'jsx-a11y/accessible-emoji': [isInQuietMode ? 'off' : 'warn'],
         'jsx-a11y/alt-text': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             area: [],
             elements: ['img', 'object', 'area', 'input[type="image"]'],
@@ -277,24 +287,34 @@ export const react = async (
             object: [],
           },
         ],
-        'jsx-a11y/anchor-has-content': ['warn', { components: [] }],
+        'jsx-a11y/anchor-has-content': [
+          isInQuietMode ? 'off' : 'warn',
+          { components: [] },
+        ],
         'jsx-a11y/anchor-is-valid': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             aspects: ['noHref', 'invalidHref', 'preferButton'],
             components: ['Link'],
             specialLink: ['to'],
           },
         ],
-        'jsx-a11y/aria-activedescendant-has-tabindex': ['warn'],
-        'jsx-a11y/aria-props': ['warn'],
-        'jsx-a11y/aria-proptypes': ['warn'],
-        'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: false }],
-        'jsx-a11y/aria-unsupported-elements': ['warn'],
+        'jsx-a11y/aria-activedescendant-has-tabindex': [
+          isInQuietMode ? 'off' : 'warn',
+        ],
+        'jsx-a11y/aria-props': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/aria-proptypes': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/aria-role': [
+          isInQuietMode ? 'off' : 'warn',
+          { ignoreNonDOM: false },
+        ],
+        'jsx-a11y/aria-unsupported-elements': [isInQuietMode ? 'off' : 'warn'],
         'jsx-a11y/autocomplete-valid': ['off', { inputComponents: [] }],
-        'jsx-a11y/click-events-have-key-events': ['warn'],
+        'jsx-a11y/click-events-have-key-events': [
+          isInQuietMode ? 'off' : 'warn',
+        ],
         'jsx-a11y/control-has-associated-label': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             controlComponents: [],
             depth: 5,
@@ -322,13 +342,16 @@ export const react = async (
             labelAttributes: ['label'],
           },
         ],
-        'jsx-a11y/heading-has-content': ['warn', { components: [''] }],
-        'jsx-a11y/html-has-lang': ['warn'],
-        'jsx-a11y/iframe-has-title': ['warn'],
-        'jsx-a11y/img-redundant-alt': ['warn'],
-        'jsx-a11y/interactive-supports-focus': ['warn'],
+        'jsx-a11y/heading-has-content': [
+          isInQuietMode ? 'off' : 'warn',
+          { components: [''] },
+        ],
+        'jsx-a11y/html-has-lang': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/iframe-has-title': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/img-redundant-alt': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/interactive-supports-focus': [isInQuietMode ? 'off' : 'warn'],
         'jsx-a11y/label-has-associated-control': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             assert: 'both',
             controlComponents: [],
@@ -347,28 +370,33 @@ export const react = async (
             },
           },
         ],
-        'jsx-a11y/lang': ['warn'],
+        'jsx-a11y/lang': [isInQuietMode ? 'off' : 'warn'],
         'jsx-a11y/media-has-caption': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             audio: [],
             track: [],
             video: [],
           },
         ],
-        'jsx-a11y/mouse-events-have-key-events': ['warn'],
-        'jsx-a11y/no-access-key': ['warn'],
-        'jsx-a11y/no-autofocus': ['warn', { ignoreNonDOM: true }],
+        'jsx-a11y/mouse-events-have-key-events': [
+          isInQuietMode ? 'off' : 'warn',
+        ],
+        'jsx-a11y/no-access-key': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/no-autofocus': [
+          isInQuietMode ? 'off' : 'warn',
+          { ignoreNonDOM: true },
+        ],
         'jsx-a11y/no-distracting-elements': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           { elements: ['marquee', 'blink'] },
         ],
         'jsx-a11y/no-interactive-element-to-noninteractive-role': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           { tr: ['none', 'presentation'] },
         ],
         'jsx-a11y/no-noninteractive-element-interactions': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             handlers: [
               'onClick',
@@ -381,7 +409,7 @@ export const react = async (
           },
         ],
         'jsx-a11y/no-noninteractive-element-to-interactive-role': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             li: ['menuitem', 'option', 'row', 'tab', 'treeitem'],
             ol: [
@@ -407,11 +435,11 @@ export const react = async (
           },
         ],
         'jsx-a11y/no-noninteractive-tabindex': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           { roles: ['tabpanel'], tags: [] },
         ],
         'jsx-a11y/no-onchange': ['off'],
-        'jsx-a11y/no-redundant-roles': ['warn'],
+        'jsx-a11y/no-redundant-roles': [isInQuietMode ? 'off' : 'warn'],
         'jsx-a11y/no-static-element-interactions': [
           'off',
           {
@@ -425,10 +453,12 @@ export const react = async (
             ],
           },
         ],
-        'jsx-a11y/role-has-required-aria-props': ['warn'],
-        'jsx-a11y/role-supports-aria-props': ['warn'],
-        'jsx-a11y/scope': ['warn'],
-        'jsx-a11y/tabindex-no-positive': ['warn'],
+        'jsx-a11y/role-has-required-aria-props': [
+          isInQuietMode ? 'off' : 'warn',
+        ],
+        'jsx-a11y/role-supports-aria-props': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/scope': [isInQuietMode ? 'off' : 'warn'],
+        'jsx-a11y/tabindex-no-positive': [isInQuietMode ? 'off' : 'warn'],
 
         // overrides
         ...overrides,

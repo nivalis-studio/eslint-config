@@ -2,7 +2,6 @@ import fs from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 import {
-  astro,
   combine,
   comments,
   formatters,
@@ -11,6 +10,7 @@ import {
   jsdoc,
   jsonc,
   markdown,
+  nextjs,
   node,
   // perfectionist,
   react,
@@ -22,7 +22,6 @@ import {
   toml,
   typescript,
   unicorn,
-  unocss,
   yaml,
 } from '../src';
 
@@ -34,7 +33,6 @@ const configs = await combine(
       },
     },
   },
-  astro(),
   comments(),
   formatters(),
   imports(),
@@ -43,6 +41,7 @@ const configs = await combine(
   jsonc(),
   markdown(),
   node(),
+  nextjs(),
   // perfectionist(),
   react(),
   solid(),
@@ -53,7 +52,6 @@ const configs = await combine(
   toml(),
   typescript(),
   unicorn(),
-  unocss(),
   yaml(),
 );
 

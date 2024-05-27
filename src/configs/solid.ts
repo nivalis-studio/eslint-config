@@ -3,6 +3,7 @@ import { GLOB_JSX, GLOB_TSX } from '../globs';
 import type {
   OptionsFiles,
   OptionsHasTypeScript,
+  OptionsIsQuiet,
   OptionsOverrides,
   OptionsTypeScriptWithTypes,
   TypedFlatConfigItem,
@@ -10,12 +11,14 @@ import type {
 
 export const solid = async (
   options: OptionsHasTypeScript &
+    OptionsIsQuiet &
     OptionsOverrides &
     OptionsFiles &
     OptionsTypeScriptWithTypes = {},
 ): Promise<TypedFlatConfigItem[]> => {
   const {
     files = [GLOB_JSX, GLOB_TSX],
+    isInQuietMode = false,
     overrides = {},
     typescript = true,
   } = options;
@@ -34,7 +37,7 @@ export const solid = async (
 
   return [
     {
-      name: 'antfu/solid/setup',
+      name: 'nivalis/solid/setup',
       plugins: {
         solid: pluginSolid as any,
       },
@@ -51,10 +54,10 @@ export const solid = async (
         },
         sourceType: 'module',
       },
-      name: 'antfu/solid/rules',
+      name: 'nivalis/solid/rules',
       rules: {
         // reactivity
-        'solid/components-return-once': 'warn',
+        'solid/components-return-once': isInQuietMode ? 'off' : 'warn',
         'solid/event-handlers': [
           'error',
           {
@@ -78,7 +81,7 @@ export const solid = async (
         'solid/no-react-specific-props': 'error',
         'solid/no-unknown-namespaces': 'error',
         'solid/prefer-for': 'error',
-        'solid/reactivity': 'warn',
+        'solid/reactivity': isInQuietMode ? 'off' : 'warn',
         'solid/self-closing-comp': 'error',
         'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
         ...(typescript

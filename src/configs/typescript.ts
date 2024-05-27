@@ -5,6 +5,7 @@ import { interopDefault, renameRules, toArray } from '../utils';
 import type {
   OptionsComponentExts,
   OptionsFiles,
+  OptionsIsQuiet,
   OptionsOverrides,
   OptionsTypeScriptParserOptions,
   OptionsTypeScriptWithTypes,
@@ -13,13 +14,20 @@ import type {
 import type { ESLint } from 'eslint';
 
 export const typescript = async (
-  options: OptionsFiles &
+  options: OptionsIsQuiet &
+    OptionsFiles &
     OptionsComponentExts &
     OptionsOverrides &
     OptionsTypeScriptWithTypes &
     OptionsTypeScriptParserOptions = {},
 ): Promise<TypedFlatConfigItem[]> => {
-  const { componentExts = [], overrides = {}, parserOptions = {} } = options;
+  const {
+    componentExts = [],
+    isInQuietMode = false,
+    overrides = {},
+    parserOptions = {},
+    typeaware = true,
+  } = options;
 
   const files = options.files ?? [
     GLOB_SRC,
@@ -31,7 +39,7 @@ export const typescript = async (
     ? toArray(options.tsconfigPath)
     : './tsconfig.json';
 
-  const isTypeAware = !!tsconfigPath;
+  const isTypeAware = typeaware && !!tsconfigPath;
 
   const typeAwareRules: TypedFlatConfigItem['rules'] = {
     'dot-notation': 'off',
@@ -46,14 +54,14 @@ export const typescript = async (
     ],
     'ts/dot-notation': ['error', { allowKeywords: true }],
     'ts/naming-convention': [
-      'warn',
+      isInQuietMode ? 'off' : 'warn',
       { format: ['PascalCase', 'camelCase'], selector: 'function' },
     ],
     'ts/no-array-delete': 'error',
     'ts/no-base-to-string': 'error',
     'ts/no-confusing-void-expression': 'error',
     'ts/no-duplicate-type-constituents': 'error',
-    'ts/no-explicit-any': 'warn',
+    'ts/no-explicit-any': isInQuietMode ? 'off' : 'warn',
     'ts/no-floating-promises': [
       'error',
       { ignoreIIFE: true, ignoreVoid: true },
@@ -78,11 +86,11 @@ export const typescript = async (
     'ts/no-unnecessary-type-arguments': 'error',
     'ts/no-unnecessary-type-assertion': ['error'],
     'ts/no-unsafe-argument': ['error'],
-    'ts/no-unsafe-assignment': ['warn'],
-    'ts/no-unsafe-call': ['warn'],
+    'ts/no-unsafe-assignment': [isInQuietMode ? 'off' : 'warn'],
+    'ts/no-unsafe-call': [isInQuietMode ? 'off' : 'warn'],
     'ts/no-unsafe-enum-comparison': 'error',
-    'ts/no-unsafe-member-access': ['warn'],
-    'ts/no-unsafe-return': ['warn'],
+    'ts/no-unsafe-member-access': [isInQuietMode ? 'off' : 'warn'],
+    'ts/no-unsafe-return': [isInQuietMode ? 'off' : 'warn'],
     'ts/no-useless-template-literals': 'error',
     'ts/non-nullable-type-assertion-style': 'error',
     'ts/prefer-includes': 'error',
@@ -102,7 +110,10 @@ export const typescript = async (
     'ts/promise-function-async': 'error',
     'ts/require-await': ['error'],
     'ts/restrict-plus-operands': 'error',
-    'ts/restrict-template-expressions': ['warn', { allowNumber: true }],
+    'ts/restrict-template-expressions': [
+      isInQuietMode ? 'off' : 'warn',
+      { allowNumber: true },
+    ],
     'ts/switch-exhaustiveness-check': 'error',
     'ts/unbound-method': 'error',
   };
@@ -285,7 +296,7 @@ export const typescript = async (
         'ts/no-explicit-any': 'off',
         'ts/no-extra-non-null-assertion': ['error'],
         'ts/no-extraneous-class': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             allowConstructorOnly: false,
             allowEmpty: false,
@@ -302,7 +313,7 @@ export const typescript = async (
         'ts/no-loop-func': ['error'],
         'ts/no-loss-of-precision': ['error'],
         'ts/no-magic-numbers': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             detectObjects: false,
             enforceConst: true,
@@ -321,7 +332,7 @@ export const typescript = async (
         'ts/no-redeclare': 'error',
         'ts/no-require-imports': 'error',
         'ts/no-shadow': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
             builtinGlobals: false,
@@ -371,7 +382,7 @@ export const typescript = async (
         'ts/prefer-namespace-keyword': ['error'],
         'ts/prefer-ts-expect-error': ['error'],
         'ts/triple-slash-reference': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           { lib: 'never', path: 'never', types: 'never' },
         ],
         'ts/unified-signatures': [

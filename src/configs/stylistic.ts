@@ -17,10 +17,7 @@ export const StylisticConfigDefaults: StylisticConfig = {
   semi: true,
 };
 
-export type StylisticOptions = {
-  lessOpinionated?: boolean;
-} & StylisticConfig &
-  OptionsOverrides;
+export type StylisticOptions = StylisticConfig & OptionsOverrides;
 
 export const stylistic = async (
   options: StylisticOptions = {},
@@ -60,7 +57,7 @@ export const stylistic = async (
         antfu: pluginAntfu,
         style: pluginStylistic as unknown as ESLint.Plugin,
       },
-      // @ts-expect-error versionning issue
+      // @ts-expect-error - Typings are incorrect
       rules: {
         ...config.rules,
 

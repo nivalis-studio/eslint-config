@@ -2,14 +2,15 @@ import { GLOB_HTML, GLOB_REACT } from '../globs';
 import { interopDefault } from '../utils';
 import type {
   OptionsIsInEditor,
+  OptionsIsQuiet,
   OptionsOverrides,
   TypedFlatConfigItem,
 } from '../types';
 
 export const tailwindcss = async (
-  options: OptionsIsInEditor & OptionsOverrides = {},
+  options: OptionsIsQuiet & OptionsIsInEditor & OptionsOverrides = {},
 ): Promise<TypedFlatConfigItem[]> => {
-  const { isInEditor = false, overrides = {} } = options;
+  const { isInEditor = false, isInQuietMode = false, overrides = {} } = options;
 
   return [
     {
@@ -34,11 +35,14 @@ export const tailwindcss = async (
     {
       files: [GLOB_REACT, GLOB_HTML],
       rules: {
-        'tailwindcss/classnames-order': isInEditor ? 'off' : 'warn',
-        'tailwindcss/enforces-negative-arbitrary-values': ['warn'],
-        'tailwindcss/enforces-shorthand': ['warn'],
+        'tailwindcss/classnames-order':
+          isInEditor && isInQuietMode ? 'off' : 'warn',
+        'tailwindcss/enforces-negative-arbitrary-values': [
+          isInQuietMode ? 'off' : 'warn',
+        ],
+        'tailwindcss/enforces-shorthand': [isInQuietMode ? 'off' : 'warn'],
         'tailwindcss/no-contradicting-classname': ['error'],
-        'tailwindcss/no-custom-classname': ['warn'],
+        'tailwindcss/no-custom-classname': [isInQuietMode ? 'off' : 'warn'],
         ...overrides,
       },
     },

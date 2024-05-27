@@ -1,7 +1,5 @@
-import { isPackageExists } from 'local-pkg';
 import { DEFAULT_INDENT } from '../constants';
 import {
-  GLOB_ASTRO,
   GLOB_CSS,
   GLOB_GRAPHQL,
   GLOB_LESS,
@@ -25,7 +23,6 @@ export const formatters = async (
   if (options === true) {
     // eslint-disable-next-line no-param-reassign
     options = {
-      astro: isPackageExists('astro'),
       css: true,
       graphql: true,
       html: true,
@@ -33,12 +30,7 @@ export const formatters = async (
     };
   }
 
-  ensurePackages(
-    [
-      'eslint-plugin-format',
-      options.astro ? 'prettier-plugin-astro' : undefined,
-    ].filter(Boolean) as string[],
-  );
+  ensurePackages(['eslint-plugin-format'] as string[]);
 
   const { indent, quotes, semi } = {
     ...StylisticConfigDefaults,
@@ -172,26 +164,6 @@ export const formatters = async (
                 ...dprintOptions,
                 language: 'markdown',
               },
-        ],
-      },
-    });
-  }
-
-  if (options.astro) {
-    configs.push({
-      files: [GLOB_ASTRO],
-      languageOptions: {
-        parser: parserPlain,
-      },
-      name: 'antfu/formatter/astro',
-      rules: {
-        'format/prettier': [
-          'error',
-          {
-            ...prettierOptions,
-            parser: 'astro',
-            plugins: ['prettier-plugin-astro'],
-          },
         ],
       },
     });

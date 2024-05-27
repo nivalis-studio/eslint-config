@@ -12,6 +12,7 @@ import {
 } from '../constants';
 import type {
   OptionsIsInEditor,
+  OptionsIsQuiet,
   OptionsOverrides,
   TypedFlatConfigItem,
 } from '../types';
@@ -19,9 +20,9 @@ import type { ESLint } from 'eslint';
 
 // eslint-disable-next-line max-lines-per-function
 export const javascript = (
-  options: OptionsIsInEditor & OptionsOverrides = {},
+  options: OptionsIsInEditor & OptionsIsQuiet & OptionsOverrides = {},
 ): TypedFlatConfigItem[] => {
-  const { isInEditor = false, overrides = {} } = options;
+  const { isInEditor = false, isInQuietMode = false, overrides = {} } = options;
 
   return [
     {
@@ -46,7 +47,7 @@ export const javascript = (
         sourceType: 'module',
       },
       linterOptions: {
-        reportUnusedDisableDirectives: true,
+        reportUnusedDisableDirectives: !isInQuietMode,
       },
       name: 'nivalis/javascript/rules',
       plugins: {
@@ -96,7 +97,7 @@ export const javascript = (
             includeCommonJSModuleExports: false,
           },
         ],
-        'func-names': ['warn'],
+        'func-names': [isInQuietMode ? 'off' : 'warn'],
         'func-style': ['error', 'expression', { allowArrowFunctions: true }],
         'getter-return': ['error', { allowImplicit: true }],
         'grouped-accessor-pairs': ['error', 'getBeforeSet'],
@@ -111,7 +112,7 @@ export const javascript = (
           },
         ],
         'max-lines': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             max: MAX_LINES,
             skipBlankLines: true,
@@ -119,7 +120,7 @@ export const javascript = (
           },
         ],
         'max-lines-per-function': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             IIFEs: true,
             max: MAX_LINES_PER_FUNCTION,
@@ -131,7 +132,7 @@ export const javascript = (
         'max-params': ['error', MAX_PARAMS],
         'max-statements': ['error', MAX_STATEMENTS],
         'new-cap': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             capIsNew: false,
             newIsCap: true,
@@ -147,12 +148,15 @@ export const javascript = (
         'no-class-assign': ['error'],
         'no-compare-neg-zero': 'error',
         'no-cond-assign': ['error', 'always'],
-        'no-console': ['warn', { allow: ['warn', 'error'] }],
+        'no-console': [
+          isInQuietMode ? 'off' : 'warn',
+          { allow: ['warn', 'error'] },
+        ],
         'no-const-assign': 'error',
         'no-constant-condition': ['error', { checkLoops: false }],
         'no-constructor-return': ['error'],
         'no-control-regex': 'error',
-        'no-debugger': 'warn',
+        'no-debugger': [isInQuietMode ? 'off' : 'warn'],
         'no-delete-var': 'error',
         'no-div-regex': ['error'],
         'no-dupe-args': 'error',
@@ -175,7 +179,10 @@ export const javascript = (
         'no-extra-bind': ['error'],
         'no-extra-boolean-cast': ['error'],
         'no-extra-label': ['error'],
-        'no-fallthrough': ['warn', { commentPattern: 'break[\\s\\w]*omitted' }],
+        'no-fallthrough': [
+          isInQuietMode ? 'off' : 'warn',
+          { commentPattern: 'break[\\s\\w]*omitted' },
+        ],
         'no-func-assign': 'error',
         'no-global-assign': 'error',
         'no-implicit-coercion': [
@@ -209,7 +216,7 @@ export const javascript = (
         'no-loop-func': ['error'],
         'no-loss-of-precision': ['error'],
         'no-magic-numbers': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             detectObjects: false,
             enforceConst: true,
@@ -360,7 +367,7 @@ export const javascript = (
         'no-sequences': ['error', { allowInParentheses: false }],
         'no-setter-return': ['error'],
         'no-shadow': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
             builtinGlobals: false,
@@ -433,7 +440,10 @@ export const javascript = (
         'no-useless-return': ['error'],
         'no-var': ['error'],
         'no-void': ['error'],
-        'no-warning-comments': ['warn', { terms: ['fixme', 'todo'] }],
+        'no-warning-comments': [
+          isInQuietMode ? 'off' : 'warn',
+          { terms: ['fixme', 'todo'] },
+        ],
         'no-with': 'error',
         'object-shorthand': [
           'error',
@@ -452,7 +462,7 @@ export const javascript = (
           },
         ],
         'prefer-const': [
-          'warn',
+          isInQuietMode ? 'off' : 'warn',
           {
             destructuring: 'all',
             ignoreReadBeforeAssign: true,

@@ -157,7 +157,7 @@ export const prettier = async (
       files: [GLOB_SRC],
       rules: {
         'prettier/prettier': [
-          'warn',
+          'error',
           {
             arrowParens: 'avoid',
             bracketSameLine: false,

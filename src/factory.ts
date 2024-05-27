@@ -4,7 +4,6 @@
 import fs from 'node:fs';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import {
-  astro,
   comments,
   graphql,
   ignores,
@@ -14,6 +13,7 @@ import {
   jsonc,
   markdown,
   neverthrow,
+  nextjs,
   node,
   perfectionist,
   prettier,
@@ -28,12 +28,12 @@ import {
   toml,
   typescript,
   unicorn,
-  unocss,
   yaml,
 } from './configs';
 import { interopDefault } from './utils';
 import { formatters } from './configs/formatters';
 import {
+  HAS_NEXTJS,
   HAS_REACT,
   HAS_TAILWINDCSS,
   HAS_TYPESCRIPT,
@@ -110,7 +110,6 @@ export const nivalis = async (
   >
 ): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> => {
   const {
-    astro: enableAstro = false,
     autoRenamePlugins = true,
     componentExts = [],
     gitignore: enableGitignore = true,
@@ -118,13 +117,13 @@ export const nivalis = async (
     isInEditor = IN_IS_EDITOR,
     neverthrow: enableNeverthrow = false,
     prettier: enablePrettier = true,
+    quiet: isInQuietMode = false,
     react: enableReact = HAS_REACT,
     solid: enableSolid = false,
     stylistic: enableStylistic = true,
     svelte: enableSvelte = false,
     tailwindcss: enableTailwindCSS = HAS_TAILWINDCSS,
     typescript: enableTypeScript = HAS_TYPESCRIPT,
-    unocss: enableUnoCSS = false,
   } = options;
 
   const stylisticOptions =
@@ -157,11 +156,13 @@ export const nivalis = async (
     ignores(),
     javascript({
       isInEditor,
+      isInQuietMode,
       overrides: getOverrides(options, 'javascript'),
     }),
-    comments(),
+    comments({ isInQuietMode }),
     node(),
     jsdoc({
+      isInQuietMode,
       stylistic: stylisticOptions,
     }),
     imports({
@@ -178,6 +179,7 @@ export const nivalis = async (
       typescript({
         ...resolveSubOptions(options, 'typescript'),
         componentExts,
+        isInQuietMode,
         overrides: getOverrides(options, 'typescript'),
       }),
     );
@@ -212,8 +214,17 @@ export const nivalis = async (
   if (enableReact) {
     configs.push(
       react({
+        isInQuietMode,
         overrides: getOverrides(options, 'react'),
         typescript: !!enableTypeScript,
+      }),
+    );
+  }
+
+  if (HAS_NEXTJS) {
+    configs.push(
+      nextjs({
+        isInQuietMode,
       }),
     );
   }
@@ -238,24 +249,6 @@ export const nivalis = async (
     );
   }
 
-  if (enableUnoCSS) {
-    configs.push(
-      unocss({
-        ...resolveSubOptions(options, 'unocss'),
-        overrides: getOverrides(options, 'unocss'),
-      }),
-    );
-  }
-
-  if (enableAstro) {
-    configs.push(
-      astro({
-        overrides: getOverrides(options, 'astro'),
-        stylistic: stylisticOptions,
-      }),
-    );
-  }
-
   if (enableNeverthrow) {
     configs.push(neverthrow());
   }
@@ -264,6 +257,7 @@ export const nivalis = async (
     configs.push(
       tailwindcss({
         ...resolveSubOptions(options, 'tailwindcss'),
+        isInQuietMode,
         overrides: getOverrides(options, 'tailwindcss'),
       }),
     );
