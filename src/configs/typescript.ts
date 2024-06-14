@@ -307,7 +307,7 @@ export const typescript = async (
         'ts/no-import-type-side-effects': 'error',
         'ts/no-inferrable-types': [
           'error',
-          { ignoreParameters: false, ignoreProperties: false },
+          { ignoreParameters: true, ignoreProperties: false },
         ],
         'ts/no-invalid-void-type': ['error'],
         'ts/no-loop-func': ['error'],
