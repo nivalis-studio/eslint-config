@@ -3,6 +3,7 @@ import { isPackageExists } from 'local-pkg';
 export const IN_IS_EDITOR = !!(
   (process.env.VSCODE_PID ||
     process.env.VSCODE_CWD ||
+    process.env.NVIM ||
     process.env.JETBRAINS_IDE ||
     process.env.VIM) &&
   !process.env.CI
