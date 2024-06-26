@@ -22,7 +22,6 @@ import {
   sortPackageJson,
   sortTsconfig,
   stylistic,
-  svelte,
   tailwindcss,
   test,
   toml,
@@ -121,7 +120,6 @@ export const nivalis = async (
     react: enableReact = HAS_REACT,
     solid: enableSolid = false,
     stylistic: enableStylistic = true,
-    svelte: enableSvelte = false,
     tailwindcss: enableTailwindCSS = HAS_TAILWINDCSS,
     typescript: enableTypeScript = HAS_TYPESCRIPT,
   } = options;
@@ -234,16 +232,6 @@ export const nivalis = async (
       solid({
         overrides: getOverrides(options, 'solid'),
         tsconfigPath: getOverrides(options, 'typescript')?.tsconfigPath,
-        typescript: !!enableTypeScript,
-      }),
-    );
-  }
-
-  if (enableSvelte) {
-    configs.push(
-      svelte({
-        overrides: getOverrides(options, 'svelte'),
-        stylistic: stylisticOptions,
         typescript: !!enableTypeScript,
       }),
     );

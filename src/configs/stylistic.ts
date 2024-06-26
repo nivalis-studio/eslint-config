@@ -57,7 +57,6 @@ export const stylistic = async (
         antfu: pluginAntfu,
         style: pluginStylistic as unknown as ESLint.Plugin,
       },
-      // @ts-expect-error - Typings are incorrect
       rules: {
         ...config.rules,
 

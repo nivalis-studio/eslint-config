@@ -14,7 +14,6 @@ export { formatters } from './formatters';
 export { react } from './react';
 export { sortPackageJson, sortTsconfig } from './sort';
 export { stylistic, StylisticConfigDefaults } from './stylistic';
-export { svelte } from './svelte';
 export { test } from './test';
 export { typescript } from './typescript';
 export { unicorn } from './unicorn';
