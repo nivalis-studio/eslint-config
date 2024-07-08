@@ -1,7 +1,5 @@
-/* eslint-disable max-lines */
 import globals from 'globals';
-import { pluginAntfu, pluginUnusedImports } from '../plugins';
-import { GLOB_SRC, GLOB_SRC_EXT } from '../globs';
+import { GLOB_SRC } from '../globs';
 import {
   MAX_COMPLEXITY,
   MAX_LINES,
@@ -10,23 +8,13 @@ import {
   MAX_PARAMS,
   MAX_STATEMENTS,
 } from '../constants';
-import type {
-  OptionsIsInEditor,
-  OptionsIsQuiet,
-  OptionsOverrides,
-  TypedFlatConfigItem,
-} from '../types';
-import type { ESLint } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 
 // eslint-disable-next-line max-lines-per-function
-export const javascript = (
-  options: OptionsIsInEditor & OptionsIsQuiet & OptionsOverrides = {},
-): TypedFlatConfigItem[] => {
-  const { isInEditor = false, isInQuietMode = false, overrides = {} } = options;
-
+export const javascript = (): TypedFlatConfigItem[] => {
   return [
     {
-      files: [GLOB_SRC],
+      name: 'nivalis/javascript/setup',
       languageOptions: {
         ecmaVersion: 2022,
         globals: {
@@ -38,22 +26,18 @@ export const javascript = (
           window: 'readonly',
         },
         parserOptions: {
-          ecmaFeatures: {
-            jsx: true,
-          },
           ecmaVersion: 2022,
           sourceType: 'module',
         },
         sourceType: 'module',
       },
       linterOptions: {
-        reportUnusedDisableDirectives: !isInQuietMode,
+        reportUnusedDisableDirectives: true,
       },
+    },
+    {
+      files: [GLOB_SRC],
       name: 'nivalis/javascript/rules',
-      plugins: {
-        antfu: pluginAntfu,
-        'unused-imports': pluginUnusedImports as unknown as ESLint.Plugin,
-      },
       rules: {
         'accessor-pairs': [
           'error',
@@ -97,7 +81,7 @@ export const javascript = (
             includeCommonJSModuleExports: false,
           },
         ],
-        'func-names': [isInQuietMode ? 'off' : 'warn'],
+        'func-names': ['warn'],
         'func-style': ['error', 'expression', { allowArrowFunctions: true }],
         'getter-return': ['error', { allowImplicit: true }],
         'grouped-accessor-pairs': ['error', 'getBeforeSet'],
@@ -112,7 +96,7 @@ export const javascript = (
           },
         ],
         'max-lines': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             max: MAX_LINES,
             skipBlankLines: true,
@@ -120,7 +104,7 @@ export const javascript = (
           },
         ],
         'max-lines-per-function': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             IIFEs: true,
             max: MAX_LINES_PER_FUNCTION,
@@ -132,7 +116,7 @@ export const javascript = (
         'max-params': ['error', MAX_PARAMS],
         'max-statements': ['error', MAX_STATEMENTS],
         'new-cap': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             capIsNew: false,
             newIsCap: true,
@@ -148,15 +132,13 @@ export const javascript = (
         'no-class-assign': ['error'],
         'no-compare-neg-zero': 'error',
         'no-cond-assign': ['error', 'always'],
-        'no-console': [
-          isInQuietMode ? 'off' : 'warn',
-          { allow: ['warn', 'error'] },
-        ],
+        'no-console': ['warn', { allow: ['warn', 'error'] }],
         'no-const-assign': 'error',
+        'no-constant-binary-expression': 'error',
         'no-constant-condition': ['error', { checkLoops: false }],
         'no-constructor-return': ['error'],
         'no-control-regex': 'error',
-        'no-debugger': [isInQuietMode ? 'off' : 'warn'],
+        'no-debugger': ['warn'],
         'no-delete-var': 'error',
         'no-div-regex': ['error'],
         'no-dupe-args': 'error',
@@ -180,8 +162,8 @@ export const javascript = (
         'no-extra-boolean-cast': ['error'],
         'no-extra-label': ['error'],
         'no-fallthrough': [
-          isInQuietMode ? 'off' : 'warn',
-          { commentPattern: 'break[\\s\\w]*omitted' },
+          'warn',
+          { commentPattern: String.raw`break[\s\w]*omitted` },
         ],
         'no-func-assign': 'error',
         'no-global-assign': 'error',
@@ -216,7 +198,7 @@ export const javascript = (
         'no-loop-func': ['error'],
         'no-loss-of-precision': ['error'],
         'no-magic-numbers': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             detectObjects: false,
             enforceConst: true,
@@ -230,7 +212,6 @@ export const javascript = (
         'no-new': 'error',
         'no-new-func': 'error',
         'no-new-native-nonconstructor': ['error'],
-        'no-new-symbol': 'error',
         'no-new-wrappers': ['error'],
         'no-nonoctal-decimal-escape': ['error'],
         'no-obj-calls': ['error'],
@@ -367,7 +348,7 @@ export const javascript = (
         'no-sequences': ['error', { allowInParentheses: false }],
         'no-setter-return': ['error'],
         'no-shadow': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
             builtinGlobals: false,
@@ -440,10 +421,7 @@ export const javascript = (
         'no-useless-return': ['error'],
         'no-var': ['error'],
         'no-void': ['error'],
-        'no-warning-comments': [
-          isInQuietMode ? 'off' : 'warn',
-          { terms: ['fixme', 'todo'] },
-        ],
+        'no-warning-comments': ['warn', { terms: ['fixme', 'todo'] }],
         'no-with': 'error',
         'object-shorthand': [
           'error',
@@ -462,7 +440,7 @@ export const javascript = (
           },
         ],
         'prefer-const': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             destructuring: 'all',
             ignoreReadBeforeAssign: true,
@@ -491,17 +469,6 @@ export const javascript = (
         strict: ['error', 'safe'],
         'symbol-description': ['error'],
         'unicode-bom': ['error', 'never'],
-        'unused-imports/no-unused-imports': isInEditor ? 'off' : 'error',
-        'unused-imports/no-unused-vars': [
-          'error',
-          {
-            args: 'after-used',
-            argsIgnorePattern: '^_',
-            ignoreRestSiblings: true,
-            vars: 'all',
-            varsIgnorePattern: '^_',
-          },
-        ],
         'use-isnan': [
           'error',
           { enforceForIndexOf: true, enforceForSwitchCase: true },
@@ -516,27 +483,6 @@ export const javascript = (
             onlyEquality: false,
           },
         ],
-
-        ...overrides,
-      },
-    },
-    {
-      files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-      name: 'nivalis/javascript/disables/cli',
-      rules: {
-        'no-console': 'off',
-      },
-    },
-    {
-      files: [`**/*.{test,spec}.${GLOB_SRC_EXT}`],
-      rules: {
-        'no-unused-expressions': 'off',
-      },
-    },
-    {
-      files: [`**/.prettierrc.${GLOB_SRC_EXT}`],
-      rules: {
-        strict: 'off',
       },
     },
   ];

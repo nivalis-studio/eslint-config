@@ -1,41 +1,18 @@
-import { interopDefault } from '../utils';
-import { pluginAntfu } from '../plugins';
+import pluginStylistic from '@stylistic/eslint-plugin';
 import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
-import { GLOB_SRC, GLOB_YAML } from '../globs';
-import type {
-  OptionsOverrides,
-  StylisticConfig,
-  TypedFlatConfigItem,
-} from '../types';
+import { GLOB_SRC } from '../globs';
+import type { TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
-export const StylisticConfigDefaults: StylisticConfig = {
-  blockSpacing: true,
+const options = {
   indent: DEFAULT_INDENT,
   jsx: true,
   quotes: 'single',
   semi: true,
-};
+} as const;
 
-export type StylisticOptions = StylisticConfig & OptionsOverrides;
-
-export const stylistic = async (
-  options: StylisticOptions = {},
-): Promise<TypedFlatConfigItem[]> => {
-  const {
-    indent,
-    jsx,
-    overrides = {},
-    quotes,
-    semi,
-  } = {
-    ...StylisticConfigDefaults,
-    ...options,
-  };
-
-  const pluginStylistic = await interopDefault(
-    import('@stylistic/eslint-plugin'),
-  );
+export const stylistic = (): TypedFlatConfigItem[] => {
+  const { indent, jsx, quotes, semi } = options;
 
   const config = pluginStylistic.configs.customize({
     arrowParens: false,
@@ -54,15 +31,10 @@ export const stylistic = async (
     {
       name: 'nivalis/stylistic/rules',
       plugins: {
-        antfu: pluginAntfu,
         style: pluginStylistic as unknown as ESLint.Plugin,
       },
       rules: {
         ...config.rules,
-
-        'antfu/consistent-list-newline': 'error',
-        'antfu/top-level-function': 'off',
-
         curly: ['error', 'multi-line', 'consistent'],
         'style/jsx-curly-brace-presence': [
           'error',
@@ -98,21 +70,36 @@ export const stylistic = async (
           { max: 1, maxBOF: 0, maxEOF: 0 },
         ],
         'style/padding-line-between-statements': ['error', ...PADDING_LINES],
-
-        ...overrides,
+        'style/quote-props': ['error', 'as-needed'],
+        'style/quotes': [
+          'error',
+          options.quotes,
+          {
+            avoidEscape: true,
+            allowTemplateLiterals: false,
+          },
+        ],
+        'style/operator-linebreak': [
+          'error',
+          'after',
+          { overrides: { '?': 'before', ':': 'before' } },
+        ],
+        'style/indent-binary-ops': ['off'],
       },
     },
-    {
-      files: [GLOB_YAML],
-      rules: {
-        'style/spaced-comment': 'off',
-      },
-    },
+    // {
+    //   name: 'nivalis/stylistic/yaml',
+    //   files: [GLOB_YAML],
+    //   rules: {
+    //     'style/spaced-comment': 'off',
+    //   },
+    // },
   ];
 };
 
 export const prettierStylistic = (): TypedFlatConfigItem[] => [
   {
+    name: 'nivalis/prettier/disables',
     files: [GLOB_SRC],
     // Rules disabled by Prettier normally
     rules: {

@@ -1,108 +1,51 @@
-/* eslint-disable max-lines-per-function */
-import { isPackageExists } from 'local-pkg';
-import { interopDefault } from '../utils';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
+import globals from 'globals';
+import { HAS_TYPESCRIPT } from '../environment';
 import { GLOB_REACT } from '../globs';
-import { HAS_NEXTJS } from '../environment';
-import type {
-  OptionsFiles,
-  OptionsHasTypeScript,
-  OptionsIsQuiet,
-  OptionsOverrides,
-  TypedFlatConfigItem,
-} from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
-// react refresh
-const ReactRefreshAllowPackages = ['vite'];
-
-// eslint-disable-next-line complexity
-export const react = async (
-  options: OptionsIsQuiet &
-    OptionsHasTypeScript &
-    OptionsOverrides &
-    OptionsFiles = {},
-): Promise<TypedFlatConfigItem[]> => {
-  const {
-    files = [GLOB_REACT],
-    isInQuietMode = false,
-    overrides = {},
-    typescript = true,
-  } = options;
-
-  const [
-    pluginA11y,
-    pluginReact,
-    pluginReactHooks,
-    pluginReactRefresh,
-    pluginReactCompiler,
-  ] = await Promise.all([
-    interopDefault(import('eslint-plugin-jsx-a11y')),
-    interopDefault(import('eslint-plugin-react')),
-    interopDefault(import('eslint-plugin-react-hooks')),
-    interopDefault(import('eslint-plugin-react-refresh')),
-    interopDefault(import('eslint-plugin-react-compiler')),
-  ] as const);
-
-  const isAllowConstantExport = ReactRefreshAllowPackages.some(i =>
-    isPackageExists(i),
-  );
-
+export const react = (): TypedFlatConfigItem[] => {
   return [
     {
       name: 'nivalis/react/setup',
       plugins: {
-        'jsx-a11y': pluginA11y,
-        react: pluginReact,
-        'react-compiler': pluginReactCompiler,
-        'react-hooks': pluginReactHooks,
-        'react-refresh': pluginReactRefresh,
+        react: eslintPluginReact,
+        'react-compiler': eslintPluginReactCompiler,
+        'react-hooks': eslintPluginReactHooks,
       },
       settings: {
         react: {
           version: 'detect',
         },
       },
-    },
-    {
-      files,
       languageOptions: {
+        globals: {
+          ...globals.serviceworker,
+          ...globals.browser,
+        },
         parserOptions: {
           ecmaFeatures: {
             jsx: true,
           },
         },
       },
+    },
+    {
       name: 'nivalis/react/rules',
+      files: [GLOB_REACT],
       rules: {
         // react-compiler
         'react-compiler/react-compiler': 'error',
 
         // react-hooks
-        'react-hooks/exhaustive-deps': isInQuietMode ? 'off' : 'warn',
+        'react-hooks/exhaustive-deps': 'warn',
         'react-hooks/rules-of-hooks': 'error',
-
-        // react refresh
-        'react-refresh/only-export-components': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            allowConstantExport: isAllowConstantExport,
-            allowExportNames: [
-              ...(HAS_NEXTJS
-                ? [
-                    'config',
-                    'generateStaticParams',
-                    'metadata',
-                    'generateMetadata',
-                    'viewport',
-                    'generateViewport',
-                  ]
-                : []),
-            ],
-          },
-        ],
 
         // recommended rules react
         'react/boolean-prop-naming': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             rule: '^(is|has|are|can|should|did|will)[A-Z]([A-Za-z0-9])+',
             validateNested: true,
@@ -133,7 +76,7 @@ export const react = async (
         'react/iframe-missing-sandbox': ['error'],
         'react/jsx-boolean-value': ['error', 'never'],
         'react/jsx-filename-extension': [
-          isInQuietMode ? 'off' : 'warn',
+          'warn',
           {
             extensions: ['.tsx'],
           },
@@ -268,7 +211,7 @@ export const react = async (
         ],
         'react/void-dom-elements-no-children': ['error'],
 
-        ...(typescript
+        ...(HAS_TYPESCRIPT
           ? {
               'react/jsx-no-undef': 'off',
               'react/prop-type': 'off',
@@ -276,192 +219,169 @@ export const react = async (
           : {}),
 
         // a11y rules
-        'jsx-a11y/accessible-emoji': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/alt-text': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            area: [],
-            elements: ['img', 'object', 'area', 'input[type="image"]'],
-            img: [],
-            'input[type="image"]': [],
-            object: [],
-          },
-        ],
-        'jsx-a11y/anchor-has-content': [
-          isInQuietMode ? 'off' : 'warn',
-          { components: [] },
-        ],
-        'jsx-a11y/anchor-is-valid': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            aspects: ['noHref', 'invalidHref', 'preferButton'],
-            components: ['Link'],
-            specialLink: ['to'],
-          },
-        ],
-        'jsx-a11y/aria-activedescendant-has-tabindex': [
-          isInQuietMode ? 'off' : 'warn',
-        ],
-        'jsx-a11y/aria-props': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/aria-proptypes': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/aria-role': [
-          isInQuietMode ? 'off' : 'warn',
-          { ignoreNonDOM: false },
-        ],
-        'jsx-a11y/aria-unsupported-elements': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/autocomplete-valid': ['off', { inputComponents: [] }],
-        'jsx-a11y/click-events-have-key-events': [
-          isInQuietMode ? 'off' : 'warn',
-        ],
-        'jsx-a11y/control-has-associated-label': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            controlComponents: [],
-            depth: 5,
-            ignoreElements: [
-              'audio',
-              'canvas',
-              'embed',
-              'input',
-              'textarea',
-              'tr',
-              'video',
-            ],
-            ignoreRoles: [
-              'grid',
-              'listbox',
-              'menu',
-              'menubar',
-              'radiogroup',
-              'row',
-              'tablist',
-              'toolbar',
-              'tree',
-              'treegrid',
-            ],
-            labelAttributes: ['label'],
-          },
-        ],
-        'jsx-a11y/heading-has-content': [
-          isInQuietMode ? 'off' : 'warn',
-          { components: [''] },
-        ],
-        'jsx-a11y/html-has-lang': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/iframe-has-title': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/img-redundant-alt': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/interactive-supports-focus': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/label-has-associated-control': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            assert: 'both',
-            controlComponents: [],
-            depth: 25,
-            labelAttributes: [],
-            labelComponents: [],
-          },
-        ],
-        'jsx-a11y/label-has-for': [
-          'off',
-          {
-            allowChildren: false,
-            components: [],
-            required: {
-              every: ['nesting', 'id'],
-            },
-          },
-        ],
-        'jsx-a11y/lang': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/media-has-caption': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            audio: [],
-            track: [],
-            video: [],
-          },
-        ],
-        'jsx-a11y/mouse-events-have-key-events': [
-          isInQuietMode ? 'off' : 'warn',
-        ],
-        'jsx-a11y/no-access-key': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/no-autofocus': [
-          isInQuietMode ? 'off' : 'warn',
-          { ignoreNonDOM: true },
-        ],
-        'jsx-a11y/no-distracting-elements': [
-          isInQuietMode ? 'off' : 'warn',
-          { elements: ['marquee', 'blink'] },
-        ],
-        'jsx-a11y/no-interactive-element-to-noninteractive-role': [
-          isInQuietMode ? 'off' : 'warn',
-          { tr: ['none', 'presentation'] },
-        ],
-        'jsx-a11y/no-noninteractive-element-interactions': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            handlers: [
-              'onClick',
-              'onMouseDown',
-              'onMouseUp',
-              'onKeyPress',
-              'onKeyDown',
-              'onKeyUp',
-            ],
-          },
-        ],
-        'jsx-a11y/no-noninteractive-element-to-interactive-role': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            li: ['menuitem', 'option', 'row', 'tab', 'treeitem'],
-            ol: [
-              'listbox',
-              'menu',
-              'menubar',
-              'radiogroup',
-              'tablist',
-              'tree',
-              'treegrid',
-            ],
-            table: ['grid'],
-            td: ['gridcell'],
-            ul: [
-              'listbox',
-              'menu',
-              'menubar',
-              'radiogroup',
-              'tablist',
-              'tree',
-              'treegrid',
-            ],
-          },
-        ],
-        'jsx-a11y/no-noninteractive-tabindex': [
-          isInQuietMode ? 'off' : 'warn',
-          { roles: ['tabpanel'], tags: [] },
-        ],
-        'jsx-a11y/no-onchange': ['off'],
-        'jsx-a11y/no-redundant-roles': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/no-static-element-interactions': [
-          'off',
-          {
-            handlers: [
-              'onClick',
-              'onMouseDown',
-              'onMouseUp',
-              'onKeyPress',
-              'onKeyDown',
-              'onKeyUp',
-            ],
-          },
-        ],
-        'jsx-a11y/role-has-required-aria-props': [
-          isInQuietMode ? 'off' : 'warn',
-        ],
-        'jsx-a11y/role-supports-aria-props': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/scope': [isInQuietMode ? 'off' : 'warn'],
-        'jsx-a11y/tabindex-no-positive': [isInQuietMode ? 'off' : 'warn'],
-
-        // overrides
-        ...overrides,
+        // 'jsx-a11y/accessible-emoji': ['warn'],
+        // 'jsx-a11y/alt-text': [
+        //   'warn',
+        //   {
+        //     area: [],
+        //     elements: ['img', 'object', 'area', 'input[type="image"]'],
+        //     img: [],
+        //     'input[type="image"]': [],
+        //     object: [],
+        //   },
+        // ],
+        // 'jsx-a11y/anchor-has-content': ['warn', { components: [] }],
+        // 'jsx-a11y/anchor-is-valid': [
+        //   'warn',
+        //   {
+        //     aspects: ['noHref', 'invalidHref', 'preferButton'],
+        //     components: ['Link'],
+        //     specialLink: ['to'],
+        //   },
+        // ],
+        // 'jsx-a11y/aria-activedescendant-has-tabindex': ['warn'],
+        // 'jsx-a11y/aria-props': ['warn'],
+        // 'jsx-a11y/aria-proptypes': ['warn'],
+        // 'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: false }],
+        // 'jsx-a11y/aria-unsupported-elements': ['warn'],
+        // 'jsx-a11y/autocomplete-valid': ['off', { inputComponents: [] }],
+        // 'jsx-a11y/click-events-have-key-events': ['warn'],
+        // 'jsx-a11y/control-has-associated-label': [
+        //   'warn',
+        //   {
+        //     controlComponents: [],
+        //     depth: 5,
+        //     ignoreElements: [
+        //       'audio',
+        //       'canvas',
+        //       'embed',
+        //       'input',
+        //       'textarea',
+        //       'tr',
+        //       'video',
+        //     ],
+        //     ignoreRoles: [
+        //       'grid',
+        //       'listbox',
+        //       'menu',
+        //       'menubar',
+        //       'radiogroup',
+        //       'row',
+        //       'tablist',
+        //       'toolbar',
+        //       'tree',
+        //       'treegrid',
+        //     ],
+        //     labelAttributes: ['label'],
+        //   },
+        // ],
+        // 'jsx-a11y/heading-has-content': ['warn', { components: [''] }],
+        // 'jsx-a11y/html-has-lang': ['warn'],
+        // 'jsx-a11y/iframe-has-title': ['warn'],
+        // 'jsx-a11y/img-redundant-alt': ['warn'],
+        // 'jsx-a11y/interactive-supports-focus': ['warn'],
+        // 'jsx-a11y/label-has-associated-control': [
+        //   'warn',
+        //   {
+        //     assert: 'both',
+        //     controlComponents: [],
+        //     depth: 25,
+        //     labelAttributes: [],
+        //     labelComponents: [],
+        //   },
+        // ],
+        // 'jsx-a11y/label-has-for': [
+        //   'off',
+        //   {
+        //     allowChildren: false,
+        //     components: [],
+        //     required: {
+        //       every: ['nesting', 'id'],
+        //     },
+        //   },
+        // ],
+        // 'jsx-a11y/lang': ['warn'],
+        // 'jsx-a11y/media-has-caption': [
+        //   'warn',
+        //   {
+        //     audio: [],
+        //     track: [],
+        //     video: [],
+        //   },
+        // ],
+        // 'jsx-a11y/mouse-events-have-key-events': ['warn'],
+        // 'jsx-a11y/no-access-key': ['warn'],
+        // 'jsx-a11y/no-autofocus': ['warn', { ignoreNonDOM: true }],
+        // 'jsx-a11y/no-distracting-elements': [
+        //   'warn',
+        //   { elements: ['marquee', 'blink'] },
+        // ],
+        // 'jsx-a11y/no-interactive-element-to-noninteractive-role': [
+        //   'warn',
+        //   { tr: ['none', 'presentation'] },
+        // ],
+        // 'jsx-a11y/no-noninteractive-element-interactions': [
+        //   'warn',
+        //   {
+        //     handlers: [
+        //       'onClick',
+        //       'onMouseDown',
+        //       'onMouseUp',
+        //       'onKeyPress',
+        //       'onKeyDown',
+        //       'onKeyUp',
+        //     ],
+        //   },
+        // ],
+        // 'jsx-a11y/no-noninteractive-element-to-interactive-role': [
+        //   'warn',
+        //   {
+        //     li: ['menuitem', 'option', 'row', 'tab', 'treeitem'],
+        //     ol: [
+        //       'listbox',
+        //       'menu',
+        //       'menubar',
+        //       'radiogroup',
+        //       'tablist',
+        //       'tree',
+        //       'treegrid',
+        //     ],
+        //     table: ['grid'],
+        //     td: ['gridcell'],
+        //     ul: [
+        //       'listbox',
+        //       'menu',
+        //       'menubar',
+        //       'radiogroup',
+        //       'tablist',
+        //       'tree',
+        //       'treegrid',
+        //     ],
+        //   },
+        // ],
+        // 'jsx-a11y/no-noninteractive-tabindex': [
+        //   'warn',
+        //   { roles: ['tabpanel'], tags: [] },
+        // ],
+        // 'jsx-a11y/no-onchange': ['off'],
+        // 'jsx-a11y/no-redundant-roles': ['warn'],
+        // 'jsx-a11y/no-static-element-interactions': [
+        //   'off',
+        //   {
+        //     handlers: [
+        //       'onClick',
+        //       'onMouseDown',
+        //       'onMouseUp',
+        //       'onKeyPress',
+        //       'onKeyDown',
+        //       'onKeyUp',
+        //     ],
+        //   },
+        // ],
+        // 'jsx-a11y/role-has-required-aria-props': ['warn'],
+        // 'jsx-a11y/role-supports-aria-props': ['warn'],
+        // 'jsx-a11y/scope': ['warn'],
+        // 'jsx-a11y/tabindex-no-positive': ['warn'],
       },
     },
   ];

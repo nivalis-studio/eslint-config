@@ -2,8 +2,8 @@ import type { TypedFlatConfigItem } from '../types';
 
 /**
  * Sort package.json
- *
  * Requires `jsonc` config
+ * @returns {TypedFlatConfigItem[]} - Array of config items
  */
 export const sortPackageJson = (): TypedFlatConfigItem[] => {
   return [
@@ -86,12 +86,12 @@ export const sortPackageJson = (): TypedFlatConfigItem[] => {
     },
   ];
 };
+
 /**
  * Sort tsconfig.json
- *
  * Requires `jsonc` config
+ * @returns {TypedFlatConfigItem[]} - Array of config items
  */
-
 export const sortTsconfig = (): TypedFlatConfigItem[] => {
   return [
     {

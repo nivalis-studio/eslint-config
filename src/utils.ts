@@ -1,42 +1,29 @@
 import { isPackageExists } from 'local-pkg';
-import type { Awaitable, TypedFlatConfigItem } from './types';
+import type {
+  Awaitable,
+  OptionsConfig,
+  ResolvedOptions,
+  TypedFlatConfigItem,
+} from './types';
 
-export const parserPlain = {
-  meta: {
-    name: 'parser-plain',
-  },
-  parseForESLint: (code: string) => ({
-    ast: {
-      body: [],
-      comments: [],
-      loc: { end: code.length, start: 0 },
-      range: [0, code.length],
-      tokens: [],
-      type: 'Program',
-    },
-    scopeManager: null,
-    services: { isPlain: true },
-    visitorKeys: {
-      Program: [],
-    },
-  }),
+export const resolveSubOptions = <K extends keyof OptionsConfig>(
+  options: OptionsConfig,
+  key: K,
+): ResolvedOptions<OptionsConfig[K]> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
+  return typeof options[key] === 'boolean' ? ({} as any) : options[key] || {};
 };
 
-/**
- * Combine array and non-array configs into a single array.
- */
-export const combine = async (
-  ...configs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
-): Promise<TypedFlatConfigItem[]> => {
-  const resolved = await Promise.all(configs);
-
-  return resolved.flat();
+export const toArray = <T>(value: T | T[]): T[] => {
+  return Array.isArray(value) ? value : [value];
 };
 
 /**
  * Rename plugin prefixes in a rule object.
  * Accepts a map of prefixes to rename.
- *
+ * @param {Record<string, any>} rules The rules to rename.
+ * @param {Record<string, string>} map The map of prefixes to rename.
+ * @returns {Record<string, any>} The renamed rules.
  * @example
  * ```ts
  * import { renameRules } from '@antfu/eslint-config'
@@ -52,6 +39,7 @@ export const combine = async (
  * ```
  */
 export const renameRules = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rules: { [key: string]: any },
   map: { [key: string]: string },
 ) => {
@@ -68,52 +56,24 @@ export const renameRules = (
 };
 
 /**
- * Rename plugin names a flat configs array
- *
- * @example
- * ```ts
- * import { renamePluginInConfigs } from '@antfu/eslint-config'
- * import someConfigs from './some-configs'
- *
- * export default renamePluginInConfigs(someConfigs, {
- *   '@typescript-eslint': 'ts',
- *   'import-x': 'import',
- * })
- * ```
+ * Combine array and non-array configs into a single array.
+ * @param {...any} configs The configs to combine.
+ * @returns {Promise<TypedFlatConfigItem[]>} The combined configs.
  */
-export const renamePluginInConfigs = (
-  configs: TypedFlatConfigItem[],
-  map: { [key: string]: string },
-): TypedFlatConfigItem[] => {
-  return configs.map(i => {
-    const clone = { ...i };
+export const combine = async (
+  ...configs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
+): Promise<TypedFlatConfigItem[]> => {
+  const resolved = await Promise.all(configs);
 
-    if (clone.rules) clone.rules = renameRules(clone.rules, map);
-
-    if (clone.plugins) {
-      clone.plugins = Object.fromEntries(
-        Object.entries(clone.plugins).map(([key, value]) => {
-          if (key in map) return [map[key], value];
-
-          return [key, value];
-        }),
-      );
-    }
-
-    return clone;
-  });
-};
-
-export const toArray = <T>(value: T | T[]): T[] => {
-  return Array.isArray(value) ? value : [value];
+  return resolved.flat();
 };
 
 export const interopDefault = async <T>(
-  mod: Awaitable<T>,
+  module_: Awaitable<T>,
 ): Promise<T extends { default: infer U } ? U : T> => {
-  const resolved = await mod;
+  const resolved = await module_;
 
-  // eslint-disable-next-line ts/no-unsafe-return, ts/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
   return (resolved as any).default || resolved;
 };
 
@@ -122,7 +82,7 @@ export const ensurePackages = (packages: string[]) => {
     return;
   }
 
-  const nonExistingPackages = packages.filter(i => !isPackageExists(i));
+  const nonExistingPackages = packages.filter(index => !isPackageExists(index));
 
   if (nonExistingPackages.length === 0) {
     return;
