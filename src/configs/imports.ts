@@ -1,32 +1,31 @@
-import { pluginAntfu, pluginImport } from '../plugins';
+import pluginImport from 'eslint-plugin-import-x';
 import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs';
-import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 
-export const imports = (
-  options: OptionsStylistic = {},
-): TypedFlatConfigItem[] => {
-  const { stylistic = true } = options;
-
+export const imports = (): TypedFlatConfigItem[] => {
   return [
     {
+      name: 'nivalis/import',
       files: [GLOB_SRC],
-      name: 'nivalis/imports/rules',
       plugins: {
-        antfu: pluginAntfu,
         import: pluginImport as unknown as ESLint.Plugin,
       },
       rules: {
-        'antfu/import-dedupe': 'error',
-        'antfu/no-import-dist': 'error',
-        'antfu/no-import-node-modules-by-path': 'error',
+        // https://typescript-eslint.io/troubleshooting/typed-linting/performance#eslint-plugin-import
+        'import/named': 'off',
+        'import/namespace': 'off',
+        'import/default': 'off',
+        'import/no-named-as-default-member': 'off',
+        'import/no-unresolved': 'off',
+
+        // Rules not supporting eslint flat config
+        'import/no-deprecated': 'off',
+        'import/no-named-as-default': 'off',
 
         'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
-        // Rules not supporting eslint flat config
-        'import/default': 'off',
         'import/export': 'error',
         'import/first': 'error',
-        'import/named': 'error',
         'import/no-anonymous-default-export': [
           'error',
           {
@@ -39,16 +38,10 @@ export const imports = (
           },
         ],
         'import/no-default-export': 'error',
-        // Rules not supporting eslint flat config
-        'import/no-deprecated': 'off',
         'import/no-duplicates': 'error',
         'import/no-empty-named-blocks': 'error',
         'import/no-import-module-exports': ['error', { exceptions: [] }],
         'import/no-mutable-exports': 'error',
-        // Rules not supporting eslint flat config
-        'import/no-named-as-default': 'off',
-        // Rules not supporting eslint flat config
-        'import/no-named-as-default-member': 'off',
         'import/no-named-default': 'error',
         'import/no-self-import': 'error',
         'import/no-webpack-loader-syntax': 'error',
@@ -70,26 +63,10 @@ export const imports = (
             warnOnUnassignedImports: true,
           },
         ],
-
-        ...(stylistic
-          ? {
-              'import/newline-after-import': [
-                'error',
-                { considerComments: true, count: 1 },
-              ],
-            }
-          : {}),
       },
     },
     {
-      files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-      name: 'nivalis/imports/disables/bin',
-      rules: {
-        'antfu/no-import-dist': 'off',
-        'antfu/no-import-node-modules-by-path': 'off',
-      },
-    },
-    {
+      name: 'nivalis/import/disabled',
       files: [
         `**/*config*.${GLOB_SRC_EXT}`,
         `**/views/${GLOB_SRC}`,

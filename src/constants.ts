@@ -1,9 +1,9 @@
-export const MAX_COMPLEXITY = 20;
+export const MAX_COMPLEXITY = 25;
 export const MAX_LINES = 500;
 export const MAX_LINES_PER_FUNCTION = 250;
-export const MAX_NESTED_CALLBACKS = 3;
+export const MAX_NESTED_CALLBACKS = 4;
 export const MAX_PARAMS = 5;
-export const MAX_STATEMENTS = 30;
+export const MAX_STATEMENTS = 35;
 export const DEFAULT_INDENT = 2;
 
 type PaddingLineType = Array<{

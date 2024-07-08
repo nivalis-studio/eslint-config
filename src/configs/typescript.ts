@@ -1,188 +1,165 @@
-/* eslint-disable max-lines-per-function */
-import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
-import { pluginAntfu } from '../plugins';
-import { interopDefault, renameRules, toArray } from '../utils';
-import type {
-  OptionsComponentExts,
-  OptionsFiles,
-  OptionsIsQuiet,
-  OptionsOverrides,
-  OptionsTypeScriptParserOptions,
-  OptionsTypeScriptWithTypes,
-  TypedFlatConfigItem,
-} from '../types';
-import type { ESLint } from 'eslint';
+import tseslint from 'typescript-eslint';
+import { toArray } from '../utils';
+import { GLOB_JS, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
+import type { OptionsTypescript, TypedFlatConfigItem } from '../types';
 
-export const typescript = async (
-  options: OptionsIsQuiet &
-    OptionsFiles &
-    OptionsComponentExts &
-    OptionsOverrides &
-    OptionsTypeScriptWithTypes &
-    OptionsTypeScriptParserOptions = {},
-): Promise<TypedFlatConfigItem[]> => {
-  const {
-    componentExts = [],
-    isInQuietMode = false,
-    overrides = {},
-    parserOptions = {},
-    typeaware = true,
-  } = options;
-
-  const files = options.files ?? [
-    GLOB_SRC,
-    ...componentExts.map(ext => `**/*.${ext}`),
-  ];
-
-  const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
-  const tsconfigPath = options?.tsconfigPath
-    ? toArray(options.tsconfigPath)
-    : './tsconfig.json';
-
-  const isTypeAware = typeaware && !!tsconfigPath;
-
-  const typeAwareRules: TypedFlatConfigItem['rules'] = {
-    'dot-notation': 'off',
-    'no-implied-eval': 'off',
-    'no-throw-literal': 'off',
-    'prefer-promise-reject-errors': 'off',
-    'require-await': 'off',
-    'ts/await-thenable': 'error',
-    'ts/consistent-type-exports': [
-      'error',
-      { fixMixedExportsWithInlineTypeSpecifier: true },
-    ],
-    'ts/dot-notation': ['error', { allowKeywords: true }],
-    'ts/naming-convention': [
-      isInQuietMode ? 'off' : 'warn',
-      { format: ['PascalCase', 'camelCase'], selector: 'function' },
-    ],
-    'ts/no-array-delete': 'error',
-    'ts/no-base-to-string': 'error',
-    'ts/no-confusing-void-expression': 'error',
-    'ts/no-duplicate-type-constituents': 'error',
-    'ts/no-explicit-any': isInQuietMode ? 'off' : 'warn',
-    'ts/no-floating-promises': [
-      'error',
-      { ignoreIIFE: true, ignoreVoid: true },
-    ],
-    'ts/no-for-in-array': 'error',
-    'ts/no-implied-eval': 'error',
-    'ts/no-meaningless-void-operator': 'error',
-    'ts/no-misused-promises': [
-      'error',
-      {
-        checksVoidReturn: {
-          arguments: false,
-          attributes: false,
-        },
-      },
-    ],
-    'ts/no-mixed-enums': 'error',
-    'ts/no-non-null-assertion': 'error',
-    'ts/no-redundant-type-constituents': ['error'],
-    'ts/no-throw-literal': 'error',
-    'ts/no-unnecessary-boolean-literal-compare': 'error',
-    'ts/no-unnecessary-type-arguments': 'error',
-    'ts/no-unnecessary-type-assertion': ['error'],
-    'ts/no-unsafe-argument': ['error'],
-    'ts/no-unsafe-assignment': [isInQuietMode ? 'off' : 'warn'],
-    'ts/no-unsafe-call': [isInQuietMode ? 'off' : 'warn'],
-    'ts/no-unsafe-enum-comparison': 'error',
-    'ts/no-unsafe-member-access': [isInQuietMode ? 'off' : 'warn'],
-    'ts/no-unsafe-return': [isInQuietMode ? 'off' : 'warn'],
-    'ts/no-useless-template-literals': 'error',
-    'ts/non-nullable-type-assertion-style': 'error',
-    'ts/prefer-includes': 'error',
-    'ts/prefer-nullish-coalescing': [
-      'error',
-      {
-        ignoreConditionalTests: true,
-        ignoreMixedLogicalExpressions: true,
-        ignorePrimitives: { number: true, string: true },
-      },
-    ],
-    'ts/prefer-optional-chain': ['error'],
-    'ts/prefer-promise-reject-errors': 'error',
-    'ts/prefer-reduce-type-parameter': 'error',
-    'ts/prefer-return-this-type': 'error',
-    'ts/prefer-string-starts-ends-with': 'error',
-    'ts/promise-function-async': 'error',
-    'ts/require-await': ['error'],
-    'ts/restrict-plus-operands': 'error',
-    'ts/restrict-template-expressions': [
-      isInQuietMode ? 'off' : 'warn',
-      { allowNumber: true },
-    ],
-    'ts/switch-exhaustiveness-check': 'error',
-    'ts/unbound-method': 'error',
-  };
-
-  const [pluginTs, parserTs] = await Promise.all([
-    interopDefault(import('@typescript-eslint/eslint-plugin')),
-    interopDefault(import('@typescript-eslint/parser')),
-  ] as const);
-
-  const makeParser = (
-    typeAware: boolean,
-    // eslint-disable-next-line ts/no-shadow
-    files: string[],
-    ignores?: string[],
-  ): TypedFlatConfigItem => {
-    return {
-      files,
-      ...(ignores ? { ignores } : {}),
-      languageOptions: {
-        parser: parserTs,
-
-        parserOptions: {
-          extraFileExtensions: componentExts.map(ext => `.${ext}`),
-          sourceType: 'module',
-          ...(typeAware
-            ? {
-                project: tsconfigPath,
-                tsconfigRootDir: process.cwd(),
-              }
-            : {}),
-
-          ...(parserOptions as any),
-        },
-      },
-      name: `nivalis/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
-    };
-  };
+export const typescript = (
+  options: OptionsTypescript,
+): TypedFlatConfigItem[] => {
+  const tsconfigPath = options.configPath
+    ? toArray(options.configPath)
+    : undefined;
 
   return [
     {
-      // Install the plugins without globs, so they can be configured separately.
-      name: 'nivalis/typescript/setup',
+      name: 'nivalis/typescript/plugin',
+      files: [GLOB_SRC],
       plugins: {
-        antfu: pluginAntfu,
-        ts: pluginTs as unknown as ESLint.Plugin,
+        '@typescript-eslint': tseslint.plugin,
+      },
+      languageOptions: {
+        parser: tseslint.parser,
       },
     },
-    // assign type-aware parser for type-aware files and type-unaware parser for the rest
-    ...(isTypeAware
+
+    ...(tsconfigPath
       ? [
-          makeParser(true, filesTypeAware),
-          makeParser(false, files, filesTypeAware),
+          ...tseslint.configs.strictTypeChecked.map(config => ({
+            ...config,
+            files: [GLOB_TS, GLOB_TSX],
+          })),
+          ...tseslint.configs.stylisticTypeChecked.map(config => ({
+            ...config,
+            files: [GLOB_TS, GLOB_TSX],
+          })),
+          {
+            files: [GLOB_SRC],
+            name: 'nivalis/typescript/languageOptions',
+            languageOptions: {
+              parserOptions: {
+                project: tsconfigPath,
+                tsconfigRootDir: process.cwd(),
+              },
+            },
+          },
+          {
+            files: [GLOB_TS, GLOB_TSX],
+            name: 'nivalis/typescript/typed-rules',
+            rules: {
+              'dot-notation': 'off',
+              'no-implied-eval': 'off',
+              'no-throw-literal': 'off',
+              'prefer-promise-reject-errors': 'off',
+              'require-await': 'off',
+              'return-await': 'off',
+
+              '@typescript-eslint/return-await': ['error', 'always'],
+              '@typescript-eslint/no-unnecessary-condition': 'off',
+              '@typescript-eslint/use-unknown-in-catch-callback-variable':
+                'warn',
+              '@typescript-eslint/await-thenable': 'error',
+              '@typescript-eslint/consistent-type-exports': [
+                'error',
+                { fixMixedExportsWithInlineTypeSpecifier: true },
+              ],
+              '@typescript-eslint/dot-notation': [
+                'error',
+                { allowKeywords: true },
+              ],
+              '@typescript-eslint/naming-convention': [
+                'warn',
+                { format: ['PascalCase', 'camelCase'], selector: 'function' },
+              ],
+              '@typescript-eslint/no-array-delete': 'error',
+              '@typescript-eslint/no-base-to-string': 'error',
+              '@typescript-eslint/no-confusing-void-expression': 'error',
+              '@typescript-eslint/no-duplicate-type-constituents': 'error',
+              '@typescript-eslint/no-explicit-any': 'warn',
+              '@typescript-eslint/no-floating-promises': [
+                'error',
+                { ignoreIIFE: true, ignoreVoid: true },
+              ],
+              '@typescript-eslint/no-for-in-array': 'error',
+              '@typescript-eslint/no-implied-eval': 'error',
+              '@typescript-eslint/no-meaningless-void-operator': 'error',
+              '@typescript-eslint/no-misused-promises': [
+                'error',
+                {
+                  checksVoidReturn: {
+                    arguments: false,
+                    attributes: false,
+                  },
+                },
+              ],
+              '@typescript-eslint/no-mixed-enums': 'error',
+              '@typescript-eslint/no-non-null-assertion': 'error',
+              '@typescript-eslint/no-redundant-type-constituents': ['error'],
+              '@typescript-eslint/no-unnecessary-boolean-literal-compare':
+                'error',
+              '@typescript-eslint/no-unnecessary-template-expression': 'error',
+              '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+              '@typescript-eslint/no-unnecessary-type-assertion': ['error'],
+              '@typescript-eslint/no-unsafe-argument': ['error'],
+              '@typescript-eslint/no-unsafe-assignment': ['warn'],
+              '@typescript-eslint/no-unsafe-call': ['warn'],
+              '@typescript-eslint/no-unsafe-enum-comparison': 'error',
+              '@typescript-eslint/no-unsafe-member-access': ['warn'],
+              '@typescript-eslint/no-unsafe-return': ['warn'],
+              '@typescript-eslint/non-nullable-type-assertion-style': 'error',
+              '@typescript-eslint/only-throw-error': 'error',
+              '@typescript-eslint/prefer-includes': 'error',
+              '@typescript-eslint/prefer-nullish-coalescing': [
+                'error',
+                {
+                  ignoreConditionalTests: true,
+                  ignoreMixedLogicalExpressions: true,
+                  ignorePrimitives: { number: true, string: true },
+                },
+              ],
+              '@typescript-eslint/prefer-optional-chain': ['error'],
+              '@typescript-eslint/prefer-promise-reject-errors': 'error',
+              '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+              '@typescript-eslint/prefer-return-this-type': 'error',
+              '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+              '@typescript-eslint/promise-function-async': 'error',
+              '@typescript-eslint/require-await': ['error'],
+              '@typescript-eslint/restrict-plus-operands': 'error',
+              '@typescript-eslint/restrict-template-expressions': [
+                'warn',
+                { allowNumber: true },
+              ],
+              '@typescript-eslint/switch-exhaustiveness-check': 'error',
+              '@typescript-eslint/unbound-method': 'error',
+              '@typescript-eslint/consistent-type-assertions': [
+                'error',
+                {
+                  assertionStyle: 'as',
+                  objectLiteralTypeAssertions: 'allow-as-parameter',
+                },
+              ],
+            },
+          },
+          {
+            files: [GLOB_JS],
+            ...tseslint.configs.disableTypeChecked,
+          },
         ]
-      : [makeParser(false, files)]),
+      : [
+          ...tseslint.configs.strict.map(config => ({
+            ...config,
+            files: [GLOB_SRC],
+          })),
+
+          ...tseslint.configs.stylistic.map(config => ({
+            ...config,
+            files: [GLOB_SRC],
+          })),
+        ]),
+
     {
-      files,
+      files: [GLOB_SRC],
       name: 'nivalis/typescript/rules',
       rules: {
-        ...renameRules(
-          // eslint-disable-next-line ts/no-non-null-assertion, ts/no-non-null-asserted-optional-chain
-          pluginTs.configs['eslint-recommended'].overrides?.[0].rules!,
-          { '@typescript-eslint': 'ts' },
-        ),
-        ...renameRules(
-          // eslint-disable-next-line ts/no-non-null-assertion
-          pluginTs.configs.strict.rules!,
-          { '@typescript-eslint': 'ts' },
-        ),
-
         'default-param-last': 'off',
         'no-array-constructor': 'off',
         'no-dupe-class-members': 'off',
@@ -200,79 +177,40 @@ export const typescript = async (
         'no-use-before-define': 'off',
         'no-useless-constructor': 'off',
 
-        'ts/adjacent-overload-signatures': ['error'],
-        'ts/array-type': ['error', { default: 'array-simple' }],
-        'ts/ban-ts-comment': [
+        // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
+        '@typescript-eslint/method-signature-style': ['error', 'property'],
+        '@typescript-eslint/adjacent-overload-signatures': ['error'],
+        '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+        '@typescript-eslint/ban-ts-comment': [
           'error',
           {
             minimumDescriptionLength: 4,
             'ts-expect-error': 'allow-with-description',
           },
         ],
-        'ts/ban-tslint-comment': ['error'],
-        'ts/ban-types': [
+        '@typescript-eslint/ban-tslint-comment': ['error'],
+        '@typescript-eslint/no-unused-vars': [
           'error',
           {
-            extendDefaults: false,
-            types: {
-              '[[[[[]]]]]': '🦄💥',
-              '[[[[]]]]': 'ur drunk 🤡',
-              '[[[]]]': "Don't use `[[[]]]`. Use `SomeType[][][]` instead.",
-              '[[]]':
-                "Don't use `[[]]`. It only allows an array with a single element which is an empty array. Use `SomeType[][]` instead.",
-              '[]': "Don't use the empty array type `[]`. It only allows empty arrays. Use `SomeType[]` instead.",
-              '{}': {
-                fixWith: 'Record<string, unknown>',
-                message:
-                  'The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.',
-              },
-              BigInt: {
-                fixWith: 'bigint',
-                message: 'Use `bigint` instead.',
-              },
-              Boolean: {
-                fixWith: 'boolean',
-                message: 'Use `boolean` instead.',
-              },
-              Function:
-                'Use a specific function type instead, like `() => void`.',
-              Number: {
-                fixWith: 'number',
-                message: 'Use `number` instead.',
-              },
-              object: {
-                fixWith: 'Record<string, unknown>',
-                message:
-                  'The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848',
-              },
-              Object: {
-                fixWith: 'Record<string, unknown>',
-                message:
-                  'The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848',
-              },
-              String: {
-                fixWith: 'string',
-                message: 'Use `string` instead.',
-              },
-              Symbol: {
-                fixWith: 'symbol',
-                message: 'Use `symbol` instead.',
-              },
-            },
+            vars: 'all',
+            args: 'after-used',
+            ignoreRestSiblings: true,
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
           },
         ],
-        'ts/class-literal-property-style': ['error', 'getters'],
-        'ts/consistent-generic-constructors': ['error', 'constructor'],
-        'ts/consistent-indexed-object-style': ['error', 'index-signature'],
-        'ts/consistent-type-assertions': [
+        '@typescript-eslint/no-shadow': ['warn'],
+        '@typescript-eslint/class-literal-property-style': ['error', 'getters'],
+        '@typescript-eslint/consistent-generic-constructors': [
           'error',
-          {
-            assertionStyle: 'as',
-            objectLiteralTypeAssertions: 'allow-as-parameter',
-          },
+          'constructor',
         ],
-        'ts/consistent-type-definitions': ['error', 'type'],
-        'ts/consistent-type-imports': [
+        '@typescript-eslint/consistent-indexed-object-style': [
+          'error',
+          'index-signature',
+        ],
+        '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+        '@typescript-eslint/consistent-type-imports': [
           'error',
           {
             disallowTypeAnnotations: false,
@@ -280,131 +218,9 @@ export const typescript = async (
             prefer: 'type-imports',
           },
         ],
-        'ts/default-param-last': ['error'],
-        'ts/member-ordering': ['error'],
-        'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
-        'ts/no-array-constructor': ['error'],
-        'ts/no-confusing-non-null-assertion': 'error',
-        'ts/no-dupe-class-members': 'error',
-        'ts/no-duplicate-enum-values': ['error'],
-        'ts/no-dynamic-delete': 'off',
-        'ts/no-empty-function': [
-          'error',
-          { allow: ['arrowFunctions', 'functions', 'methods'] },
-        ],
-        'ts/no-empty-interface': ['error', { allowSingleExtends: true }],
-        'ts/no-explicit-any': 'off',
-        'ts/no-extra-non-null-assertion': ['error'],
-        'ts/no-extraneous-class': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            allowConstructorOnly: false,
-            allowEmpty: false,
-            allowStaticOnly: false,
-            allowWithDecorator: true,
-          },
-        ],
-        'ts/no-import-type-side-effects': 'error',
-        'ts/no-inferrable-types': [
-          'error',
-          { ignoreParameters: true, ignoreProperties: false },
-        ],
-        'ts/no-invalid-void-type': ['error'],
-        'ts/no-loop-func': ['error'],
-        'ts/no-loss-of-precision': ['error'],
-        'ts/no-magic-numbers': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            detectObjects: false,
-            enforceConst: true,
-            ignore: [0, 1, -1],
-            ignoreArrayIndexes: true,
-          },
-        ],
-        'ts/no-misused-new': ['error'],
-        'ts/no-namespace': [
-          'error',
-          { allowDeclarations: false, allowDefinitionFiles: false },
-        ],
-        'ts/no-non-null-asserted-nullish-coalescing': ['error'],
-        'ts/no-non-null-asserted-optional-chain': ['error'],
-        'ts/no-non-null-assertion': 'off',
-        'ts/no-redeclare': 'error',
-        'ts/no-require-imports': 'error',
-        'ts/no-shadow': [
-          isInQuietMode ? 'off' : 'warn',
-          {
-            allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
-            builtinGlobals: false,
-            hoist: 'functions',
-            ignoreFunctionTypeParameterNameValueShadow: true,
-            ignoreTypeValueShadow: true,
-          },
-        ],
-        'ts/no-this-alias': ['error', { allowDestructuring: true }],
-        'ts/no-unnecessary-type-constraint': ['error'],
-        'ts/no-unused-expressions': [
-          'error',
-          {
-            allowShortCircuit: false,
-            allowTaggedTemplates: false,
-            allowTernary: false,
-            enforceForJSX: true,
-          },
-        ],
-        'ts/no-unused-vars': [
-          'error',
-          {
-            args: 'after-used',
-            argsIgnorePattern: '^_',
-            ignoreRestSiblings: true,
-            vars: 'all',
-            varsIgnorePattern: '^_',
-          },
-        ],
-        'ts/no-use-before-define': [
-          'error',
-          {
-            allowNamedExports: false,
-            classes: false,
-            functions: false,
-            variables: true,
-          },
-        ],
-        'ts/no-useless-constructor': ['error'],
-        'ts/no-useless-empty-export': ['error'],
-        'ts/no-var-requires': ['error'],
-        'ts/parameter-properties': ['error', { prefer: 'parameter-property' }],
-        'ts/prefer-as-const': ['error'],
-        'ts/prefer-for-of': ['error'],
-        'ts/prefer-function-type': ['error'],
-        'ts/prefer-literal-enum-member': ['error'],
-        'ts/prefer-namespace-keyword': ['error'],
-        'ts/prefer-ts-expect-error': ['error'],
-        'ts/triple-slash-reference': [
-          isInQuietMode ? 'off' : 'warn',
-          { lib: 'never', path: 'never', types: 'never' },
-        ],
-        'ts/unified-signatures': [
-          'error',
-          { ignoreDifferentlyNamedParameters: true },
-        ],
-        'unused-imports/no-unused-vars': 'off',
-        ...overrides,
       },
     },
-    ...(isTypeAware
-      ? [
-          {
-            files: filesTypeAware,
-            name: 'nivalis/typescript/rules-type-aware',
-            rules: {
-              ...(tsconfigPath ? typeAwareRules : {}),
-              ...overrides,
-            },
-          },
-        ]
-      : []),
+
     {
       files: ['**/*.d.ts'],
       name: 'nivalis/typescript/disables/dts',
@@ -424,11 +240,11 @@ export const typescript = async (
     },
     {
       files: ['**/*.js', '**/*.cjs'],
-      name: 'nivalis/typescript/disables/cjss',
+      name: 'nivalis/typescript/disables/cjs',
       rules: {
-        'ts/no-require-imports': 'off',
-        'ts/no-var-requires': 'off',
+        '@typescript-eslint/no-require-imports': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
-  ];
+  ] as TypedFlatConfigItem[];
 };

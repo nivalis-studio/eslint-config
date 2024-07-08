@@ -1,27 +1,22 @@
-import { GLOB_HTML, GLOB_REACT } from '../globs';
-import { interopDefault } from '../utils';
-import type {
-  OptionsIsInEditor,
-  OptionsIsQuiet,
-  OptionsOverrides,
-  TypedFlatConfigItem,
-} from '../types';
+import tailwind from 'eslint-plugin-tailwindcss';
+import { GLOB_REACT } from '../globs';
+import type { OptionsTailwindCSS, TypedFlatConfigItem } from '../types';
+import type { ESLint } from 'eslint';
 
-export const tailwindcss = async (
-  options: OptionsIsQuiet & OptionsIsInEditor & OptionsOverrides = {},
-): Promise<TypedFlatConfigItem[]> => {
-  const { isInEditor = false, isInQuietMode = false, overrides = {} } = options;
-
+export const tailwindcss = (
+  options: OptionsTailwindCSS,
+): TypedFlatConfigItem[] => {
   return [
     {
-      name: 'nivalis:tailwindcss',
+      name: 'nivalis/tailwindcss',
+      files: [GLOB_REACT],
       plugins: {
-        tailwindcss: await interopDefault(import('eslint-plugin-tailwindcss')),
+        tailwindcss: tailwind as unknown as ESLint.Plugin,
       },
       settings: {
         tailwindcss: {
           callees: ['cn', 'classnames', 'clsx', 'cva'],
-          config: 'tailwind.config.ts',
+          config: options.configPath || 'tailwind.config.ts',
           /**
            * Performance issue with the plugin, somewhat mitigated setting cssFiles to an empty array.
            * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/276
@@ -31,19 +26,8 @@ export const tailwindcss = async (
           removeDuplicates: true,
         },
       },
-    },
-    {
-      files: [GLOB_REACT, GLOB_HTML],
       rules: {
-        'tailwindcss/classnames-order':
-          isInEditor && isInQuietMode ? 'off' : 'warn',
-        'tailwindcss/enforces-negative-arbitrary-values': [
-          isInQuietMode ? 'off' : 'warn',
-        ],
-        'tailwindcss/enforces-shorthand': [isInQuietMode ? 'off' : 'warn'],
-        'tailwindcss/no-contradicting-classname': ['error'],
-        'tailwindcss/no-custom-classname': [isInQuietMode ? 'off' : 'warn'],
-        ...overrides,
+        ...tailwind.configs.recommended.rules,
       },
     },
   ];
