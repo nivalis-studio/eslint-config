@@ -19,6 +19,7 @@ export const unicorn = (): TypedFlatConfigItem[] => {
         'unicorn/no-null': 'off',
         'unicorn/no-array-reduce': 'off',
         'unicorn/no-abusive-eslint-disable': 'off',
+        'unicorn/prefer-ternary': 'off',
         'unicorn/string-content': [
           'error',
           {

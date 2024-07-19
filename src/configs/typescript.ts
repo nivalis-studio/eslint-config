@@ -54,7 +54,7 @@ export const typescript = (
               'return-await': 'off',
 
               '@typescript-eslint/return-await': ['error', 'always'],
-              '@typescript-eslint/no-unnecessary-condition': 'warn',
+              '@typescript-eslint/no-unnecessary-condition': 'off',
               '@typescript-eslint/use-unknown-in-catch-callback-variable':
                 'warn',
               '@typescript-eslint/await-thenable': 'error',

@@ -36,7 +36,12 @@ export const node = (): TypedFlatConfigItem[] => {
         'node/no-unpublished-import': 'error',
         'node/no-unpublished-require': 'error',
         'node/no-unsupported-features/es-builtins': 'error',
-        'node/no-unsupported-features/node-builtins': 'error',
+        'node/no-unsupported-features/node-builtins': [
+          'error',
+          {
+            ignores: ['fetch', 'navigator'],
+          },
+        ],
         'node/process-exit-as-throw': 'error',
         'node/hashbang': 'error',
         'node/no-unsupported-features/es-syntax': [

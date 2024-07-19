@@ -187,7 +187,7 @@ export const react = (): TypedFlatConfigItem[] => {
           'error',
           {
             customValidators: [],
-            ignore: [],
+            ignore: ['className', 'children', 'class', 'style'],
             skipUndeclared: false,
           },
         ],
