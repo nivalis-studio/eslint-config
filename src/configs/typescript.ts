@@ -3,6 +3,7 @@ import { toArray } from '../utils';
 import { GLOB_JS, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
 import type { OptionsTypescript, TypedFlatConfigItem } from '../types';
 
+// eslint-disable-next-line max-lines-per-function
 export const typescript = (
   options: OptionsTypescript,
 ): TypedFlatConfigItem[] => {
@@ -199,7 +200,16 @@ export const typescript = (
             varsIgnorePattern: '^_',
           },
         ],
-        '@typescript-eslint/no-shadow': ['warn'],
+        '@typescript-eslint/no-shadow': [
+          'warn',
+          {
+            allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'cb'],
+            builtinGlobals: false,
+            hoist: 'functions',
+            ignoreFunctionTypeParameterNameValueShadow: true,
+            ignoreTypeValueShadow: true,
+          },
+        ],
         '@typescript-eslint/class-literal-property-style': ['error', 'getters'],
         '@typescript-eslint/consistent-generic-constructors': [
           'error',
@@ -217,6 +227,93 @@ export const typescript = (
             fixStyle: 'separate-type-imports',
             prefer: 'type-imports',
           },
+        ],
+        '@typescript-eslint/default-param-last': ['error'],
+        '@typescript-eslint/member-ordering': ['error'],
+        '@typescript-eslint/no-array-constructor': ['error'],
+        '@typescript-eslint/no-confusing-non-null-assertion': 'error',
+        '@typescript-eslint/no-dupe-class-members': 'error',
+        '@typescript-eslint/no-duplicate-enum-values': ['error'],
+        '@typescript-eslint/no-empty-function': [
+          'error',
+          { allow: ['arrowFunctions', 'functions', 'methods'] },
+        ],
+        '@typescript-eslint/no-extra-non-null-assertion': ['error'],
+        '@typescript-eslint/no-extraneous-class': [
+          'warn',
+          {
+            allowConstructorOnly: false,
+            allowEmpty: false,
+            allowStaticOnly: false,
+            allowWithDecorator: true,
+          },
+        ],
+        '@typescript-eslint/no-import-type-side-effects': 'error',
+        '@typescript-eslint/no-inferrable-types': [
+          'error',
+          { ignoreParameters: true, ignoreProperties: false },
+        ],
+        '@typescript-eslint/no-invalid-void-type': ['error'],
+        '@typescript-eslint/no-loop-func': ['error'],
+        '@typescript-eslint/no-magic-numbers': [
+          'warn',
+          {
+            detectObjects: false,
+            enforceConst: true,
+            ignore: [0, 1, -1],
+            ignoreArrayIndexes: true,
+          },
+        ],
+        '@typescript-eslint/no-misused-new': ['error'],
+        '@typescript-eslint/no-namespace': [
+          'error',
+          { allowDeclarations: false, allowDefinitionFiles: false },
+        ],
+        '@typescript-eslint/no-non-null-asserted-nullish-coalescing': ['error'],
+        '@typescript-eslint/no-non-null-asserted-optional-chain': ['error'],
+        '@typescript-eslint/no-redeclare': 'error',
+        '@typescript-eslint/no-require-imports': 'error',
+        '@typescript-eslint/no-this-alias': [
+          'error',
+          { allowDestructuring: true },
+        ],
+        '@typescript-eslint/no-unnecessary-type-constraint': ['error'],
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: false,
+            allowTaggedTemplates: false,
+            allowTernary: false,
+            enforceForJSX: true,
+          },
+        ],
+        '@typescript-eslint/no-use-before-define': [
+          'error',
+          {
+            allowNamedExports: false,
+            classes: false,
+            functions: false,
+            variables: true,
+          },
+        ],
+        '@typescript-eslint/no-useless-constructor': ['error'],
+        '@typescript-eslint/no-useless-empty-export': ['error'],
+        '@typescript-eslint/parameter-properties': [
+          'error',
+          { prefer: 'parameter-property' },
+        ],
+        '@typescript-eslint/prefer-as-const': ['error'],
+        '@typescript-eslint/prefer-for-of': ['error'],
+        '@typescript-eslint/prefer-function-type': ['error'],
+        '@typescript-eslint/prefer-literal-enum-member': ['error'],
+        '@typescript-eslint/prefer-namespace-keyword': ['error'],
+        '@typescript-eslint/triple-slash-reference': [
+          'warn',
+          { lib: 'never', path: 'never', types: 'never' },
+        ],
+        '@typescript-eslint/unified-signatures': [
+          'error',
+          { ignoreDifferentlyNamedParameters: true },
         ],
       },
     },
