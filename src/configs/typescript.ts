@@ -55,6 +55,10 @@ export const typescript = (
               'return-await': 'off',
 
               '@typescript-eslint/return-await': ['error', 'always'],
+              '@typescript-eslint/strict-boolean-expressions': [
+                'off',
+                { allowNullableBoolean: true, allowNullableObject: true },
+              ],
               '@typescript-eslint/no-unnecessary-condition': 'off',
               '@typescript-eslint/use-unknown-in-catch-callback-variable':
                 'warn',
@@ -219,6 +223,7 @@ export const typescript = (
           'error',
           'index-signature',
         ],
+        '@typescript-eslint/no-wrapper-object-types': ['error'],
         '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         '@typescript-eslint/consistent-type-imports': [
           'error',
@@ -319,7 +324,7 @@ export const typescript = (
     },
 
     {
-      files: ['**/*.d.ts'],
+      files: ['**/*.d.?([cm])ts'],
       name: 'nivalis/typescript/disables/dts',
       rules: {
         'eslint-comments/no-unlimited-disable': 'off',
