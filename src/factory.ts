@@ -15,6 +15,7 @@ import { regexp } from './configs/regexp';
 import { tailwindcss } from './configs/tailwindcss';
 import { typescript } from './configs/typescript';
 import { unicorn } from './configs/unicorn';
+import { commonjs } from './configs/commonjs';
 import { resolveSubOptions } from './utils';
 import {
   HAS_NEXTJS,
@@ -76,6 +77,7 @@ export const nivalis = async (
     promise(),
     comments(),
     unicorn(),
+    commonjs(),
   );
 
   if (enableReact) {
