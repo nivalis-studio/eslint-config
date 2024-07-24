@@ -92,3 +92,14 @@ export const ensurePackages = (packages: string[]) => {
     `This package(s) are required for this config: ${nonExistingPackages.join(', ')}. Please install them.`,
   );
 };
+
+export const isInEditorEnv = (): boolean => {
+  return !!(
+    (process.env.VSCODE_PID ||
+      process.env.VSCODE_CWD ||
+      process.env.JETBRAINS_IDE ||
+      process.env.VIM ||
+      process.env.NVIM) &&
+    !process.env.CI
+  );
+};
