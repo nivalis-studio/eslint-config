@@ -20,7 +20,7 @@ export type OptionsTypescript = {
    * When this options is provided, type aware rules will be enabled.
    * @see https://typescript-eslint.io/linting/typed-linting/
    */
-  configPath?: string | string[];
+  configPath?: string;
 };
 
 export type OptionsTailwindCSS = {

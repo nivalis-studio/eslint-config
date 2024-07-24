@@ -1,20 +1,17 @@
 import tseslint from 'typescript-eslint';
-import { toArray } from '../utils';
-import { GLOB_JS, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
+import { GLOB_JS, GLOB_TS, GLOB_TSX } from '../globs';
 import type { OptionsTypescript, TypedFlatConfigItem } from '../types';
 
 // eslint-disable-next-line max-lines-per-function
 export const typescript = (
   options: OptionsTypescript,
 ): TypedFlatConfigItem[] => {
-  const tsconfigPath = options.configPath
-    ? toArray(options.configPath)
-    : undefined;
+  const tsconfigPath = options?.configPath ?? undefined;
 
   return [
     {
       name: 'nivalis/typescript/plugin',
-      files: [GLOB_SRC],
+      files: [GLOB_TS, GLOB_TSX],
       plugins: {
         '@typescript-eslint': tseslint.plugin,
       },
@@ -34,11 +31,14 @@ export const typescript = (
             files: [GLOB_TS, GLOB_TSX],
           })),
           {
-            files: [GLOB_SRC],
+            files: [GLOB_TS, GLOB_TSX],
             name: 'nivalis/typescript/languageOptions',
             languageOptions: {
               parserOptions: {
-                project: tsconfigPath,
+                projectService: {
+                  allowDefaultProject: ['./*.js'],
+                  defaultProject: tsconfigPath,
+                },
                 tsconfigRootDir: process.cwd(),
               },
             },
@@ -152,17 +152,17 @@ export const typescript = (
       : [
           ...tseslint.configs.strict.map(config => ({
             ...config,
-            files: [GLOB_SRC],
+            files: [GLOB_TS, GLOB_TSX],
           })),
 
           ...tseslint.configs.stylistic.map(config => ({
             ...config,
-            files: [GLOB_SRC],
+            files: [GLOB_TS, GLOB_TSX],
           })),
         ]),
 
     {
-      files: [GLOB_SRC],
+      files: [GLOB_TS, GLOB_TSX],
       name: 'nivalis/typescript/rules',
       rules: {
         'default-param-last': 'off',
