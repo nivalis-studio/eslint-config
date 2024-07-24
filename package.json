@@ -39,7 +39,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "pnpm run build",
-    "typegen": "pnpm dlx tsx ./scripts/typegen.ts",
+    "typegen": "pnpm dlx tsx@latest ./scripts/typegen.ts",
     "prepack": "pnpm run build",
     "prepare": "simple-git-hooks",
     "ts": "tsc --noEmit"
