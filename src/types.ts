@@ -40,12 +40,17 @@ export type OptionsConfig = {
   typescript?: boolean | OptionsTypescript;
   /**
    * Enable tailwindcss rules.
-   * @default false
+   * @default auto-detect based on the dependencies
    */
   tailwindcss?: boolean | OptionsTailwindCSS;
   /**
    * Enable Prettier support.
-   * @default true
+   * @default auto-detect based on the dependencies
    */
   prettier?: boolean | OptionsPrettier;
+  /**
+   * Enable Nextjs support.
+   * @default auto-detect based on the dependencies
+   */
+  nextjs?: boolean;
 };

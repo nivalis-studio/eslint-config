@@ -57,7 +57,7 @@ export const nivalis = async (
   const configs: Array<Awaitable<TypedFlatConfigItem[]>> = [];
 
   const enableReact = HAS_REACT;
-  const enableNextJs = HAS_NEXTJS;
+  const enableNextJs = HAS_NEXTJS && options.nextjs !== false;
   const enablePrettier = HAS_PRETTIER && options.prettier !== false;
   const enableTypescript = HAS_TYPESCRIPT && options.typescript !== false;
   const enableTailwindCss = HAS_TAILWINDCSS && options.tailwindcss !== false;
