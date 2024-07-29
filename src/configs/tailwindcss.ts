@@ -1,11 +1,14 @@
-import tailwind from 'eslint-plugin-tailwindcss';
 import { GLOB_REACT } from '../globs';
 import type { OptionsTailwindCSS, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
-export const tailwindcss = (
+export const tailwindcss = async (
   options: OptionsTailwindCSS,
-): TypedFlatConfigItem[] => {
+): Promise<TypedFlatConfigItem[]> => {
+  const tailwind = (await import(
+    'eslint-plugin-tailwindcss'
+  )) as unknown as ESLint.Plugin;
+
   return [
     {
       name: 'nivalis/tailwindcss',
@@ -26,8 +29,10 @@ export const tailwindcss = (
           removeDuplicates: true,
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       rules: {
-        ...tailwind.configs.recommended.rules,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+        ...(tailwind.configs?.recommended as any)?.rules,
       },
     },
   ];
