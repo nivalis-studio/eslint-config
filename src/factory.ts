@@ -50,7 +50,7 @@ export const nivalis = async (
       | TypedFlatConfigItem[]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       | FlatConfigComposer<any, any>
-      | Linter.FlatConfig[]
+      | Linter.Config[]
     >
   >
 ) => {

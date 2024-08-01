@@ -44,11 +44,11 @@ const configs = await combine(
   prettier({}),
 );
 
-const configNames = (configs as Linter.FlatConfig[])
+const configNames = (configs as Linter.Config[])
   .map(index => index.name)
   .filter(Boolean) as string[];
 
-let dts = await flatConfigsToRulesDTS(configs as Linter.FlatConfig[], {
+let dts = await flatConfigsToRulesDTS(configs as Linter.Config[], {
   includeAugmentation: false,
 });
 
