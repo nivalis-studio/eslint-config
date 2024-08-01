@@ -21,6 +21,7 @@ export const javascript = (): TypedFlatConfigItem[] => {
           ...globals.browser,
           ...globals.es2021,
           ...globals.node,
+          ...globals.commonjs,
           document: 'readonly',
           navigator: 'readonly',
           window: 'readonly',
