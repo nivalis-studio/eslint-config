@@ -1,13 +1,14 @@
 import { GLOB_REACT } from '../globs';
+import { interopDefault } from '../utils';
 import type { OptionsTailwindCSS, TypedFlatConfigItem } from '../types';
 import type { ESLint } from 'eslint';
 
 export const tailwindcss = async (
   options: OptionsTailwindCSS,
 ): Promise<TypedFlatConfigItem[]> => {
-  const tailwind = (await import(
-    'eslint-plugin-tailwindcss'
-  )) as unknown as ESLint.Plugin;
+  const tailwind = await interopDefault<ESLint.Plugin>(
+    import('eslint-plugin-tailwindcss') as unknown as ESLint.Plugin,
+  );
 
   return [
     {
