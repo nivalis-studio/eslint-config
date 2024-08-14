@@ -91,9 +91,9 @@ export const javascript = (): TypedFlatConfigItem[] => {
         'id-length': [
           'error',
           {
-            exceptions: ['_', 'i', 'j', 'k', 'x', 'y', 'z'],
+            exceptions: ['_', 'i', 'j', 'k', 'x', 'y', 'z', 'a', 'b', 'c'],
             max: 30,
-            min: 2,
+            min: 3,
             properties: 'never',
           },
         ],
