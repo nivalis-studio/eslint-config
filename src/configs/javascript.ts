@@ -93,7 +93,7 @@ export const javascript = (): TypedFlatConfigItem[] => {
           {
             exceptions: ['_', 'i', 'j', 'k', 'x', 'y', 'z', 'a', 'b', 'c'],
             max: 30,
-            min: 3,
+            min: 2,
             properties: 'never',
           },
         ],

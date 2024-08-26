@@ -2,7 +2,7 @@
   "name": "@nivalis/eslint-config",
   "type": "module",
   "version": "3.4.1",
-  "packageManager": "pnpm@9.7.0+sha256.b35018fbfa8f583668b2649e407922a721355cd81f61beeb4ac1d4258e585559",
+  "packageManager": "pnpm@9.8.0+sha256.56a9e76b51796ca7f73b85e44cf83712862091f4d498c0ce4d5b7ecdc6ba18f7",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "license": "MIT",
   "homepage": "https://github.com/nivalis-studio/eslint-config#readme",
@@ -36,8 +36,8 @@
   "scripts": {
     "build": "pnpm run typegen && pnpm tsup --format esm,cjs --clean --dts",
     "dev": "pnpm dlx @eslint/config-inspector --config eslint.config.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --flag unstable_ts_config",
+    "lint:fix": "eslint . --fix --flag unstable_ts_config",
     "prepublishOnly": "pnpm run build",
     "typegen": "pnpm dlx tsx@latest ./scripts/typegen.ts",
     "prepack": "pnpm run build",
@@ -50,36 +50,36 @@
   },
   "prettier": "@nivalis/prettier-config",
   "dependencies": {
-    "@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
-    "@next/eslint-plugin-next": "15.0.0-canary.111",
-    "@stylistic/eslint-plugin": "^2.6.2",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.0",
+    "@next/eslint-plugin-next": "15.0.0-canary.130",
+    "@stylistic/eslint-plugin": "^2.6.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import-x": "^3.1.0",
-    "eslint-plugin-jsdoc": "^50.0.1",
+    "eslint-plugin-jsdoc": "^50.2.2",
     "eslint-plugin-jsonc": "^2.16.0",
     "eslint-plugin-n": "^17.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^7.1.0",
     "eslint-plugin-react": "git://github.com/jsx-eslint/eslint-plugin-react.git#a2306e7a88762ced2c15cefa3df5a865e9976617",
     "eslint-plugin-react-compiler": "0.0.0-experimental-9ed098e-20240725",
-    "eslint-plugin-react-hooks": "5.1.0-rc-2d2cc042-20240809",
+    "eslint-plugin-react-hooks": "5.1.0-rc-b57d2823-20240822",
     "eslint-plugin-regexp": "^2.6.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
-    "eslint-plugin-unicorn": "git://github.com/sindresorhus/eslint-plugin-unicorn.git#77f32e5a6b2df542cf50dfbd371054f2cd8ce2d6",
+    "eslint-plugin-unicorn": "git://github.com/sindresorhus/eslint-plugin-unicorn.git#891842d539d0d002119e9c476a050a12d3936a75",
     "globals": "^15.9.0",
     "local-pkg": "^0.5.0",
-    "typescript-eslint": "8.0.1"
+    "typescript-eslint": "8.2.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
+    "@eslint/js": "^9.9.1",
     "@nivalis/prettier-config": "^3.3.3",
-    "@swc/core": "^1.7.10",
+    "@swc/core": "^1.7.18",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^20.14.15",
-    "eslint": "npm:eslint-ts-patch@9.5.0-0",
-    "eslint-flat-config-utils": "^0.3.0",
-    "eslint-typegen": "^0.3.0",
-    "lint-staged": "^15.2.8",
+    "@types/node": "^20.16.1",
+    "eslint": "9.9.1",
+    "eslint-flat-config-utils": "^0.3.1",
+    "eslint-typegen": "^0.3.1",
+    "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "tsup": "^8.2.4",
@@ -89,6 +89,6 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix --no-warn-ignored"
+    "*": "eslint --fix --no-warn-ignored --flag unstable_ts_config"
   }
 }
