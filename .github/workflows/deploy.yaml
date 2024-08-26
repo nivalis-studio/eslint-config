@@ -1,5 +1,11 @@
 name: Deploy
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '!**'
 
 jobs:
   build:
@@ -7,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - run: corepack enable
       - uses: actions/setup-node@v4
@@ -21,4 +27,4 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - run: pnpx pkg-pr-new publish
+      - run: pnpx pkg-pr-new publish --compact --comment=update
