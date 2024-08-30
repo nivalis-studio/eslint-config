@@ -2,7 +2,7 @@
   "name": "@nivalis/eslint-config",
   "type": "module",
   "version": "3.5.0",
-  "packageManager": "pnpm@9.8.0+sha256.56a9e76b51796ca7f73b85e44cf83712862091f4d498c0ce4d5b7ecdc6ba18f7",
+  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "license": "MIT",
   "homepage": "https://github.com/nivalis-studio/eslint-config#readme",
@@ -41,7 +41,6 @@
     "prepublishOnly": "pnpm run build",
     "typegen": "pnpm dlx tsx@latest ./scripts/typegen.ts",
     "prepack": "pnpm run build",
-    "prepare": "simple-git-hooks",
     "ts": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -79,14 +78,11 @@
     "eslint": "9.9.1",
     "eslint-flat-config-utils": "^0.3.1",
     "eslint-typegen": "^0.3.1",
+    "lefthook": "1.7.14",
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
-    "simple-git-hooks": "^2.11.1",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix --no-warn-ignored --flag unstable_ts_config"
