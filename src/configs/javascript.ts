@@ -15,6 +15,9 @@ export const javascript = (): Linter.Config[] => {
       name: 'nivalis/javascript/setup',
       languageOptions: {
         globals: { ...globals.browser, ...globals.node },
+        parserOptions: {
+          ecmaVersion: 2022,
+        },
       },
     },
     {
@@ -474,12 +477,12 @@ export const javascript = (): Linter.Config[] => {
         curly: 'error',
         'guard-for-in': 'error',
         'id-match': 'error',
-        'init-declarations': 'error',
+        'init-declarations': 'off',
         'logical-assignment-operators': 'error',
         'max-classes-per-file': 'error',
         'max-depth': 'error',
         'no-bitwise': 'error',
-        'no-continue': 'error',
+        'no-continue': 'off',
         'no-duplicate-imports': 'error',
         'no-eq-null': 'error',
         'no-inline-comments': 'off',
@@ -490,7 +493,7 @@ export const javascript = (): Linter.Config[] => {
         'no-restricted-imports': 'error',
         'no-undefined': 'error',
         'no-underscore-dangle': 'off',
-        'no-useless-assignment': 'error',
+        'no-useless-assignment': 'off',
         'operator-assignment': 'error',
         'prefer-destructuring': 'off',
         'prefer-named-capture-group': 'off',

@@ -176,14 +176,14 @@ export const react = (): Linter.Config[] => {
             ignorePureComponents: true,
           },
         ],
-        'react/prop-types': [
-          'error',
-          {
-            customValidators: [],
-            ignore: ['className', 'children', 'class', 'style'],
-            skipUndeclared: false,
-          },
-        ],
+        // 'react/prop-types': [
+        //   'error',
+        //   {
+        //     customValidators: [],
+        //     ignore: ['className', 'children', 'class', 'style'],
+        //     skipUndeclared: false,
+        //   },
+        // ],
         'react/react-in-jsx-scope': 'off',
         'react/require-render-return': 'error',
         'react/self-closing-comp': [
@@ -205,7 +205,8 @@ export const react = (): Linter.Config[] => {
         'react/void-dom-elements-no-children': ['error'],
 
         'react/jsx-no-undef': 'off',
-        'react/prop-type': 'off',
+        // TODO: enable this rule
+        'react/prop-types': 'off',
 
         /**          a11y rules
         'jsx-a11y/accessible-emoji': ['warn'],
