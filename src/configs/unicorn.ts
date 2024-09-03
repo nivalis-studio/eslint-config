@@ -1,7 +1,7 @@
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const unicorn = (): TypedFlatConfigItem[] => {
+export const unicorn = (): Linter.Config[] => {
   return [
     eslintPluginUnicorn.configs['flat/recommended'],
     {
@@ -33,5 +33,5 @@ export const unicorn = (): TypedFlatConfigItem[] => {
         ],
       },
     },
-  ];
+  ] satisfies Linter.Config[];
 };

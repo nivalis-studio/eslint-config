@@ -1,18 +1,17 @@
 import pluginComments from '@eslint-community/eslint-plugin-eslint-comments';
-import type { TypedFlatConfigItem } from '../types';
-import type { ESLint } from 'eslint';
+import type { Linter } from 'eslint';
 
-export const comments = (): TypedFlatConfigItem[] => {
+export const comments = (): Linter.Config[] => {
   return [
     {
       name: 'nivalis/eslint-comments/rules',
       plugins: {
-        'eslint-comments': pluginComments as unknown as ESLint.Plugin,
+        'eslint-comments': pluginComments,
       },
       rules: {
         'eslint-comments/disable-enable-pair': [
           'error',
-          { 'allowWholeFile': true },
+          { allowWholeFile: true },
         ],
         'eslint-comments/no-aggregating-enable': 'error',
         'eslint-comments/no-duplicate-disable': 'error',

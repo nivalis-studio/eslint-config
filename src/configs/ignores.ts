@@ -1,11 +1,11 @@
 import { GLOB_EXCLUDE } from '../globs';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const ignores = (): TypedFlatConfigItem[] => {
+export const ignores = (userIgnores: string[] = []): Linter.Config[] => {
   return [
     {
       name: 'nivalis/ignores',
-      ignores: GLOB_EXCLUDE,
+      ignores: [...GLOB_EXCLUDE, ...userIgnores],
     },
   ];
 };

@@ -1,32 +1,27 @@
-import globals from 'globals';
-import { interopDefault } from '../utils';
+import pluginNextjs from '@next/eslint-plugin-next';
 import { GLOB_REACT } from '../globs';
-import type { ESLint } from 'eslint';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const nextjs = async (): Promise<TypedFlatConfigItem[]> => {
-  const pluginNextjs = await interopDefault<ESLint.Plugin>(
-    import('@next/eslint-plugin-next') as unknown as ESLint.Plugin,
-  );
-
+export const nextjs = (): Linter.Config[] => {
   return [
     {
       files: [GLOB_REACT],
       name: 'nivalis/nextjs',
-      languageOptions: {
-        globals: {
-          ...globals.serviceworker,
-          ...globals.browser,
-          ...globals.node,
+      settings: {
+        react: {
+          version: 'detect',
         },
+      },
+      languageOptions: {
         parserOptions: {
           ecmaFeatures: {
             jsx: true,
           },
         },
       },
-      plugins: { 'nextjs': pluginNextjs },
+      plugins: { nextjs: pluginNextjs },
       rules: {
+        'nextjs/no-html-link-for-pages': 'off',
         'nextjs/google-font-display': 'warn',
         'nextjs/google-font-preconnect': 'warn',
         'nextjs/next-script-for-ga': 'warn',
@@ -34,7 +29,6 @@ export const nextjs = async (): Promise<TypedFlatConfigItem[]> => {
         'nextjs/no-before-interactive-script-outside-document': 'warn',
         'nextjs/no-css-tags': 'warn',
         'nextjs/no-head-element': 'warn',
-        'nextjs/no-html-link-for-pages': 'warn',
         'nextjs/no-img-element': 'warn',
         'nextjs/no-page-custom-font': 'warn',
         'nextjs/no-styled-jsx-in-document': 'warn',

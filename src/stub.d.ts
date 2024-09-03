@@ -1,5 +1,4 @@
 declare module 'eslint-plugin-tailwindcss' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };
@@ -19,7 +18,6 @@ declare module '@eslint-community/eslint-plugin-eslint-comments' {
 }
 
 declare module 'eslint-plugin-promise' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };
@@ -29,7 +27,6 @@ declare module 'eslint-plugin-promise' {
 }
 
 declare module '@next/eslint-plugin-next' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };
@@ -39,7 +36,6 @@ declare module '@next/eslint-plugin-next' {
 }
 
 declare module 'eslint-plugin-react-hooks' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };
@@ -49,7 +45,6 @@ declare module 'eslint-plugin-react-hooks' {
 }
 
 declare module 'eslint-plugin-react' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };
@@ -59,7 +54,6 @@ declare module 'eslint-plugin-react' {
 }
 
 declare module 'eslint-plugin-react-compiler' {
-  import type { ESLint } from 'eslint';
   const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
     configs: { [key: string]: ESLint.ConfigData };

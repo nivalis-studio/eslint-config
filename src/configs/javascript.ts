@@ -1,46 +1,27 @@
 import globals from 'globals';
 import { GLOB_SRC } from '../globs';
-import {
-  MAX_COMPLEXITY,
-  MAX_LINES,
-  MAX_LINES_PER_FUNCTION,
-  MAX_NESTED_CALLBACKS,
-  MAX_PARAMS,
-  MAX_STATEMENTS,
-} from '../constants';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-// eslint-disable-next-line max-lines-per-function
-export const javascript = (): TypedFlatConfigItem[] => {
+const MAX_COMPLEXITY = 25;
+const MAX_LINES = 500;
+const MAX_LINES_PER_FUNCTION = 250;
+const MAX_NESTED_CALLBACKS = 4;
+const MAX_PARAMS = 5;
+const MAX_STATEMENTS = 35;
+
+export const javascript = (): Linter.Config[] => {
   return [
     {
       name: 'nivalis/javascript/setup',
       languageOptions: {
-        ecmaVersion: 2022,
-        globals: {
-          ...globals.browser,
-          ...globals.es2021,
-          ...globals.node,
-          ...globals.commonjs,
-          document: 'readonly',
-          navigator: 'readonly',
-          window: 'readonly',
-        },
-        parserOptions: {
-          ecmaVersion: 2022,
-          sourceType: 'module',
-        },
-        sourceType: 'module',
-      },
-      linterOptions: {
-        reportUnusedDisableDirectives: true,
+        globals: { ...globals.browser, ...globals.node },
       },
     },
-
     {
-      files: [GLOB_SRC],
       name: 'nivalis/javascript/rules',
+      files: [GLOB_SRC],
       rules: {
+        'valid-typeof': 'error',
         'accessor-pairs': [
           'error',
           {
@@ -149,7 +130,7 @@ export const javascript = (): TypedFlatConfigItem[] => {
         'no-dupe-keys': 'error',
         'no-duplicate-case': ['error'],
         'no-else-return': ['error', { allowElseIf: false }],
-        'no-empty': ['error', { allowEmptyCatch: true }],
+        'no-empty': ['error'],
         'no-empty-character-class': 'error',
         'no-empty-function': [
           'error',
@@ -475,7 +456,7 @@ export const javascript = (): TypedFlatConfigItem[] => {
           'error',
           { enforceForIndexOf: true, enforceForSwitchCase: true },
         ],
-        'valid-typeof': ['error', { requireStringLiterals: true }],
+        // 'valid-typeof': ['error', { requireStringLiterals: true }],
         'vars-on-top': 'error',
         yoda: [
           'error',
@@ -485,6 +466,39 @@ export const javascript = (): TypedFlatConfigItem[] => {
             onlyEquality: false,
           },
         ],
+
+        'arrow-body-style': 'error',
+        'capitalized-comments': 'off',
+        'consistent-return': 'off',
+        'consistent-this': 'error',
+        curly: 'error',
+        'guard-for-in': 'error',
+        'id-match': 'error',
+        'init-declarations': 'error',
+        'logical-assignment-operators': 'error',
+        'max-classes-per-file': 'error',
+        'max-depth': 'error',
+        'no-bitwise': 'error',
+        'no-continue': 'error',
+        'no-duplicate-imports': 'error',
+        'no-eq-null': 'error',
+        'no-inline-comments': 'off',
+        'no-multi-assign': 'error',
+        'no-nested-ternary': 'error',
+        'no-object-constructor': 'error',
+        'no-restricted-exports': 'error',
+        'no-restricted-imports': 'error',
+        'no-undefined': 'error',
+        'no-underscore-dangle': 'off',
+        'no-useless-assignment': 'error',
+        'operator-assignment': 'error',
+        'prefer-destructuring': 'off',
+        'prefer-named-capture-group': 'off',
+        'prefer-numeric-literals': 'error',
+        'prefer-object-has-own': 'error',
+        'prefer-object-spread': 'error',
+        'require-unicode-regexp': 'off',
+        'sort-vars': 'error',
       },
     },
   ];

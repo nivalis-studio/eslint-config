@@ -1,10 +1,10 @@
 import pluginPromise from 'eslint-plugin-promise';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const promise = (): TypedFlatConfigItem[] => {
+export const promise = (): Linter.Config[] => {
   return [
     {
-      ...(pluginPromise.configs['flat/recommended'] as TypedFlatConfigItem),
+      ...(pluginPromise.configs['flat/recommended'] as Linter.Config),
       name: 'nivalis/promise/setup',
     },
     {

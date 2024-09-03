@@ -1,14 +1,25 @@
+import path from 'node:path';
+import { existsSync } from 'node:fs';
+import tailwind from 'eslint-plugin-tailwindcss';
 import { GLOB_REACT } from '../globs';
-import { interopDefault } from '../utils';
-import type { OptionsTailwindCSS, TypedFlatConfigItem } from '../types';
-import type { ESLint } from 'eslint';
+import type { ESLint, Linter } from 'eslint';
+import type { TailwindOptions } from '../options';
 
-export const tailwindcss = async (
-  options: OptionsTailwindCSS,
-): Promise<TypedFlatConfigItem[]> => {
-  const tailwind = await interopDefault<ESLint.Plugin>(
-    import('eslint-plugin-tailwindcss') as unknown as ESLint.Plugin,
+export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
+  if (options === false) {
+    return [];
+  }
+
+  const configPath = path.join(
+    process.cwd(),
+    options?.configPath ?? './tailwind.config.ts',
   );
+
+  if (!existsSync(configPath)) {
+    throw new Error(
+      `Tailwind config not found. The file ${configPath} does not exist. Please check your configuration.`,
+    );
+  }
 
   return [
     {
@@ -20,7 +31,7 @@ export const tailwindcss = async (
       settings: {
         tailwindcss: {
           callees: ['cn', 'classnames', 'clsx', 'cva'],
-          config: options.configPath || 'tailwind.config.ts',
+          config: configPath,
           /**
            * Performance issue with the plugin, somewhat mitigated setting cssFiles to an empty array.
            * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/276

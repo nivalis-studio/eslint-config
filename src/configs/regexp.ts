@@ -1,7 +1,7 @@
 import { configs } from 'eslint-plugin-regexp';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const regexp = (): TypedFlatConfigItem[] => {
+export const regexp = (): Linter.Config[] => {
   return [
     {
       ...configs['flat/recommended'],

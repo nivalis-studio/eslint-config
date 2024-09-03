@@ -1,7 +1,7 @@
 import pluginJsdoc from 'eslint-plugin-jsdoc';
-import type { TypedFlatConfigItem } from '../types';
+import type { Linter } from 'eslint';
 
-export const jsdoc = (): TypedFlatConfigItem[] => {
+export const jsdoc = (): Linter.Config[] => {
   return [
     pluginJsdoc.configs['flat/recommended'],
     {
