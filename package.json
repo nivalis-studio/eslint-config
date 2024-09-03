@@ -59,7 +59,7 @@
     "@dprint/formatter": "0.4.1",
     "@dprint/typescript": "0.91.7",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.0",
-    "@next/eslint-plugin-next": "14.2.7",
+    "@next/eslint-plugin-next": "15.0.0-canary.130",
     "@stylistic/eslint-plugin": "2.7.2",
     "@typescript-eslint/parser": "8.4.0",
     "@typescript-eslint/utils": "8.4.0",
