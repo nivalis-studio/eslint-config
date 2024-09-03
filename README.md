@@ -1,1 +1,0 @@
-# @nivalis/eslint-config

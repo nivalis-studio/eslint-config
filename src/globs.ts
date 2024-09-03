@@ -4,6 +4,8 @@ export const GLOB_ASTRO_TS = '**/*.astro/*.ts';
 
 export const GLOB_SRC_EXT = '?([cm])[jt]s?(x)';
 export const GLOB_SRC = '**/*.?([cm])[jt]s?(x)';
+export const GLOB_SRC_TS = '**/*.?([cm])ts?(x)';
+export const GLOB_SRC_JS = '**/*.?([cm])js?(x)';
 export const GLOB_JS = '**/*.?([cm])js';
 export const GLOB_TS = '**/*.?([cm])ts';
 

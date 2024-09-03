@@ -1,16 +1,99 @@
-import pluginImport from 'eslint-plugin-import-x';
+import eslintPluginImportX from 'eslint-plugin-import-x';
 import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs';
-import type { ESLint } from 'eslint';
-import type { TypedFlatConfigItem } from '../types';
 
-export const imports = (): TypedFlatConfigItem[] => {
-  return [
+export const imports = async (withTypescript = true) => {
+  const importsConfig = [
     {
-      name: 'nivalis/import',
-      files: [GLOB_SRC],
-      plugins: {
-        import: pluginImport as unknown as ESLint.Plugin,
+      name: 'import/flat/recommended',
+      plugins: { import: eslintPluginImportX },
+      rules: {
+        // Analysis/correctness
+        'import/no-unresolved': 'error',
+        'import/named': 'error',
+        'import/namespace': 'error',
+        'import/default': 'error',
+        'import/export': 'error',
+
+        // Red flags (thus, warnings)
+        'import/no-named-as-default': 'warn',
+        'import/no-named-as-default-member': 'warn',
+        'import/no-duplicates': 'warn',
       },
+      // Need all these for parsing dependencies (even if _your_ code doesn't need
+      // All of them)
+      languageOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+      },
+    } as any,
+  ];
+
+  if (withTypescript) {
+    const tsParser = await import('@typescript-eslint/parser');
+
+    /**
+     * This config:
+     * 1) adds `.jsx`, `.ts`, `.cts`, `.mts`, and `.tsx` as an extension
+     * 2) enables JSX/TSX parsing
+     */
+
+    // Omit `.d.ts` because 1) TypeScript compilation already confirms that
+    // Types are resolved, and 2) it would mask an unresolved
+    // `.ts`/`.tsx`/`.js`/`.jsx` implementation.
+    const typeScriptExtensions = ['.ts', '.tsx', '.cts', '.mts'] as const;
+
+    const allExtensions = [
+      ...typeScriptExtensions,
+      '.js',
+      '.jsx',
+      '.cjs',
+      '.mjs',
+    ] as const;
+
+    importsConfig.push(
+      {
+        name: 'import/flat/settings',
+        settings: {
+          'import/extensions': allExtensions,
+          'import/external-module-folders': [
+            'node_modules',
+            'node_modules/@types',
+          ],
+          'import/parsers': {
+            '@typescript-eslint/parser': [...typeScriptExtensions],
+          },
+          'import/resolver': {
+            typescript: true,
+          },
+        },
+        rules: {
+          // Analysis/correctness
+
+          // TypeScript compilation already ensures that named imports exist in the referenced module
+          'import/named': 'off',
+        },
+      },
+      {
+        name: 'import/flat/options',
+        files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+        ignores: ['eslint.config.js'],
+        languageOptions: {
+          parser: tsParser,
+          ecmaVersion: 'latest',
+          sourceType: 'module',
+        },
+        rules: {
+          'no-unused-vars': 'off',
+          'import/no-dynamic-require': 'warn',
+        },
+      },
+    );
+  }
+
+  importsConfig.push(
+    {
+      name: 'import/nivalis-rules',
+
       rules: {
         // https://typescript-eslint.io/troubleshooting/typed-linting/performance#eslint-plugin-import
         'import/named': 'off',
@@ -66,7 +149,7 @@ export const imports = (): TypedFlatConfigItem[] => {
       },
     },
     {
-      name: 'nivalis/import/disabled',
+      name: 'import/nivalis-disabled-rules',
       files: [
         `**/*config*.${GLOB_SRC_EXT}`,
         `**/views/${GLOB_SRC}`,
@@ -80,5 +163,7 @@ export const imports = (): TypedFlatConfigItem[] => {
         'import/no-default-export': 'off',
       },
     },
-  ];
+  );
+
+  return importsConfig;
 };

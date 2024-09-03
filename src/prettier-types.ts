@@ -39,7 +39,7 @@ export type VendoredPrettierOptionsRequired = {
    */
   bracketSpacing: boolean;
   /**
-   * Put the `>` of a multi-line HTML (HTML, JSX, Vue, Angular) element at the end of the last line instead of being
+   * Put the `>` of a multi-line HTML (HTML, XML, JSX, Vue, Angular) element at the end of the last line instead of being
    * alone on the next line (does not apply to self closing elements).
    */
   bracketSameLine: boolean;
@@ -71,7 +71,7 @@ export type VendoredPrettierOptionsRequired = {
   /**
    * Provide ability to support new languages to prettier.
    */
-  plugins: unknown[];
+  plugins: Array<string | any>;
   /**
    * How to handle whitespaces in HTML.
    * @default "css"
@@ -93,10 +93,31 @@ export type VendoredPrettierOptionsRequired = {
    */
   vueIndentScriptAndStyle: boolean;
   /**
-   * Enforce single attribute per line in HTML, Vue and JSX.
+   * Enforce single attribute per line in HTML, XML, Vue and JSX.
    * @default false
    */
   singleAttributePerLine: boolean;
+
+  /**
+   * How to handle whitespaces in XML.
+   * @default "preserve"
+   */
+  xmlQuoteAttributes: 'single' | 'double' | 'preserve';
+  /**
+   * Whether to put a space inside the brackets of self-closing XML elements.
+   * @default true
+   */
+  xmlSelfClosingSpace: boolean;
+  /**
+   * Whether to sort attributes by key in XML elements.
+   * @default false
+   */
+  xmlSortAttributesByKey: boolean;
+  /**
+   * How to handle whitespaces in XML.
+   * @default "ignore"
+   */
+  xmlWhitespaceSensitivity: 'ignore' | 'strict' | 'preserve';
 };
 
 export type BuiltInParserName =
@@ -122,16 +143,16 @@ export type BuiltInParserName =
   | 'scss'
   | 'typescript'
   | 'vue'
+  | 'xml'
   | 'yaml';
 
-/* This utility is here to handle the case where you have an explicit union
-   between string literals and the generic string type. It would normally
-   resolve out to just the string type, but this generic LiteralUnion maintains
-   the intellisense of the original union.
-
-   It comes from this issue: microsoft/TypeScript#29729:
-     https://github.com/microsoft/TypeScript/issues/29729#issuecomment-700527227 */
+// This utility is here to handle the case where you have an explicit union
+// Between string literals and the generic string type. It would normally
+// Resolve out to just the string type, but this generic LiteralUnion maintains
+// The intellisense of the original union.
+//
+// It comes from this issue: microsoft/TypeScript#29729:
+//   https://github.com/microsoft/TypeScript/issues/29729#issuecomment-700527227
 export type LiteralUnion<T extends U, U = string> =
   | T
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   | (Pick<U, never> & { _?: never | undefined });

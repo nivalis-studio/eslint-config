@@ -1,6 +1,7 @@
-import { nivalis } from './src';
+import { nivalis } from './src/factory';
 
-export default nivalis(
-  { typescript: { configPath: './tsconfig.json' } },
-  { ignores: ['src/typegen.d.ts'] },
-);
+export default nivalis({
+  format: {
+    formatter: 'prettier',
+  },
+});
