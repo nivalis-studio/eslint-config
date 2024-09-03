@@ -20,14 +20,24 @@
     "flat config"
   ],
   "exports": {
+    "./package.json": "./package.json",
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
+    "LICENSE",
+    "README.md",
     "dist"
   ],
   "publishConfig": {
@@ -45,7 +55,6 @@
   "peerDependencies": {
     "eslint": ">=9.7.0"
   },
-
   "dependencies": {
     "@dprint/formatter": "0.4.1",
     "@dprint/typescript": "0.91.7",
