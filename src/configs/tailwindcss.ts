@@ -1,4 +1,5 @@
 import { interopDefault } from '../utils';
+import { GLOB_REACT } from '../globs';
 import type { ESLint } from 'eslint';
 import type { OptionsTailwindCSS } from '../options';
 
