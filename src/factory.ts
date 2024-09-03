@@ -10,6 +10,7 @@ import { node } from './configs/node';
 import { regexp } from './configs/regexp';
 import { stylistic } from './configs/stylistic';
 import { unicorn } from './configs/unicorn';
+import { format } from './configs/format';
 import { HAS_NEXTJS, HAS_TAILWINDCSS, HAS_TYPESCRIPT } from './environment';
 import type { ConfigOptions } from './options';
 
@@ -51,11 +52,8 @@ export const nivalis = async (options?: ConfigOptions) => {
     composer = composer.append(...ts.typescript(options?.typescript));
   }
 
-  if (options?.format !== false && options?.format?.formatter === 'prettier') {
-    const fmt = await import('./configs/format');
-
-    composer = composer.append(...fmt.format(options?.format));
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  composer = composer.append(...format(options?.format));
 
   if (options?.format !== false && options?.format?.formatter === 'dprint') {
     composer = composer.append(nivalisCustom());

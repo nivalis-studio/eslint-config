@@ -1,54 +1,8 @@
 import pluginFormat from 'eslint-plugin-format';
-import { GLOB_SRC, GLOB_SRC_JS, GLOB_SRC_TS } from '../globs';
+import { GLOB_SRC } from '../globs';
 import type { FormatConfigOptions } from '../options';
 
 export const format = (options?: FormatConfigOptions) => {
-  if (options === false) {
-    return [];
-  }
-
-  let config = {
-    arrowParens: 'avoid',
-    bracketSameLine: false,
-    bracketSpacing: true,
-    endOfLine: 'lf',
-    htmlWhitespaceSensitivity: 'css',
-    jsxSingleQuote: true,
-    overrides: [
-      {
-        files: ['**/*.json'],
-        options: { trailingComma: 'none', useTabs: false },
-      },
-      {
-        files: ['**/*.yml', '**/*.yaml'],
-        options: { singleQuote: false, useTabs: false },
-      },
-    ],
-    printWidth: 80,
-    proseWrap: 'always',
-    quoteProps: 'preserve',
-    requirePragma: false,
-    semi: true,
-    singleAttributePerLine: false,
-    singleQuote: true,
-    tabWidth: 2,
-    trailingComma: 'all',
-    useTabs: false,
-    ...options?.prettierOptions,
-  };
-
-  const dprint = options?.dprint ?? false;
-  const formatter: 'dprint' | 'prettier' = dprint ? 'dprint' : 'prettier';
-
-  if (options?.dprint) {
-    config = {
-      indentWidth: 2,
-      quoteStyle: 'preferSingle',
-      useTabs: false,
-      ...options.dprintOptions,
-    };
-  }
-
   const eslintConfigs: any = [
     {
       name: 'nivalis/formatter/setup',
@@ -207,24 +161,41 @@ export const format = (options?: FormatConfigOptions) => {
     },
   ];
 
-  if (formatter === 'dprint') {
-    eslintConfigs.push(
+  if (options === false) {
+    return eslintConfigs;
+  }
+
+  const config = {
+    arrowParens: 'avoid',
+    bracketSameLine: false,
+    bracketSpacing: true,
+    endOfLine: 'lf',
+    htmlWhitespaceSensitivity: 'css',
+    jsxSingleQuote: true,
+    overrides: [
       {
-        files: [GLOB_SRC_JS],
-        name: 'nivalis/formatter/drpint/js',
-        rules: {
-          'format/dprint': ['error', { ...config, language: 'javascript' }],
-        },
+        files: ['**/*.json'],
+        options: { trailingComma: 'none', useTabs: false },
       },
       {
-        files: [GLOB_SRC_TS],
-        name: 'nivalis/formatter/dprint/ts',
-        rules: {
-          'format/dprint': ['error', { ...config, language: 'typescript' }],
-        },
+        files: ['**/*.yml', '**/*.yaml'],
+        options: { singleQuote: false, useTabs: false },
       },
-    );
-  } else {
+    ],
+    printWidth: 80,
+    proseWrap: 'always',
+    quoteProps: 'preserve',
+    requirePragma: false,
+    semi: true,
+    singleAttributePerLine: false,
+    singleQuote: true,
+    tabWidth: 2,
+    trailingComma: 'all',
+    useTabs: false,
+    ...options?.options,
+  };
+
+  if (options?.formatter === 'prettier') {
     eslintConfigs.push({
       files: [GLOB_SRC],
       name: 'nivalis/formatter/prettier',
