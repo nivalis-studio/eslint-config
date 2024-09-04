@@ -14,6 +14,7 @@ export const unicorn = (): Linter.Config[] => {
             ignore: [/^[A-Z]+\..*$/],
           },
         ],
+        'unicorn/prefer-string-raw': 'off',
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/no-array-callback-reference': 'warn',
         'unicorn/no-null': 'off',
