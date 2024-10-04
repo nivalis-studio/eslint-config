@@ -2,7 +2,7 @@
   "name": "@nivalis/eslint-config",
   "type": "module",
   "version": "4.0.0-beta.1",
-  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
   "description": "ESLint shareable flat config used at Nivalis Studio",
   "license": "MIT",
   "homepage": "https://github.com/nivalis-studio/eslint-config#readme",
@@ -53,32 +53,32 @@
     "ts": "tsc --noEmit"
   },
   "peerDependencies": {
-    "eslint": ">=9.7.0"
+    "eslint": "^9.11.1"
   },
   "prettier": "@nivalis/prettier-config",
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.0",
-    "@next/eslint-plugin-next": "15.0.0-canary.130",
+    "@next/eslint-plugin-next": "15.0.0-canary.170",
     "@stylistic/eslint-plugin": "2.8.0",
-    "@typescript-eslint/parser": "8.6.0",
-    "@typescript-eslint/utils": "8.7.0",
+    "@typescript-eslint/parser": "8.8.0",
+    "@typescript-eslint/utils": "8.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-flat-config-utils": "0.4.0",
-    "eslint-plugin-import-x": "4.3.0",
-    "eslint-plugin-jsdoc": "^50.3.0",
+    "eslint-plugin-import-x": "4.3.1",
+    "eslint-plugin-jsdoc": "50.3.1",
     "eslint-plugin-jsonc": "2.16.0",
     "eslint-plugin-n": "17.10.3",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-promise": "7.1.0",
-    "eslint-plugin-react": "git://github.com/jsx-eslint/eslint-plugin-react.git#a2306e7a88762ced2c15cefa3df5a865e9976617",
+    "eslint-plugin-react": "7.37.1",
     "eslint-plugin-react-compiler": "0.0.0-experimental-9ed098e-20240725",
     "eslint-plugin-react-hooks": "5.1.0-rc-e4953922-20240919",
     "eslint-plugin-regexp": "2.6.0",
     "eslint-plugin-tailwindcss": "3.17.4",
-    "eslint-plugin-unicorn": "git://github.com/sindresorhus/eslint-plugin-unicorn.git#d3e4b805da31c6ed7275e2e2e770b6b0fbcf11c2",
-    "globals": "^15.9.0",
+    "eslint-plugin-unicorn": "56.0.0",
+    "globals": "15.10.0",
     "local-pkg": "0.5.0",
-    "typescript-eslint": "8.7.0"
+    "typescript-eslint": "8.8.0"
   },
   "devDependencies": {
     "@commitlint/cli": "19.5.0",
@@ -86,8 +86,8 @@
     "@nivalis/prettier-config": "3.3.3",
     "@types/node": "22.7.4",
     "eslint": "9.11.1",
-    "lefthook": "1.7.17",
-    "lint-staged": "^15.2.10",
+    "lefthook": "1.7.18",
+    "lint-staged": "15.2.10",
     "typescript": "5.5.4",
     "unbuild": "2.0.0"
   },
