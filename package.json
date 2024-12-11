@@ -83,7 +83,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.6.0",
     "@commitlint/config-conventional": "19.6.0",
-    "@nivalis/prettier-config": "3.4.1",
+    "@nivalis/prettier-config": "3.4.2",
     "@types/node": "22.10.2",
     "eslint": "9.16.0",
     "lefthook": "1.9.0",
