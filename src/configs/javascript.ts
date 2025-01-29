@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import globals from 'globals';
 import { GLOB_SRC } from '../globs';
 import type { Linter } from 'eslint';
@@ -9,6 +10,7 @@ const MAX_NESTED_CALLBACKS = 4;
 const MAX_PARAMS = 5;
 const MAX_STATEMENTS = 35;
 
+// eslint-disable-next-line max-lines-per-function
 export const javascript = (): Linter.Config[] => {
   return [
     {

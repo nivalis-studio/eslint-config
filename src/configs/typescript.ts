@@ -3,6 +3,7 @@ import { GLOB_SRC_TS } from '../globs';
 import type { TSConfigOptions } from '../options';
 import type { Linter } from 'eslint';
 
+// eslint-disable-next-line max-lines-per-function
 export const typescript = (options?: TSConfigOptions): Linter.Config[] => {
   if (options === false) {
     return [];
