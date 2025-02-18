@@ -3,7 +3,7 @@ import type { Linter } from 'eslint';
 
 export const unicorn = (): Linter.Config[] => {
   return [
-    eslintPluginUnicorn.configs['flat/recommended'],
+    eslintPluginUnicorn.configs.recommended,
     {
       name: 'nivalis/unicorn/rules',
       rules: {
