@@ -17,7 +17,6 @@ export const stylistic = (): Linter.Config[] => {
     arrowParens: false,
     blockSpacing: true,
     braceStyle: '1tbs',
-    flat: true,
     indent,
     jsx,
     pluginName: 'style',
