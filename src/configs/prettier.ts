@@ -1,5 +1,5 @@
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
-import { DEFAULT_INDENT } from '../constants';
+import { DEFAULT_INDENT, DEFAULT_QUOTES } from '../constants';
 import { GLOB_SRC } from '../globs';
 import type { PrettierOptions } from '../options';
 import type { Linter } from 'eslint';
@@ -11,12 +11,13 @@ export const prettier = (options: PrettierOptions): Linter.Config[] => {
 
   const bracketSpacing = options?.bracketSpacing ?? true;
   const semi = options?.semi ?? true;
-  const quotes =
-    options?.singleQuote === undefined
-      ? 'single'
-      : options.singleQuote
-        ? 'single'
-        : 'double';
+
+  let quotes = DEFAULT_QUOTES;
+
+  if (options?.singleQuote !== undefined) {
+    quotes = options.singleQuote ? 'single' : 'double';
+  }
+
   const indent = options?.tabWidth ?? DEFAULT_INDENT;
 
   return [
@@ -210,7 +211,7 @@ export const prettier = (options: PrettierOptions): Linter.Config[] => {
             singleQuote: quotes === 'single',
             tabWidth: typeof indent === 'number' ? indent : DEFAULT_INDENT,
             trailingComma: 'all',
-            useTabs: !(typeof indent === 'number'),
+            useTabs: typeof indent !== 'number',
           },
         ],
       },

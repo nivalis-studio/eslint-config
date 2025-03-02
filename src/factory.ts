@@ -9,6 +9,7 @@ import { node } from './configs/node';
 import { regexp } from './configs/regexp';
 import { stylistic } from './configs/stylistic';
 import { unicorn } from './configs/unicorn';
+import { sonarjs } from './configs/sonarjs';
 import {
   HAS_NEXTJS,
   HAS_REACT,
@@ -42,6 +43,7 @@ export const nivalis = async (
     promise(),
     comments(),
     unicorn(),
+    sonarjs(options?.typescript),
   );
 
   if (enableReact) {

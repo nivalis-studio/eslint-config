@@ -1,4 +1,5 @@
 export const DEFAULT_INDENT = 2;
+export const DEFAULT_QUOTES = 'single';
 
 type PaddingLineType = Array<{
   blankLine: 'always' | 'any';

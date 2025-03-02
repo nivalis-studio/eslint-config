@@ -1,9 +1,11 @@
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
+import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import { GLOB_REACT } from '../globs';
 import type { Linter } from 'eslint';
 
+// eslint-disable-next-line max-lines-per-function
 export const react = (): Linter.Config[] => {
   return [
     {
@@ -12,6 +14,8 @@ export const react = (): Linter.Config[] => {
         react: eslintPluginReact,
         'react-compiler': eslintPluginReactCompiler,
         'react-hooks': eslintPluginReactHooks,
+        // @ts-expect-error Eslint versions compatibility
+        'jsx-a11y': eslintPluginJsxA11y,
       },
       settings: {
         react: {
@@ -208,7 +212,6 @@ export const react = (): Linter.Config[] => {
         // TODO: enable this rule
         'react/prop-types': 'off',
 
-        /**          a11y rules
         'jsx-a11y/accessible-emoji': ['warn'],
         'jsx-a11y/alt-text': [
           'warn',
@@ -372,7 +375,6 @@ export const react = (): Linter.Config[] => {
         'jsx-a11y/role-supports-aria-props': ['warn'],
         'jsx-a11y/scope': ['warn'],
         'jsx-a11y/tabindex-no-positive': ['warn'],
-        */
       },
     },
   ];

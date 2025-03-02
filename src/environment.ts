@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-redundant-boolean */
 /* eslint-disable no-constant-binary-expression */
 import { isPackageExists } from 'local-pkg';
 

@@ -19,14 +19,16 @@ export type TailwindOptions =
   | null
   | undefined
   | {
-      // Defaults to 'tailwind.config.ts'
+      /**
+       * @default 'tailwind.config.ts'
+       */
       configPath?: string;
     };
 
 export type ConfigOptions =
   | {
-      nextjs?: boolean | undefined | null;
-      react?: boolean | undefined | null;
+      nextjs?: boolean | null;
+      react?: boolean | null;
       typescript?: TSConfigOptions;
       tailwindcss?: TailwindOptions;
       ignores?: string[];
