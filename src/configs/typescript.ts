@@ -12,11 +12,12 @@ export const typescript = (options?: TSConfigOptions): Linter.Config[] => {
   const configs: Linter.Config[] = [
     {
       files: [GLOB_SRC_TS],
-      ...(tseslint.configs.base as unknown as Linter.Config[]),
+      ...(tseslint.configs.base as unknown as Linter.Config),
+      name: 'nivalis/typescript/base',
     },
     {
       files: [GLOB_SRC_TS],
-      name: 'nivalis/typescript/base',
+      name: 'nivalis/typescript/rules',
       rules: {
         'constructor-super': 'off',
         'getter-return': 'off',

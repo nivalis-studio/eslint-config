@@ -4,11 +4,18 @@ import type { TSConfigOptions } from '../options';
 
 export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
   const config = [
-    eslintPluginSonarjs.configs.recommended,
+    {
+      ...eslintPluginSonarjs.configs.recommended,
+      name: 'nivalis/sonarjs/recommended',
+    },
     {
       name: 'nivalis/sonarjs/rules',
       rules: {
         'sonarjs/todo-tag': 'off',
+        'sonarjs/fixme-tag': 'off',
+        'sonarjs/no-unused-vars': 'off',
+        'sonarjs/no-commented-code': 'off',
+        'sonarjs/max-lines': 'off',
       },
     },
   ] satisfies Linter.Config[];

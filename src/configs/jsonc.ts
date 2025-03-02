@@ -1,9 +1,11 @@
 import eslintPluginJsonc from 'eslint-plugin-jsonc';
 import type { Linter } from 'eslint';
 
-export const jsonc = (): Linter.Config[] => [
-  ...eslintPluginJsonc.configs['flat/recommended-with-json'],
-];
+export const jsonc = (): Linter.Config[] =>
+  eslintPluginJsonc.configs['flat/recommended-with-json'].map(config => ({
+    ...config,
+    name: 'nivalis/jsonc/recommended',
+  }));
 
 export const sortPackageJson = (): Linter.Config[] => [
   {

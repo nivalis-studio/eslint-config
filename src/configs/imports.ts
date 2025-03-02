@@ -7,7 +7,7 @@ export const imports = async (
 ): Promise<Linter.Config[]> => {
   const importsConfig: Linter.Config[] = [
     {
-      name: 'import/flat/recommended',
+      name: 'nivalis/import/recommended',
       plugins: { import: eslintPluginImportX as unknown as ESLint.Plugin },
       rules: {
         // Analysis/correctness
@@ -55,7 +55,7 @@ export const imports = async (
 
     importsConfig.push(
       {
-        name: 'import/flat/settings',
+        name: 'nivalis/import/settings',
         settings: {
           'import/extensions': allExtensions,
           'import/external-module-folders': [
@@ -95,8 +95,7 @@ export const imports = async (
 
   importsConfig.push(
     {
-      name: 'import/nivalis-rules',
-
+      name: 'nivalis/import/rules',
       rules: {
         // https://typescript-eslint.io/troubleshooting/typed-linting/performance#eslint-plugin-import
         'import/named': 'off',
@@ -152,7 +151,7 @@ export const imports = async (
       },
     },
     {
-      name: 'import/nivalis-disabled-rules',
+      name: 'nivalis/import/disable',
       files: [
         `**/*config*.${GLOB_SRC_EXT}`,
         `**/views/${GLOB_SRC}`,

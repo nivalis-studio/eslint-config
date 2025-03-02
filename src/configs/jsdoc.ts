@@ -3,7 +3,10 @@ import type { Linter } from 'eslint';
 
 export const jsdoc = (): Linter.Config[] => {
   return [
-    pluginJsdoc.configs['flat/recommended'],
+    {
+      ...pluginJsdoc.configs['flat/recommended'],
+      name: 'nivalis/jsdoc/recommended',
+    },
     {
       name: 'nivalis/jsdoc/rules',
       rules: {
