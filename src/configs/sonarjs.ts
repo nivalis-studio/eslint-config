@@ -16,6 +16,9 @@ export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
         'sonarjs/no-unused-vars': 'off',
         'sonarjs/no-commented-code': 'off',
         'sonarjs/max-lines': 'off',
+        'sonarjs/different-types-comparison': 'off',
+        // This rule is really slow (slower than prettier)
+        'sonarjs/sonarjs/deprecation': 'off',
       },
     },
   ] satisfies Linter.Config[];
