@@ -18,7 +18,7 @@ export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
         'sonarjs/max-lines': 'off',
         'sonarjs/different-types-comparison': 'off',
         // This rule is really slow (slower than prettier)
-        'sonarjs/sonarjs/deprecation': 'off',
+        'sonarjs/deprecation': 'off',
       },
     },
   ] satisfies Linter.Config[];
