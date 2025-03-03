@@ -19,6 +19,7 @@ export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
         'sonarjs/different-types-comparison': 'off',
         // This rule is really slow (slower than prettier)
         'sonarjs/deprecation': 'off',
+        'sonarjs/no-redundant-optional': 'off',
       },
     },
   ] satisfies Linter.Config[];
