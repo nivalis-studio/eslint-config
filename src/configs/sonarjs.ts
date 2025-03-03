@@ -1,4 +1,5 @@
 import eslintPluginSonarjs from 'eslint-plugin-sonarjs';
+import { GLOB_REACT } from '../globs';
 import type { Linter } from 'eslint';
 import type { TSConfigOptions } from '../options';
 
@@ -91,6 +92,14 @@ export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
       },
     });
   }
+
+  config.push({
+    name: 'nivalis/sonarjs/react',
+    files: [GLOB_REACT],
+    rules: {
+      'sonarjs/function-return-type': 'off',
+    },
+  } satisfies Linter.Config);
 
   return config;
 };
