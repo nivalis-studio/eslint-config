@@ -45,7 +45,7 @@ export const react = (): Linter.Config[] => {
         'react/boolean-prop-naming': [
           'warn',
           {
-            rule: '^(is|has|are|can|should|did|will)[A-Z]([A-Za-z0-9])+',
+            rule: '^(is|has|are|can|should|did|will|as)[A-Z]([A-Za-z0-9])+',
             validateNested: true,
           },
         ],
