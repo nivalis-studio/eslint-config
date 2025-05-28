@@ -47,9 +47,9 @@
     "dev": "pnpm dlx @eslint/config-inspector --config eslint.config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "unbuild",
-    "prepublishOnly": "unbuild",
-    "prepack": "unbuild",
+    "build": "tsdown",
+    "prepublishOnly": "tsdown",
+    "prepack": "tsdown",
     "ts": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -91,14 +91,7 @@
     "lefthook": "1.11.13",
     "lint-staged": "16.1.0",
     "typescript": "5.8.3",
-    "unbuild": "3.5.0"
-  },
-  "unbuild": {
-    "declaration": true,
-    "failOnWarn": false,
-    "exports": "named",
-    "preserveModules": true,
-    "sourcemap": true
+    "tsdown": "0.12.4"
   },
   "lint-staged": {
     "*": "eslint --fix --no-warn-ignored"
