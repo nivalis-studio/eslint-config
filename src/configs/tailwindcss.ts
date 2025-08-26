@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { existsSync } from 'node:fs';
-import tailwind from 'eslint-plugin-tailwindcss';
+import tailwind from 'eslint-plugin-better-tailwindcss';
 import { GLOB_REACT } from '../globs';
 import type { ESLint, Linter } from 'eslint';
 import type { TailwindOptions } from '../options';
@@ -21,30 +21,43 @@ export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
     );
   }
 
+  const cssGlobalPath = path.join(
+    process.cwd(),
+    options?.configPath ?? './src/styles/globals.css',
+  );
+
+  if (!existsSync(cssGlobalPath)) {
+    throw new Error(
+      `Tailwind css globals files not found. The file ${cssGlobalPath} does not exist. Please check your configuration.`,
+    );
+  }
+
   return [
     {
       name: 'nivalis/tailwindcss',
       files: [GLOB_REACT],
       plugins: {
-        tailwindcss: tailwind as unknown as ESLint.Plugin,
+        'better-tailwindcss': tailwind as unknown as ESLint.Plugin,
       },
       settings: {
-        tailwindcss: {
+        'better-tailwindcss': {
           callees: ['cn', 'classnames', 'clsx', 'cva'],
-          config: configPath,
-          /**
-           * Performance issue with the plugin, somewhat mitigated setting cssFiles to an empty array.
-           * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/276
-           * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/174
-           */
-          cssFiles: [],
-          removeDuplicates: true,
+          entryPoint: cssGlobalPath,
+          tailwindConfig: configPath,
         },
       },
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       rules: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-        ...(tailwind.configs?.recommended as any)?.rules,
+        'better-tailwindcss/enforce-consistent-class-order': 'off',
+        'better-tailwindcss/enforce-consistent-important-position': 'off',
+        'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+        'better-tailwindcss/enforce-consistent-variable-syntax': 'error',
+        'better-tailwindcss/enforce-shorthand-classes': 'warn',
+        'better-tailwindcss/no-conflicting-classes': 'error',
+        'better-tailwindcss/no-deprecated-classes': 'error',
+        'better-tailwindcss/no-duplicate-classes': 'error',
+        'better-tailwindcss/no-restricted-classes': 'error',
+        'better-tailwindcss/no-unnecessary-whitespace': 'warn',
+        'better-tailwindcss/no-unregistered-classes': 'off',
       },
     },
   ];
