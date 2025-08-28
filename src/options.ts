@@ -23,6 +23,10 @@ export type TailwindOptions =
        * @default 'tailwind.config.ts'
        */
       configPath?: string;
+      /**
+       * @default 'src/styles/globals.css'
+       */
+      cssGlobalPath?: string;
     };
 
 export type ConfigOptions =

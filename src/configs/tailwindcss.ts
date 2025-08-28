@@ -23,7 +23,7 @@ export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
 
   const cssGlobalPath = path.join(
     process.cwd(),
-    options?.configPath ?? './src/styles/globals.css',
+    options?.cssGlobalPath ?? './src/styles/globals.css',
   );
 
   if (!existsSync(cssGlobalPath)) {
