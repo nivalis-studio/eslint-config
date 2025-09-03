@@ -1,8 +1,9 @@
 import pluginJsdoc from 'eslint-plugin-jsdoc';
+import { defineConfig } from 'eslint/config';
 import type { Linter } from 'eslint';
 
 export const jsdoc = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       ...pluginJsdoc.configs['flat/recommended'],
       name: 'nivalis/jsdoc/recommended',
@@ -31,5 +32,5 @@ export const jsdoc = (): Linter.Config[] => {
         'jsdoc/require-jsdoc': 'off',
       },
     },
-  ];
+  ]);
 };

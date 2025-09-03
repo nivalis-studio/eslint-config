@@ -1,9 +1,10 @@
 import pluginNextjs from '@next/eslint-plugin-next';
+import { defineConfig } from 'eslint/config';
 import { GLOB_REACT } from '../globs';
 import type { Linter } from 'eslint';
 
 export const nextjs = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       files: [GLOB_REACT],
       name: 'nivalis/nextjs',
@@ -44,5 +45,5 @@ export const nextjs = (): Linter.Config[] => {
         'nextjs/no-script-component-in-head': 'error',
       },
     },
-  ];
+  ]);
 };

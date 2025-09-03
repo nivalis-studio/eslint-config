@@ -1,4 +1,5 @@
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
+import { defineConfig } from 'eslint/config';
 import { DEFAULT_INDENT, DEFAULT_QUOTES } from '../constants';
 import { GLOB_SRC } from '../globs';
 import type { PrettierOptions } from '../options';
@@ -20,7 +21,7 @@ export const prettier = (options: PrettierOptions): Linter.Config[] => {
 
   const indent = options?.tabWidth ?? DEFAULT_INDENT;
 
-  return [
+  return defineConfig([
     {
       ...eslintPluginPrettier,
       files: [GLOB_SRC],
@@ -216,5 +217,5 @@ export const prettier = (options: PrettierOptions): Linter.Config[] => {
         ],
       },
     },
-  ];
+  ]);
 };

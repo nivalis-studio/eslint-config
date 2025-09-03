@@ -1,8 +1,9 @@
 import pluginComments from '@eslint-community/eslint-plugin-eslint-comments';
+import { defineConfig } from 'eslint/config';
 import type { Linter } from 'eslint';
 
 export const comments = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       name: 'nivalis/eslint-comments/rules',
       plugins: {
@@ -19,5 +20,5 @@ export const comments = (): Linter.Config[] => {
         'eslint-comments/no-unused-enable': 'error',
       },
     },
-  ];
+  ]);
 };

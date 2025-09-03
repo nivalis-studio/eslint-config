@@ -1,3 +1,4 @@
+import { defineConfig } from 'eslint/config';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
@@ -7,7 +8,7 @@ import type { Linter } from 'eslint';
 
 // eslint-disable-next-line max-lines-per-function
 export const react = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       name: 'nivalis/react/setup',
       plugins: {
@@ -377,5 +378,5 @@ export const react = (): Linter.Config[] => {
         'jsx-a11y/tabindex-no-positive': ['warn'],
       },
     },
-  ];
+  ]);
 };

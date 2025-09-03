@@ -1,11 +1,12 @@
 import eslintPluginImportX from 'eslint-plugin-import-x';
+import { defineConfig } from 'eslint/config';
 import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs';
 import type { ESLint, Linter } from 'eslint';
 
 export const imports = async (
   withTypescript = true,
 ): Promise<Linter.Config[]> => {
-  const importsConfig: Linter.Config[] = [
+  const importsConfig: Linter.Config[] = defineConfig([
     {
       name: 'nivalis/import/recommended',
       plugins: { import: eslintPluginImportX as unknown as ESLint.Plugin },
@@ -29,7 +30,7 @@ export const imports = async (
         sourceType: 'module',
       },
     },
-  ];
+  ]);
 
   if (withTypescript) {
     const tsParser = await import('@typescript-eslint/parser');

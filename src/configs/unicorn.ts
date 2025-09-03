@@ -1,8 +1,9 @@
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import { defineConfig } from 'eslint/config';
 import type { Linter } from 'eslint';
 
 export const unicorn = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       ...eslintPluginUnicorn.configs.recommended,
       name: 'nivalis/unicorn/recommended',
@@ -38,5 +39,5 @@ export const unicorn = (): Linter.Config[] => {
         ],
       },
     },
-  ] satisfies Linter.Config[];
+  ]);
 };

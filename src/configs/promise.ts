@@ -1,8 +1,9 @@
 import pluginPromise from 'eslint-plugin-promise';
+import { defineConfig } from 'eslint/config';
 import type { Linter } from 'eslint';
 
 export const promise = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       ...(pluginPromise.configs['flat/recommended'] as Linter.Config),
       name: 'nivalis/promise/setup',
@@ -19,5 +20,5 @@ export const promise = (): Linter.Config[] => {
         'promise/no-multiple-resolved': 'warn',
       },
     },
-  ];
+  ]);
 };

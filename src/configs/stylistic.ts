@@ -1,4 +1,5 @@
 import pluginStylistic from '@stylistic/eslint-plugin';
+import { defineConfig } from 'eslint/config';
 import { DEFAULT_INDENT, PADDING_LINES } from '../constants';
 import { GLOB_SRC } from '../globs';
 import type { ESLint, Linter } from 'eslint';
@@ -25,7 +26,7 @@ export const stylistic = (): Linter.Config[] => {
     semi,
   });
 
-  return [
+  return defineConfig([
     {
       name: 'nivalis/stylistic/plugin',
       plugins: {
@@ -185,5 +186,5 @@ export const stylistic = (): Linter.Config[] => {
         'style/yield-star-spacing': 'off',
       },
     },
-  ];
+  ]);
 };

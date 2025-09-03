@@ -1,8 +1,9 @@
 import { configs } from 'eslint-plugin-regexp';
+import { defineConfig } from 'eslint/config';
 import type { Linter } from 'eslint';
 
 export const regexp = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       ...configs['flat/recommended'],
       name: 'nivalis/regexp/setup',
@@ -19,5 +20,5 @@ export const regexp = (): Linter.Config[] => {
         ],
       },
     },
-  ];
+  ]);
 };

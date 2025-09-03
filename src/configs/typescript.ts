@@ -1,3 +1,4 @@
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import { GLOB_SRC_TS } from '../globs';
 import type { TSConfigOptions } from '../options';
@@ -340,5 +341,5 @@ export const typescript = (options?: TSConfigOptions): Linter.Config[] => {
     );
   }
 
-  return tseslint.config(...configs) as Linter.Config[];
+  return defineConfig(...configs);
 };

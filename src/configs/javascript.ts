@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import globals from 'globals';
+import { defineConfig } from 'eslint/config';
 import { GLOB_SRC } from '../globs';
 import type { Linter } from 'eslint';
 
@@ -12,7 +13,7 @@ const MAX_STATEMENTS = 35;
 
 // eslint-disable-next-line max-lines-per-function
 export const javascript = (): Linter.Config[] => {
-  return [
+  return defineConfig([
     {
       name: 'nivalis/javascript/setup',
       languageOptions: {
@@ -506,5 +507,5 @@ export const javascript = (): Linter.Config[] => {
         'sort-vars': 'error',
       },
     },
-  ];
+  ]);
 };

@@ -1,10 +1,11 @@
 import eslintPluginSonarjs from 'eslint-plugin-sonarjs';
+import { defineConfig } from 'eslint/config';
 import { GLOB_REACT } from '../globs';
 import type { Linter } from 'eslint';
 import type { TSConfigOptions } from '../options';
 
 export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
-  const config = [
+  const config = defineConfig([
     {
       ...eslintPluginSonarjs.configs.recommended,
       name: 'nivalis/sonarjs/recommended',
@@ -23,7 +24,7 @@ export const sonarjs = (options?: TSConfigOptions): Linter.Config[] => {
         'sonarjs/no-redundant-optional': 'off',
       },
     },
-  ] satisfies Linter.Config[];
+  ]);
 
   if (options && options.disableTypeChecking === true) {
     config.push({

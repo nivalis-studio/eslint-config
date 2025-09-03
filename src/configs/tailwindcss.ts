@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { existsSync } from 'node:fs';
+import { defineConfig } from 'eslint/config';
 import tailwind from 'eslint-plugin-better-tailwindcss';
 import { GLOB_REACT } from '../globs';
 import type { ESLint, Linter } from 'eslint';
@@ -7,7 +8,7 @@ import type { TailwindOptions } from '../options';
 
 export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
   if (options === false) {
-    return [];
+    return defineConfig([]);
   }
 
   const configPath = path.join(
@@ -32,7 +33,7 @@ export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
     );
   }
 
-  return [
+  return defineConfig([
     {
       name: 'nivalis/tailwindcss',
       files: [GLOB_REACT],
@@ -60,5 +61,5 @@ export const tailwindcss = (options: TailwindOptions): Linter.Config[] => {
         'better-tailwindcss/no-unregistered-classes': 'off',
       },
     },
-  ];
+  ]);
 };
