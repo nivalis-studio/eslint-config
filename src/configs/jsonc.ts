@@ -110,7 +110,7 @@ export const sortPackageJson = (): Linter.Config[] =>
 export const sortTsconfig = (): Linter.Config[] =>
   defineConfig([
     {
-      files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+      files: ['**/[jt]sconfig.json', '**/[jt]sconfig.*.json'],
       name: 'nivalis/sort/tsconfig-json',
       rules: {
         'jsonc/sort-keys': [

@@ -1,6 +1,5 @@
 export const GLOB_MARKDOWN = '**/*.md';
-export const GLOB_ASTRO = '**/*.astro';
-export const GLOB_ASTRO_TS = '**/*.astro/*.ts';
+export const GLOB_MARKDOWN_IN_MARKDOWN = '**/*.md/*.md';
 
 export const GLOB_SRC_EXT = '?([cm])[jt]s?(x)';
 export const GLOB_SRC = '**/*.?([cm])[jt]s?(x)';
@@ -8,6 +7,11 @@ export const GLOB_SRC_TS = '**/*.?([cm])ts?(x)';
 export const GLOB_SRC_JS = '**/*.?([cm])js?(x)';
 export const GLOB_JS = '**/*.?([cm])js';
 export const GLOB_TS = '**/*.?([cm])ts';
+
+export const GLOB_ASTRO = '**/*.astro';
+export const GLOB_ASTRO_TS = '**/*.astro/*.ts';
+export const GLOB_SVELTE = '**/*.svelte?(.{js,ts})';
+export const GLOB_VUE = '**/*.vue';
 
 export const GLOB_REACT = '**/*.?([cm])?(j|t)sx';
 export const GLOB_JSX = '**/*.?([cm])jsx';
