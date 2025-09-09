@@ -50,12 +50,12 @@
     "@eslint-community/eslint-plugin-eslint-comments": "4.5.0",
     "@next/eslint-plugin-next": "15.5.2",
     "@stylistic/eslint-plugin": "5.3.1",
-    "@typescript-eslint/parser": "8.42.0",
+    "@typescript-eslint/parser": "8.43.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-flat-config-utils": "2.1.1",
-    "eslint-plugin-better-tailwindcss": "3.7.6",
+    "eslint-plugin-better-tailwindcss": "3.7.7",
     "eslint-plugin-import-x": "4.16.1",
-    "eslint-plugin-jsdoc": "54.3.1",
+    "eslint-plugin-jsdoc": "55.0.5",
     "eslint-plugin-jsonc": "2.20.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-n": "17.21.3",
@@ -66,10 +66,10 @@
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-regexp": "2.10.0",
     "eslint-plugin-sonarjs": "3.0.5",
-    "eslint-plugin-unicorn": "60.0.0",
+    "eslint-plugin-unicorn": "61.0.2",
     "globals": "16.3.0",
     "local-pkg": "1.1.2",
-    "typescript-eslint": "8.42.0"
+    "typescript-eslint": "8.43.0"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
@@ -77,9 +77,9 @@
     "@nivalis/prettier-config": "3.6.2",
     "@types/eslint-plugin-jsx-a11y": "6.10.0",
     "@types/node": "24.2.1",
-    "eslint": "9.34.0",
-    "lefthook": "1.12.3",
-    "tsdown": "0.14.2",
+    "eslint": "9.35.0",
+    "lefthook": "1.12.4",
+    "tsdown": "0.15.0",
     "typescript": "5.9.2"
   }
 }
