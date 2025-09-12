@@ -441,6 +441,7 @@ export const javascript = (): Linter.Config[] => {
         'prefer-rest-params': 'error',
         'prefer-spread': 'error',
         'prefer-template': 'error',
+        'preserve-caught-error': ['error'],
         radix: ['error'],
         'require-atomic-updates': ['error', { allowProperties: true }],
         'require-await': ['error'],
