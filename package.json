@@ -48,6 +48,7 @@
   "prettier": "@nivalis/prettier-config",
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "4.6.0",
+    "@eslint/core": "^1.1.0",
     "@next/eslint-plugin-next": "16.1.6",
     "@stylistic/eslint-plugin": "5.9.0",
     "@typescript-eslint/parser": "8.56.1",

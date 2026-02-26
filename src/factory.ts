@@ -19,11 +19,12 @@ import {
 import { promise } from './configs/promise';
 import type { ConfigOptions } from './options';
 import type { Linter } from 'eslint';
+import type { RulesConfig } from '@eslint/core';
 
 export const nivalis = async (
   options?: ConfigOptions,
   ...userConfigs: Linter.Config[]
-) => {
+): Promise<Array<Linter.Config<RulesConfig>>> => {
   const enableNextJs =
     (HAS_NEXTJS && options?.nextjs !== false) || options?.nextjs === true;
   const enableReact =
