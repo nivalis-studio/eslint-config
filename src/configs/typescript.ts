@@ -198,19 +198,18 @@ export const typescript = (options?: TSConfigOptions): Linter.Config[] => {
         ],
       },
     },
-  ];
-
-  configs.push({
-    files: ['**/*.d.ts'],
-    name: 'nivalis/typescript/disables/dts',
-    rules: {
-      'eslint-comments/no-unlimited-disable': 'off',
-      'import/no-duplicates': 'off',
-      'no-restricted-syntax': 'off',
-      'init-declarations': 'off',
-      'unused-imports/no-unused-vars': 'off',
+    {
+      files: ['**/*.d.ts'],
+      name: 'nivalis/typescript/disables/dts',
+      rules: {
+        'eslint-comments/no-unlimited-disable': 'off',
+        'import/no-duplicates': 'off',
+        'no-restricted-syntax': 'off',
+        'init-declarations': 'off',
+        'unused-imports/no-unused-vars': 'off',
+      },
     },
-  });
+  ];
 
   if (options?.disableTypeChecking !== true) {
     configs.push(
