@@ -1,3 +1,6 @@
+allowBuilds:
+  lefthook: true
+  unrs-resolver: true
 onlyBuiltDependencies:
   - lefthook
   - unrs-resolver
